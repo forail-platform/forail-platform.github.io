@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operator v1.0.0 — Forge Platform Docs</title>
+  <meta name="description" content="forge-operator v1.0.0: nine CRDs, multi-cluster routing via ForgeInstance, declarative Workflow DAG, and an OLM bundle for OperatorHub / OpenShift distribution.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://forgeplatform.github.io/docs/operator-v1.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
+      Forge
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
+      <li><a href="../dev/index.html">Dev Docs</a></li>
+    </ul>
+    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <button class="nav-toggle" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="docs-layout" style="padding: 2rem;">
+  <aside class="docs-sidebar">
+    <h4>Getting Started</h4>
+    <a href="architecture.html">Architecture</a>
+    <a href="deployment.html">Deployment (Docker)</a>
+    <a href="kubernetes.html">Kubernetes</a>
+    <a href="operator-v1.html" style="color: var(--primary);">Operator v1.0.0</a>
+    <h4>Features</h4>
+    <a href="event-driven.html">Event-Driven Automation</a>
+    <a href="drift-detection.html">Drift Detection</a>
+    <a href="policy-as-code.html">Policy-as-Code</a>
+    <a href="self-service.html">Self-Service Portal</a>
+    <a href="multi-tenancy.html">Multi-Tenancy</a>
+    <a href="oidc-webauthn.html">OIDC + WebAuthn</a>
+    <a href="iac-scanning.html">IaC Scanning</a>
+    <a href="observability.html">Observability</a>
+    <a href="dynamic-surveys.html">Dynamic Surveys</a>
+    <a href="audit-trail.html">Audit Trail</a>
+    <a href="recommendations.html">Recommendations</a>
+    <h4>AI Assistant</h4>
+    <a href="assistant-architecture.html">Architecture</a>
+    <a href="assistant-api.html">API Reference</a>
+    <a href="assistant-config.html">Configuration</a>
+    <a href="assistant-deploy.html">Deployment</a>
+    <h4>Operations</h4>
+    <a href="user-handbook.html">User Handbook</a>
+    <a href="admin-handbook.html">Admin Handbook</a>
+    <h4>Release Notes</h4>
+    <a href="release-2026.04.0.html">v2026.04.0</a>
+    <a href="release-2026.03.0.html">v2026.03.0</a>
+    <h4>&nbsp;</h4>
+    <a href="../dev/index.html">Developer Docs</a>
+    <a href="../index.html">Home</a>
+  </aside>
+  <main class="docs-content">
+
+<h1 id="operator-v1">Operator v1.0.0</h1>
+<p><a href="https://github.com/forgeplatform/forge-operator"><code>forge-operator</code></a> jumps from 0.3.1 to 1.0.0 with three headline changes: <strong>five new CRDs</strong> finishing the Forge resource model, <strong>multi-cluster routing</strong> so one operator deployment can drive multiple Forge backends, and an <strong>OLM bundle</strong> for OperatorHub / OpenShift installation. The previous Helm install path keeps working — this page covers what is new.</p>
+
+<hr />
+
+<h2 id="crd-matrix">CRD Matrix</h2>
+<p>The operator now manages nine kinds. The first four are the original 0.3.x set; the bold five ship in 1.0.0.</p>
+<table>
+<thead><tr><th>Kind</th><th>API group</th><th>Forge resource</th><th>v0.3.x</th><th>v1.0.0</th></tr></thead>
+<tbody>
+<tr><td><code>JobTemplate</code></td><td><code>forge.forgeplatform.io/v1alpha1</code></td><td><code>/api/v2/job_templates</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>Inventory</code></td><td><code>forge.forgeplatform.io/v1alpha1</code></td><td><code>/api/v2/inventories</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>Credential</code></td><td><code>forge.forgeplatform.io/v1alpha1</code></td><td><code>/api/v2/credentials</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><code>Schedule</code></td><td><code>forge.forgeplatform.io/v1alpha1</code></td><td><code>/api/v2/schedules</code></td><td>Yes</td><td>Yes</td></tr>
+<tr><td><strong><code>Organization</code></strong></td><td><code>forge.forgeplatform.io/v1alpha1</code></td><td><code>/api/v2/organizations</code></td><td>—</td><td><strong>new</strong></td></tr>
+<tr><td><strong><code>Team</code></strong></td><td><code>forge.forgeplatform.io/v1alpha1</code></td><td><code>/api/v2/teams</code> + <code>/teams/{id}/users/</code></td><td>—</td><td><strong>new</strong></td></tr>
+<tr><td><strong><code>Project</code></strong></td><td><code>forge.forgeplatform.io/v1alpha1</code></td><td><code>/api/v2/projects</code></td><td>—</td><td><strong>new</strong></td></tr>
+<tr><td><strong><code>Workflow</code></strong></td><td><code>forge.forgeplatform.io/v1alpha1</code></td><td><code>/api/v2/workflow_job_templates</code> + <code>/workflow_nodes/</code></td><td>—</td><td><strong>new</strong></td></tr>
+<tr><td><strong><code>ForgeInstance</code></strong></td><td><code>forge.forgeplatform.io/v1alpha1</code></td><td>control-plane only</td><td>—</td><td><strong>new</strong></td></tr>
+</tbody>
+</table>
+
+<hr />
+
+<h2 id="multi-cluster">Multi-cluster routing</h2>
+<p>Every CR gets an optional <code>spec.forgeInstance</code> field. When set, the controller looks up a <code>ForgeInstance</code> CR by that name in the same namespace, dereferences <code>spec.tokenSecretRef</code> to read the bearer token from a Kubernetes <code>Secret</code>, and builds a per-instance HTTP client (cached and invalidated on observed <code>Generation</code> bumps). When the field is empty the CR falls back to the global default supplied via the operator flags <code>--forge-url</code> and <code>--forge-token</code>.</p>
+
+<p>Example: route one Project to a European Forge backend and another to a US one, from the same Kubernetes cluster.</p>
+<pre><code>---
+apiVersion: v1
+kind: Secret
+metadata: { name: forge-eu-token, namespace: default }
+stringData:
+  token: &lt;PAT from forge-manage create_oauth2_token&gt;
+---
+apiVersion: forge.forgeplatform.io/v1alpha1
+kind: ForgeInstance
+metadata: { name: forge-eu, namespace: default }
+spec:
+  url: https://forge-eu.example.com
+  tokenSecretRef: { name: forge-eu-token, key: token }
+---
+apiVersion: forge.forgeplatform.io/v1alpha1
+kind: Project
+metadata: { name: eu-roles, namespace: default }
+spec:
+  forgeInstance: forge-eu              # routes to forge-eu backend
+  organization: Default
+  scmType: git
+  scmUrl: https://github.com/mycorp/eu-roles.git
+  scmBranch: main
+---
+apiVersion: forge.forgeplatform.io/v1alpha1
+kind: Project
+metadata: { name: us-roles, namespace: default }
+spec:
+  # no forgeInstance — uses the default backend the operator was bootstrapped with
+  organization: Default
+  scmType: git
+  scmUrl: https://github.com/mycorp/us-roles.git</code></pre>
+
+<p>The <code>ForgeInstance</code> reconciler also probes <code>/api/v2/ping/</code> every 60 seconds and surfaces reachability + server version in <code>status</code>, so you can spot a backend going dark with <code>kubectl get forgeinstance</code>:</p>
+<pre><code>$ kubectl get forgeinstance -A
+NAMESPACE   NAME       URL                              REACHABLE   VERSION    LAST CHECKED   AGE
+default     forge-eu   https://forge-eu.example.com     true        2026.04.0  12s            5m
+default     forge-us   https://forge-us.example.com     false       —          22s            5m</code></pre>
+
+<hr />
+
+<h2 id="workflow-dag">Workflow DAG</h2>
+<p><code>Workflow</code> is the only CRD with a non-trivial graph model. A workflow is the wrapper resource, and its <code>spec.nodes[]</code> describes a DAG of upstream/downstream edges keyed by per-node identifier:</p>
+<pre><code>apiVersion: forge.forgeplatform.io/v1alpha1
+kind: Workflow
+metadata:
+  name: build-and-deploy
+spec:
+  organization: Default
+  nodes:
+    - identifier: build
+      unifiedJobTemplate: Provision EC2     # references a JobTemplate by name
+      successNodes: [deploy]                # graph edge: on success run "deploy"
+      failureNodes: [notify-failure]
+    - identifier: deploy
+      unifiedJobTemplate: Deploy App
+      alwaysNodes: [notify-end]
+    - identifier: notify-failure
+      unifiedJobTemplate: Send Slack Alert
+    - identifier: notify-end
+      unifiedJobTemplate: Send Slack Alert</code></pre>
+<p>Reconcile is three-phase: (1) create or update the workflow shell at <code>/workflow_job_templates/</code>, (2) diff <code>spec.nodes[]</code> against <code>/workflow_job_templates/{id}/workflow_nodes/</code> and create / update / delete to converge, (3) for each desired node diff <code>successNodes</code> / <code>failureNodes</code> / <code>alwaysNodes</code> against the per-node <code>/success_nodes/</code>, <code>/failure_nodes/</code>, <code>/always_nodes/</code> sub-relations. Edge association uses the same <code>{"id": targetID}</code> / <code>{"id": targetID, "disassociate": true}</code> M2M pattern Forge uses everywhere else.</p>
+
+<hr />
+
+<h2 id="olm">OLM bundle</h2>
+<p>The operator now ships an OLM bundle so it can be installed on OpenShift or any cluster running the upstream Operator Lifecycle Manager. The bundle contains a <code>ClusterServiceVersion</code> with <code>alm-examples</code> for all nine kinds, the CRD manifests, RBAC, and a deployment spec — all in the standard <code>registry+v1</code> layout.</p>
+
+<h3 id="olm-build">Build &amp; push</h3>
+<pre><code>make bundle bundle-build bundle-push \
+    BUNDLE_IMG=krlex/forge-operator-bundle:v1.0.0
+
+make catalog-build catalog-push \
+    BUNDLE_IMG=krlex/forge-operator-bundle:v1.0.0 \
+    CATALOG_IMG=krlex/forge-operator-catalog:v1.0.0</code></pre>
+
+<h3 id="olm-install">Subscribe</h3>
+<pre><code>cat &lt;&lt;EOF | kubectl apply -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata: { name: forge, namespace: olm }
+spec:
+  sourceType: grpc
+  image: krlex/forge-operator-catalog:v1.0.0
+  displayName: Forge Operators
+  publisher: Forge Platform
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata: { name: forge-operator, namespace: operators }
+spec:
+  channel: alpha
+  name: forge-operator
+  source: forge
+  sourceNamespace: olm
+EOF</code></pre>
+<p>OLM creates the <code>ClusterServiceVersion</code>, installs all nine CRDs, and runs the operator in <code>AllNamespaces</code> mode. The Helm install path remains supported in parallel and stays the recommended option for non-OLM clusters.</p>
+
+<hr />
+
+<h2 id="upgrade">Upgrade from 0.3.x</h2>
+<p>The release is non-breaking for existing CRs: any <code>JobTemplate</code>, <code>Inventory</code>, <code>Credential</code>, or <code>Schedule</code> that was reconciling against 0.3.x continues to reconcile against 1.0.0 unchanged. The operator deployment, however, needs the wider RBAC for the five added kinds.</p>
+
+<p>If you installed via Helm:</p>
+<pre><code>git -C forge-operator pull
+helm upgrade forge-operator ./forge-operator/helm -n forge-operator \
+    --reuse-values \
+    --set image.tag=1.0.0</code></pre>
+<p>The chart's <code>helm/crds/</code> directory now contains all nine CRD manifests. Helm 3 applies CRDs once on install (it does not own them on upgrade), so on an in-place upgrade the new five must be applied manually:</p>
+<pre><code>kubectl apply -f forge-operator/helm/crds/forge.forgeplatform.io_organizations.yaml
+kubectl apply -f forge-operator/helm/crds/forge.forgeplatform.io_teams.yaml
+kubectl apply -f forge-operator/helm/crds/forge.forgeplatform.io_projects.yaml
+kubectl apply -f forge-operator/helm/crds/forge.forgeplatform.io_workflows.yaml
+kubectl apply -f forge-operator/helm/crds/forge.forgeplatform.io_forgeinstances.yaml</code></pre>
+
+<hr />
+
+<h2 id="testing">Verifying a fresh install</h2>
+<p>After install, a healthy operator pod logs <code>Starting workers</code> for each of the nine reconcilers. A round-trip smoke test against a live Forge:</p>
+<pre><code>kubectl apply -f forge-operator/config/samples/organization-sample.yaml
+sleep 5
+kubectl get organization platform-team -o jsonpath='{.status.forgeId}'   # should print a number
+kubectl describe organization platform-team | grep 'Reason\|Message'      # InSync / Synced</code></pre>
+
+<p>Then verify in Forge itself (you can use the same OAuth2 PAT the operator does):</p>
+<pre><code>kubectl -n forge exec deploy/forge-web -- \
+    curl -s http://localhost:8013/api/v2/organizations/ \
+    -H "Authorization: Bearer $TOKEN" | jq '.results[] | {id, name}'</code></pre>
+
+<p>Deleting the CR triggers the finalizer — the operator issues a Forge DELETE, waits for a 2xx, and only then drops the finalizer so the CR can leave Kubernetes. <code>kubectl get organization</code> showing nothing while the matching Forge row is gone confirms the cleanup pipeline.</p>
+
+<hr />
+
+<h2 id="see-also">See also</h2>
+<ul>
+<li><a href="kubernetes.html">Kubernetes Deployment</a> — full Helm + Pages context this page assumes.</li>
+<li><a href="https://github.com/forgeplatform/forge-operator/blob/main/CHANGELOG.md">Operator CHANGELOG</a> — the per-day breakdown of the 1.0.0 work.</li>
+<li><a href="https://github.com/forgeplatform/forge-dev-cluster">forge-dev-cluster</a> — 3 master + 4 worker k3s test environment used to validate the release end-to-end.</li>
+</ul>
+
+  </main>
+</div>
+<footer class="footer">
+  <div class="footer-links">
+    <a href="../index.html">Home</a>
+    <a href="../dev/index.html">Dev Docs</a>
+    <a href="https://github.com/forgeplatform">GitHub</a>
+  </div>
+  <p>Forge Platform — Apache License 2.0</p>
+</footer>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
