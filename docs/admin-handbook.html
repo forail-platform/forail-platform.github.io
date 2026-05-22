@@ -35,6 +35,7 @@
     <a href="architecture.html">Architecture</a>
     <a href="deployment.html">Deployment (Docker)</a>
     <a href="kubernetes.html">Kubernetes</a>
+    <a href="operator-v1.html">Operator v1.0.0</a>
     <h4>Features</h4>
     <a href="event-driven.html">Event-Driven Automation</a>
     <a href="drift-detection.html">Drift Detection</a>
@@ -56,6 +57,7 @@
     <a href="user-handbook.html">User Handbook</a>
     <a href="admin-handbook.html">Admin Handbook</a>
     <h4>Release Notes</h4>
+    <a href="release-2026.05.0.html">v2026.05.0</a>
     <a href="release-2026.04.0.html">v2026.04.0</a>
     <a href="release-2026.03.0.html">v2026.03.0</a>
     <h4>&nbsp;</h4>
@@ -486,15 +488,25 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 </blockquote>
 <hr />
 <h2 id="switching-to-kubernetes">Switching to Kubernetes</h2>
-<p>For full deployments on Kubernetes, use the official Helm chart and operator instead of hand-rolling manifests. The <a href="kubernetes.html">Kubernetes Deployment</a> page covers the architecture (services, namespaces, ingress, storage), prerequisites, install, day-2 operations, and a troubleshooting catalog of the gotchas (mDNS hijack of <code>.local</code>, instance node-type defaults, OOM thresholds, Flannel CNI quirks on VirtualBox).</p>
-<p><strong>Quick path</strong></p>
+<p>The <code>k8s/</code> folder contains baseline manifests if you outgrow Docker Compose.</p>
+<p><strong>Step by step</strong></p>
 <ol>
-<li>Pre-create the <code>forge</code> namespace plus the Harbor pull-secret and a TLS secret (see <a href="kubernetes.html#prerequisites">Prerequisites</a>).</li>
-<li><code>helm install forge ./forge-helm -n forge --set secrets.forgeAdminPassword=&lt;strong-password&gt;</code></li>
-<li>Optional: install the operator to manage <code>JobTemplate</code> / <code>Inventory</code> / <code>Credential</code> / <code>Schedule</code> as Custom Resources — see <a href="kubernetes.html#install-operator">Install the Operator</a>.</li>
+<li>Read <a href="../k8s/"><code>k8s/</code></a> — it includes Deployments, Services, ConfigMap, Secret, Ingress.</li>
+<li>Create a namespace:
+   <code>bash
+   kubectl create namespace forge</code></li>
+<li>Create the secrets (translate your <code>.env</code>):
+   <code>bash
+   kubectl -n forge create secret generic forge-env --from-env-file=.env</code></li>
+<li>Apply the manifests:
+   <code>bash
+   kubectl -n forge apply -f k8s/</code></li>
+<li>Watch the rollout:
+   <code>bash
+   kubectl -n forge get pods -w</code></li>
 </ol>
 <blockquote>
-<p>Migration from Compose to Kubernetes is a one-shot: dump Postgres on the Compose host, import into the Helm-managed Postgres (or repoint Forge at an external RDS by setting <code>postgres.enabled=false</code> and overriding the DB env).</p>
+<p>Migration from compose to k8s is a one-shot: dump Postgres, import into the k8s-managed Postgres (or external RDS).</p>
 </blockquote>
 <hr />
 <h1 id="observability_1">OBSERVABILITY</h1>

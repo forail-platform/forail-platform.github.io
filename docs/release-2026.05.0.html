@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Release Notes v2026.05.0 — Forge Platform Docs</title>
+  <meta name="description" content="Release Notes v2026.05.0 — documentation for the Forge infrastructure automation platform.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://forgeplatform.github.io/docs/release-2026.05.0.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
+      Forge
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
+      <li><a href="../dev/index.html">Dev Docs</a></li>
+    </ul>
+    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <button class="nav-toggle" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="docs-layout" style="padding: 2rem;">
+  <aside class="docs-sidebar">
+    <h4>Getting Started</h4>
+    <a href="architecture.html">Architecture</a>
+    <a href="deployment.html">Deployment (Docker)</a>
+    <a href="kubernetes.html">Kubernetes</a>
+    <a href="operator-v1.html">Operator v1.0.0</a>
+    <h4>Features</h4>
+    <a href="event-driven.html">Event-Driven Automation</a>
+    <a href="drift-detection.html">Drift Detection</a>
+    <a href="policy-as-code.html">Policy-as-Code</a>
+    <a href="self-service.html">Self-Service Portal</a>
+    <a href="multi-tenancy.html">Multi-Tenancy</a>
+    <a href="oidc-webauthn.html">OIDC + WebAuthn</a>
+    <a href="iac-scanning.html">IaC Scanning</a>
+    <a href="observability.html">Observability</a>
+    <a href="dynamic-surveys.html">Dynamic Surveys</a>
+    <a href="audit-trail.html">Audit Trail</a>
+    <a href="recommendations.html">Recommendations</a>
+    <h4>AI Assistant</h4>
+    <a href="assistant-architecture.html">Architecture</a>
+    <a href="assistant-api.html">API Reference</a>
+    <a href="assistant-config.html">Configuration</a>
+    <a href="assistant-deploy.html">Deployment</a>
+    <h4>Operations</h4>
+    <a href="user-handbook.html">User Handbook</a>
+    <a href="admin-handbook.html">Admin Handbook</a>
+    <h4>Release Notes</h4>
+    <a href="release-2026.05.0.html">v2026.05.0</a>
+    <a href="release-2026.04.0.html">v2026.04.0</a>
+    <a href="release-2026.03.0.html">v2026.03.0</a>
+    <h4>&nbsp;</h4>
+    <a href="../dev/index.html">Developer Docs</a>
+    <a href="../index.html">Home</a>
+  </aside>
+  <main class="docs-content">
+<h1 id="forge-2026050-release-notes">Forge 2026.05.0 — Release Notes</h1>
+<p><strong>Release date:</strong> 2026-05-22
+<strong>Based on:</strong> Forge 2026.04.0 + new features
+<strong>License:</strong> Apache License 2.0</p>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>Forge 2026.05.0 is the platform's GA milestone. The Kubernetes operator
+graduates to <strong>v1.0.0</strong> with a complete resource model (9 CRDs) and
+multi-cluster control-plane support, the dev-cluster moves to a
+production-shaped 3-master/4-worker HA k3s topology, and the AI
+Assistant is repackaged as a single all-in-one image that runs on a
+single PVC.</p>
+<hr />
+<h2 id="component-versions">Component Versions</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Version</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>forge-backend</td>
+<td>2026.05.0</td>
+<td>Migration <code>0208</code> fix for <code>DriftAlertRule</code> audit fields</td>
+</tr>
+<tr>
+<td>forge-frontend</td>
+<td>2026.05.0</td>
+<td>Tracks backend API</td>
+</tr>
+<tr>
+<td>forge-assistant</td>
+<td>2026.05.0</td>
+<td>All-in-one image (Ollama + ChromaDB embedded), <code>gemma3:1b</code> default</td>
+</tr>
+<tr>
+<td>forge-operator</td>
+<td><strong>1.0.0</strong></td>
+<td>5 new CRDs, multi-cluster, OLM bundle</td>
+</tr>
+<tr>
+<td>forge-helm</td>
+<td><strong>1.0.0</strong></td>
+<td><code>appVersion: 2026.05.0</code></td>
+</tr>
+<tr>
+<td>forge-dev-cluster</td>
+<td>—</td>
+<td>3m+4w k3s 1.30 (was 2m+2w kubeadm)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="new-features">New Features</h2>
+<h3 id="forge-operator-v100-complete-resource-model-multi-cluster">Forge Operator v1.0.0 — Complete Resource Model + Multi-Cluster</h3>
+<p>The Kubernetes operator now covers the full Forge object graph and can
+fan out to multiple Forge backends from a single control plane.</p>
+<p><strong>5 new CRDs:</strong></p>
+<ul>
+<li><strong><code>Project</code></strong> — SCM-backed source of playbooks, with optional
+  Credential + ExecutionEnvironment references.</li>
+<li><strong><code>Organization</code></strong> — top-level tenant container with max-host quota
+  and a default-EE reference.</li>
+<li><strong><code>Team</code></strong> — namespaced team within an Organization. <code>spec.users[]</code>
+  is reconciled declaratively against
+  <code>/api/v2/teams/{id}/users/</code> (add/remove users to match spec).</li>
+<li><strong><code>Workflow</code></strong> — <code>workflow_job_template</code> wrapper with a declarative
+  DAG of nodes (<code>spec.nodes[]</code> keyed by <code>identifier</code>) and three edge
+  types (<code>successNodes</code>, <code>failureNodes</code>, <code>alwaysNodes</code>). The
+  reconciler diffs against
+  <code>/workflow_job_template_nodes/</code> + each node's sub-relations.</li>
+<li><strong><code>ForgeInstance</code></strong> — describes a Forge backend (URL + bearer
+  token via <code>tokenSecretRef</code>) that other CRs target by name via
+  <code>spec.forgeInstance</code>.</li>
+</ul>
+<p><strong>Multi-cluster (<code>forgeapi.ClientPool</code>):</strong></p>
+<p>Per-CR resolution of which Forge backend to write to. CRs without
+<code>spec.forgeInstance</code> fall back to the default client supplied via
+<code>--forge-url</code> / <code>--forge-token</code>. Generation-gated cache invalidation
+on the ForgeInstance reconciler rebuilds the client lazily when the
+target URL or secret reference changes.</p>
+<p><strong>OLM packaging:</strong></p>
+<ul>
+<li><code>config/manifests/bases/forge-operator.clusterserviceversion.yaml</code>
+  — CSV with <code>alm-examples</code>, <code>customresourcedefinitions.owned</code>
+  entries for all 9 CRDs, deployment spec, cluster-scoped RBAC.</li>
+<li><code>bundle.Dockerfile</code> + <code>bundle/{manifests,metadata}</code> for OperatorHub
+  catalog builds.</li>
+<li>Makefile targets: <code>bundle</code>, <code>bundle-build</code>, <code>catalog-build</code>.</li>
+</ul>
+<p><strong>Resource model summary:</strong></p>
+<table>
+<thead>
+<tr>
+<th>CRD</th>
+<th>Scope</th>
+<th>Reconciles to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inventory</td>
+<td>Namespaced</td>
+<td><code>/api/v2/inventories/</code></td>
+</tr>
+<tr>
+<td>Credential</td>
+<td>Namespaced</td>
+<td><code>/api/v2/credentials/</code></td>
+</tr>
+<tr>
+<td>JobTemplate</td>
+<td>Namespaced</td>
+<td><code>/api/v2/job_templates/</code></td>
+</tr>
+<tr>
+<td>Schedule</td>
+<td>Namespaced</td>
+<td><code>/api/v2/schedules/</code></td>
+</tr>
+<tr>
+<td><strong>Project</strong></td>
+<td>Namespaced</td>
+<td><code>/api/v2/projects/</code></td>
+</tr>
+<tr>
+<td><strong>Organization</strong></td>
+<td>Cluster</td>
+<td><code>/api/v2/organizations/</code></td>
+</tr>
+<tr>
+<td><strong>Team</strong></td>
+<td>Namespaced</td>
+<td><code>/api/v2/teams/</code> + user membership</td>
+</tr>
+<tr>
+<td><strong>Workflow</strong></td>
+<td>Namespaced</td>
+<td><code>/api/v2/workflow_job_templates/</code> + DAG nodes</td>
+</tr>
+<tr>
+<td><strong>ForgeInstance</strong></td>
+<td>Namespaced</td>
+<td>(control-plane only; no upstream call)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="forge-assistant-all-in-one-image">Forge Assistant — All-in-One Image</h3>
+<p>The AI Assistant is repackaged from three Compose services (Ollama +
+ChromaDB + FastAPI + a setup container) into <strong>one container</strong> with a
+single <code>/data</code> volume.</p>
+<ul>
+<li><strong><code>entrypoint.sh</code></strong> orchestrates startup: <code>ollama serve</code>, conditional
+  model pull (the configured chat model + <code>nomic-embed-text</code>),
+  <code>chroma run</code>, document indexing, then <code>uvicorn</code>.</li>
+<li>Default chat model: <strong><code>gemma3:1b</code></strong> (was <code>mistral:7b</code>). Smaller and
+  faster; answer quality reduced for general questions but adequate
+  for short RAG-grounded responses against the in-tree docs.</li>
+<li>Default <code>top_k</code> lowered from 5 to 3.</li>
+<li>Default config hosts switched from <code>ollama</code> / <code>chromadb</code> to
+  <code>localhost</code> to match the single-container layout.</li>
+<li>Explicit <code>httpx.Timeout(connect=10, read=300, write=10, pool=10)</code>
+  so the long read timeout no longer applies to connection setup.</li>
+<li>New RAG corpus under <code>docs_to_index/deployment/</code> (architecture,
+  Docker deployment, CI/CD, contributing, admin/user handbooks,
+  startup walkthrough) so the assistant can answer operational
+  questions.</li>
+</ul>
+<p>The Helm chart (<code>assistant.enabled=true</code>) provisions a single
+Deployment + PVC + Service (default 20 GiB volume,
+1 GiB/250m requests, 4 GiB/2 vCPU limits, <code>startupProbe</code>
+<code>failureThreshold: 30</code> ≈ 5 min boot budget for the first-pull model
+download).</p>
+<h3 id="forge-helm-100">Forge Helm 1.0.0</h3>
+<ul>
+<li>Chart version bumped to <strong>1.0.0</strong> (from 0.3.0) marking platform GA
+  alongside <code>forge-operator</code> v1.0.0.</li>
+<li><code>appVersion: 2026.05.0</code> tracks the backend release that ships the
+  <code>0208_driftalertrule_audit_fields</code> migration fix.</li>
+<li>5 new operator CRDs added under <code>helm/crds/</code> so <code>helm install
+  forge-operator</code> provisions the complete schema.</li>
+</ul>
+<h3 id="dev-cluster-3-master-4-worker-ha-k3s">Dev-Cluster — 3-Master / 4-Worker HA k3s</h3>
+<p>The Vagrant test cluster (<code>forge-dev-cluster</code>) was rebuilt for
+production-shaped HA:</p>
+<ul>
+<li>Topology: <strong>3 control-plane (k8s-m1..m3) + 4 worker (k8s-w1..w4)</strong>
+  on <code>192.168.56.30-36</code>. Per-VM resources bumped to 2 vCPU / 4 GB
+  (was 2 vCPU / 2 GB) → 14 vCPU, 28 GB total.</li>
+<li><strong>Switched distribution from kubeadm to k3s</strong> (v1.30.4+k3s1). k3s
+  bundles Traefik, local-path-provisioner, klipper-lb (servicelb),
+  CoreDNS, and metrics-server, so <code>post-cluster-setup.sh</code> collapsed
+  from 4 stages to creating just the <code>forge</code> namespace + Harbor
+  pull-secret + self-signed TLS cert.</li>
+<li><strong>HA control plane via embedded etcd</strong>: first server runs
+  <code>k3s server --cluster-init</code>, the other two join with <code>--server</code>.
+  TLS SANs cover all 3 server IPs/hostnames so <code>kubectl</code> works
+  against any master. 3-node etcd quorum tolerates a single master
+  failure (was 2-node quorum, which lost the cluster on any master
+  loss).</li>
+<li><code>--flannel-iface=eth1</code> passed explicitly on every node — fixes the
+  long-standing wrong-NIC binding that broke pod networking on the
+  kubeadm setup.</li>
+</ul>
+<p>Provisioning scripts renamed: <code>master-init.sh</code> / <code>master-join.sh</code> /
+<code>worker-join.sh</code> → <code>server-init.sh</code> / <code>server-join.sh</code> /
+<code>agent-join.sh</code>.</p>
+<hr />
+<h2 id="bug-fixes">Bug Fixes</h2>
+<h3 id="backend-driftalertrule-cascade-delete-migration-0208">Backend — <code>DriftAlertRule</code> cascade-delete (migration <code>0208</code>)</h3>
+<p><code>DriftAlertRule</code> rows could not be cascade-deleted from an
+Organization: the original <code>0198_drift_models</code> migration omitted the
+<code>created_by</code> / <code>modified_by</code> FK columns inherited from
+<code>PrimordialModel</code>, so any ORM query joining the audit columns blew up
+with <code>psycopg.UndefinedColumn</code>.</p>
+<ul>
+<li>Symptom in the wild: <code>DELETE /api/v2/organizations/{id}/</code> returned
+  HTTP 500 and the <code>forge-operator</code> Organization finalizer hung
+  forever.</li>
+<li>Migration <code>0208_driftalertrule_audit_fields</code> backfills both columns
+  as nullable + <code>SET_NULL</code>.</li>
+<li>New schema-level regression test
+  (<code>tests_standalone/test_drift_audit_fields_schema.py</code>) parses the
+  migration sequence and asserts the columns exist so the gap can't
+  re-open.</li>
+</ul>
+<hr />
+<h2 id="upgrade-path">Upgrade Path</h2>
+<h3 id="from-2026040-2026050">From 2026.04.0 → 2026.05.0</h3>
+<p><strong>Backend (<code>forge-helm</code> upgrade):</strong></p>
+<div class="codehilite"><pre><span></span><code>helm<span class="w"> </span>repo<span class="w"> </span>update
+helm<span class="w"> </span>upgrade<span class="w"> </span>forge<span class="w"> </span>forgeplatform/forge<span class="w"> </span>-n<span class="w"> </span>forge<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.0.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--reuse-values
+kubectl<span class="w"> </span>-n<span class="w"> </span>forge<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>deploy/forge-web<span class="w"> </span>--<span class="w"> </span>forge-manage<span class="w"> </span>migrate
+</code></pre></div>
+
+<p>The <code>0208</code> migration is forward-compatible (nullable column add,
+SET_NULL FKs). No downtime; existing <code>DriftAlertRule</code> rows backfill
+with <code>NULL</code> audit fields.</p>
+<p><strong>Operator (<code>forge-operator</code> upgrade):</strong></p>
+<p>If upgrading the operator from 0.3.x to 1.0.0:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Apply the new CRDs first (Helm hooks won&#39;t re-install CRDs).</span>
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>https://github.com/forgeplatform/forge-operator/releases/download/v1.0.0/crds.yaml
+
+<span class="c1"># 2. Upgrade the operator chart.</span>
+helm<span class="w"> </span>upgrade<span class="w"> </span>forge-operator<span class="w"> </span>forgeplatform/forge-operator<span class="w"> </span>-n<span class="w"> </span>forge-operator<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.0.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--reuse-values
+</code></pre></div>
+
+<p>Existing <code>Inventory</code> / <code>Credential</code> / <code>JobTemplate</code> / <code>Schedule</code> CRs
+continue to work unchanged.</p>
+<p><strong>Multi-cluster (optional):</strong></p>
+<p>To start fanning out to multiple Forge backends, create a
+<code>ForgeInstance</code> per backend and reference it in your CRs:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">forge.forgeplatform.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ForgeInstance</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">forge-staging</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://forge-staging.example.com</span>
+<span class="w">  </span><span class="nt">tokenSecretRef</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">forge-staging-token</span>
+<span class="w">    </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">token</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">forge.forgeplatform.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">JobTemplate</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy-staging</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">forgeInstance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">forge-staging</span><span class="w">   </span><span class="c1"># routes to the staging backend</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">...</span>
+</code></pre></div>
+
+<p>CRs without <code>spec.forgeInstance</code> continue to use the default
+operator-wide URL/token.</p>
+<hr />
+<h2 id="documentation">Documentation</h2>
+<p>New / updated documentation:</p>
+<ul>
+<li><strong><code>forgeplatform.github.io/docs/operator-v1.html</code></strong> — Dedicated
+  page for v1.0.0: multi-cluster, Workflow DAG model, OLM bundle,
+  upgrade path.</li>
+<li><strong><code>forgeplatform.github.io/docs/kubernetes.html</code></strong> — Refreshed for
+  v1.0.0 (9-CRD table, sidebar reorganized).</li>
+<li><strong><code>forge-assistant/docs_to_index/deployment/</code></strong> — 8 new operational
+  markdown files indexed into the RAG corpus.</li>
+</ul>
+<hr />
+<h2 id="known-issues">Known Issues</h2>
+<ul>
+<li><strong>OLM bundle warnings:</strong> 4 of the older CRDs (Inventory, Credential,
+  JobTemplate, Schedule) don't yet have <code>alm-examples</code> entries in the
+  CSV, and the CSV lacks <code>spec.icon</code>. Both are cosmetic
+  (<code>operator-sdk bundle validate</code> warnings, not errors) and do not
+  block submission to OperatorHub. Slated for <code>1.0.1</code>.</li>
+<li><strong><code>forge-assistant</code> first boot</strong> can take 3–5 minutes on the
+  initial pod start while <code>gemma3:1b</code> and <code>nomic-embed-text</code> are
+  pulled into the PVC. The <code>startupProbe</code> (<code>failureThreshold: 30</code>)
+  budgets ~5 minutes; raise it if your registry mirror is slow.</li>
+</ul>
+<hr />
+<h2 id="quality-metrics">Quality Metrics</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Operator e2e (live 3m+4w k3s)</td>
+<td>9/9 CRDs reconcile cleanly</td>
+</tr>
+<tr>
+<td>Backend regression (<code>test_drift_audit_fields_schema</code>)</td>
+<td>passing</td>
+</tr>
+<tr>
+<td>Helm chart (<code>helm lint</code> + <code>helm template</code>, both default and <code>assistant.enabled=true</code>)</td>
+<td>passing</td>
+</tr>
+<tr>
+<td>Operator OLM bundle (<code>operator-sdk bundle validate</code>)</td>
+<td>passing (4 warnings, see Known Issues)</td>
+</tr>
+</tbody>
+</table>
+  </main>
+</div>
+<footer class="footer">
+  <div class="footer-links">
+    <a href="../index.html">Home</a>
+    <a href="../dev/index.html">Dev Docs</a>
+    <a href="https://github.com/forgeplatform">GitHub</a>
+  </div>
+  <p>Forge Platform — Apache License 2.0</p>
+</footer>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

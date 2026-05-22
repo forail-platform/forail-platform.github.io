@@ -34,6 +34,7 @@ DOCS["forge-deploy/docs/ADMIN_HANDBOOK.md"]="admin-handbook.html|Administrator H
 # Release Notes
 DOCS["forge-deploy/docs/RELEASE_NOTES_v2026.03.0.md"]="release-2026.03.0.html|Release Notes v2026.03.0"
 DOCS["forge-deploy/docs/RELEASE_NOTES_v2026.04.0.md"]="release-2026.04.0.html|Release Notes v2026.04.0"
+DOCS["forge-deploy/docs/RELEASE_NOTES_v2026.05.0.md"]="release-2026.05.0.html|Release Notes v2026.05.0"
 
 generate_page() {
   local src="$1" out="$2" title="$3"
@@ -85,7 +86,9 @@ sys.stdout.write(html)
   <aside class="docs-sidebar">
     <h4>Getting Started</h4>
     <a href="architecture.html">Architecture</a>
-    <a href="deployment.html">Deployment</a>
+    <a href="deployment.html">Deployment (Docker)</a>
+    <a href="kubernetes.html">Kubernetes</a>
+    <a href="operator-v1.html">Operator v1.0.0</a>
     <h4>Features</h4>
     <a href="event-driven.html">Event-Driven Automation</a>
     <a href="drift-detection.html">Drift Detection</a>
@@ -107,6 +110,7 @@ sys.stdout.write(html)
     <a href="user-handbook.html">User Handbook</a>
     <a href="admin-handbook.html">Admin Handbook</a>
     <h4>Release Notes</h4>
+    <a href="release-2026.05.0.html">v2026.05.0</a>
     <a href="release-2026.04.0.html">v2026.04.0</a>
     <a href="release-2026.03.0.html">v2026.03.0</a>
     <h4>&nbsp;</h4>
