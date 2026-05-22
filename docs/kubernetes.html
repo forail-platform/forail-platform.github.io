@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kubernetes Deployment — Forge Platform Docs</title>
-  <meta name="description" content="Deploy Forge Platform on Kubernetes with the official Helm chart and operator: namespaces, networking, storage, ingress, and the JobTemplate / Inventory / Credential / Schedule CRDs.">
+  <meta name="description" content="Deploy Forge Platform on Kubernetes with the official Helm chart and the v1.0.0 operator: 9 CRDs (Organization, Team, Project, Inventory, Credential, JobTemplate, Schedule, Workflow, ForgeInstance) with multi-cluster routing and OLM bundle.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://forgeplatform.github.io/docs/kubernetes.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,6 +35,7 @@
     <a href="architecture.html">Architecture</a>
     <a href="deployment.html">Deployment (Docker)</a>
     <a href="kubernetes.html" style="color: var(--primary);">Kubernetes</a>
+    <a href="operator-v1.html">Operator v1.0.0</a>
     <h4>Features</h4>
     <a href="event-driven.html">Event-Driven Automation</a>
     <a href="drift-detection.html">Drift Detection</a>
@@ -65,7 +66,7 @@
   <main class="docs-content">
 
 <h1 id="kubernetes-deployment">Kubernetes Deployment</h1>
-<p>Forge Platform deploys natively on Kubernetes via the official Helm chart at <a href="https://github.com/forgeplatform/forge-helm"><code>forgeplatform/forge-helm</code></a>, with an optional operator at <a href="https://github.com/forgeplatform/forge-operator"><code>forgeplatform/forge-operator</code></a> that lets you manage Forge resources (job templates, inventories, credentials, schedules) declaratively as Kubernetes Custom Resources.</p>
+<p>Forge Platform deploys natively on Kubernetes via the official Helm chart at <a href="https://github.com/forgeplatform/forge-helm"><code>forgeplatform/forge-helm</code></a>, with an optional operator at <a href="https://github.com/forgeplatform/forge-operator"><code>forgeplatform/forge-operator</code></a> (v1.0.0) that lets you manage <strong>nine</strong> Forge resource kinds — organizations, teams, projects, inventories, credentials, job templates, schedules, workflows (DAG), and remote Forge instances — declaratively as Kubernetes Custom Resources, with support for routing different CRs to different Forge backends.</p>
 <p>This page is the long-form companion to the Docker Compose <a href="deployment.html">Deployment</a> guide. If you already run a Kubernetes cluster, the Helm path is the recommended deployment for production: it manages secrets natively, supports rolling upgrades, and integrates with Ingress controllers, External Secrets, and the wider ecosystem.</p>
 
 <hr />
@@ -119,7 +120,7 @@
 <p>Two extra resources run as one-shots / CRDs:</p>
 <ul>
 <li><strong><code>forge-init</code> Job</strong> — runs once per release revision: applies migrations, creates the admin user, provisions the instance, registers the <code>controlplane</code> + <code>default</code> queues, seeds preload data, and writes <code>CSRF_TRUSTED_ORIGINS</code> into the DB. Suffixed with <code>{{ .Release.Revision }}</code> so each upgrade gets a fresh Job (Job spec is immutable, so re-applying the same name would fail).</li>
-<li><strong>forge-operator</strong> — runs in its own namespace, watches <code>JobTemplate</code> / <code>Inventory</code> / <code>Credential</code> / <code>Schedule</code> CRs cluster-wide, and reconciles each into the Forge REST API. Authenticates with an OAuth2 personal access token issued by Forge.</li>
+<li><strong>forge-operator</strong> — runs in its own namespace, watches <code>Organization</code> / <code>Team</code> / <code>Project</code> / <code>Inventory</code> / <code>Credential</code> / <code>JobTemplate</code> / <code>Schedule</code> / <code>Workflow</code> / <code>ForgeInstance</code> CRs cluster-wide, and reconciles each into a Forge REST API. Authenticates with an OAuth2 personal access token issued by Forge; the optional <code>ForgeInstance</code> CR lets one operator deployment fan out to multiple Forge backends.</li>
 </ul>
 
 <hr />
@@ -131,7 +132,7 @@
 <tbody>
 <tr><td><code>forge</code></td><td>Postgres, Redis, OPA, OTel Collector, forge-web, forge-task, forge-frontend, forge-init Job, Ingress, all chart Secrets and ConfigMaps</td><td><code>helm install forge ./forge-helm -n forge --create-namespace</code> (or pre-created if you need to seed pull-secrets first)</td></tr>
 <tr><td><code>forge-operator</code></td><td>The operator <code>Deployment</code>, its <code>ServiceAccount</code> + <code>ClusterRole</code> + <code>ClusterRoleBinding</code>, and one <code>Secret</code> holding the Forge OAuth2 token</td><td><code>helm install forge-operator ./forge-operator/helm -n forge-operator --create-namespace</code></td></tr>
-<tr><td><em>any</em></td><td>The four CRD instances (<code>JobTemplate</code>, <code>Inventory</code>, <code>Credential</code>, <code>Schedule</code>). Each CR is namespace-scoped; the operator watches all namespaces and reconciles them centrally against Forge.</td><td>You — <code>kubectl apply -f cr.yaml</code></td></tr>
+<tr><td><em>any</em></td><td>The nine CRD instances (<code>Organization</code>, <code>Team</code>, <code>Project</code>, <code>Inventory</code>, <code>Credential</code>, <code>JobTemplate</code>, <code>Schedule</code>, <code>Workflow</code>, <code>ForgeInstance</code>). Each CR is namespace-scoped; the operator watches all namespaces and reconciles them centrally against Forge.</td><td>You — <code>kubectl apply -f cr.yaml</code></td></tr>
 </tbody>
 </table>
 <p>The chart’s top-level <code>namespace.create</code> value defaults to <code>false</code> because pre-creating the namespace is the common path: you usually want to <code>kubectl create</code> it first so you can drop in the Harbor pull-secret and a TLS secret <em>before</em> the Pods start trying to mount them.</p>
@@ -301,7 +302,9 @@ helm install forge-operator helm/ \
     --set forge.url=http://forge-web.forge.svc.cluster.local:8013</code></pre>
 <p>Verify:</p>
 <pre><code>kubectl -n forge-operator logs deploy/forge-operator -f</code></pre>
-<p>You should see <code>Starting Controller</code> for each of the four reconcilers (<code>jobtemplate</code>, <code>inventory</code>, <code>credential</code>, <code>schedule</code>).</p>
+<p>You should see <code>Starting workers</code> for each of the nine reconcilers (<code>organization</code>, <code>team</code>, <code>project</code>, <code>inventory</code>, <code>credential</code>, <code>jobtemplate</code>, <code>schedule</code>, <code>workflow</code>, <code>forgeinstance</code>).</p>
+
+<p>For full coverage of the v1.0.0 release — multi-cluster routing via <code>ForgeInstance</code>, the OLM bundle, and the declarative <code>Workflow</code> DAG model — see the dedicated <a href="operator-v1.html">Operator v1.0.0 guide</a>.</p>
 
 <h3 id="custom-resources">Custom Resources</h3>
 <p>Each CR maps to a Forge primary-key after first reconcile (status.<code>forgeId</code>). The operator owns the resource via a finalizer — deleting the CR deletes the Forge resource too. Re-applying a CR after manual edits in the Forge UI overwrites the UI changes (drift is detected on a 60s requeue and reconciled toward the CR).</p>
@@ -309,10 +312,15 @@ helm install forge-operator helm/ \
 <table>
 <thead><tr><th>Kind</th><th>Maps to</th><th>Sensitive fields</th></tr></thead>
 <tbody>
+<tr><td><code>Organization</code></td><td><code>/api/v2/organizations</code></td><td>None — top-level tenant container with max-host quota</td></tr>
+<tr><td><code>Team</code></td><td><code>/api/v2/teams</code> + member sync at <code>/teams/{id}/users/</code></td><td>None — <code>spec.users[]</code> resolves usernames at reconcile</td></tr>
+<tr><td><code>Project</code></td><td><code>/api/v2/projects</code></td><td>SCM credential resolved by name from an existing <code>Credential</code> CR</td></tr>
 <tr><td><code>Inventory</code></td><td><code>/api/v2/inventories</code> + nested hosts &amp; groups</td><td>None — pure spec</td></tr>
-<tr><td><code>JobTemplate</code></td><td><code>/api/v2/job_templates</code> with credential / project / inventory references resolved by name</td><td>None</td></tr>
 <tr><td><code>Credential</code></td><td><code>/api/v2/credentials</code></td><td><code>spec.inputsFrom[]</code> reads sensitive values from k8s Secrets in the same namespace; the operator watches those Secrets and re-syncs on rotation</td></tr>
+<tr><td><code>JobTemplate</code></td><td><code>/api/v2/job_templates</code> with credential / project / inventory references resolved by name</td><td>None</td></tr>
 <tr><td><code>Schedule</code></td><td><code>/api/v2/schedules</code></td><td>None — RFC 5545 RRULE drives recurrence</td></tr>
+<tr><td><code>Workflow</code></td><td><code>/api/v2/workflow_job_templates</code> + node DAG at <code>/workflow_job_templates/{id}/workflow_nodes/</code> + edges</td><td>Declarative <code>spec.nodes[]</code> keyed by <code>identifier</code> with <code>successNodes</code> / <code>failureNodes</code> / <code>alwaysNodes</code> graph references</td></tr>
+<tr><td><code>ForgeInstance</code></td><td>Control-plane only — describes a Forge backend that other CRs target via <code>spec.forgeInstance</code></td><td>Bearer token sourced from a k8s <code>Secret</code> via <code>spec.tokenSecretRef</code></td></tr>
 </tbody>
 </table>
 
