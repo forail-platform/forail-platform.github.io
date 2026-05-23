@@ -50,18 +50,17 @@
   </aside>
   <main class="docs-content">
 <h1 id="08-cicd-pipeline">08 — CI/CD Pipeline</h1>
-<p>Forge Platform uses a centralized Jenkins pipeline in <code>forge-deploy</code> that orchestrates
-builds across all three repositories: <code>forge-backend</code>, <code>forge-frontend</code>, and <code>forge-deploy</code>.</p>
+<p>Forge Platform uses <strong>GitHub Actions</strong> as the public CI/CD pipeline. Each repository has its own workflow in <code>.github/workflows/</code> that runs on push and pull request.</p>
 <hr />
 <h2 id="pipeline-overview">Pipeline Overview</h2>
 <div class="codehilite"><pre><span></span><code>┌──────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌──────────┐   ┌─────────┐
 │ Checkout │──►│  Lint  │──►│  Test  │──►│ Build  │──►│ Security │──►│ Release │
 └──────────┘   └────────┘   └────────┘   └────────┘   └──────────┘   └─────────┘
-  clone          flake8       pytest       docker        pip-audit      docker push
-  backend +      tsc          vitest       build         trivy          Harbor
-  frontend
+  GitHub         ruff /        pytest /     docker        pip-audit      docker push
+  Actions        tsc           vitest       build         trivy          ghcr.io/forgeplatform
 </code></pre></div>
 
+<p>Each repo's workflow file: <strong><code>.github/workflows/ci.yml</code></strong></p>
 <h2 id="pipeline-stages">Pipeline Stages</h2>
 <table>
 <thead>
@@ -74,53 +73,48 @@ builds across all three repositories: <code>forge-backend</code>, <code>forge-fr
 <tbody>
 <tr>
 <td>Checkout</td>
-<td>Clone <code>forge-backend</code> and <code>forge-frontend</code> repos (parallel)</td>
-<td>Git auth fails</td>
+<td><code>actions/checkout@v4</code> clones the repo on the runner</td>
+<td>Repo unreachable</td>
 </tr>
 <tr>
 <td>Lint (Python)</td>
-<td><code>flake8 forge/</code> in backend</td>
-<td>PEP8 errors</td>
+<td><code>ruff check</code> in backend / assistant</td>
+<td>Lint errors</td>
 </tr>
 <tr>
 <td>Lint (Frontend)</td>
-<td><code>tsc --noEmit</code> in frontend</td>
+<td><code>tsc --noEmit</code> + ESLint</td>
 <td>TypeScript type errors</td>
 </tr>
 <tr>
 <td>Test (Python)</td>
-<td><code>pytest forge/main/tests/unit/</code></td>
+<td><code>pytest</code> against <code>tests_standalone/</code> (no DB needed for fast path)</td>
 <td>Any test fails</td>
 </tr>
 <tr>
 <td>Test (Frontend)</td>
-<td><code>npx vitest run</code></td>
+<td><code>vitest run</code></td>
 <td>Any test fails</td>
 </tr>
 <tr>
-<td>Build Backend</td>
-<td><code>docker build</code> → <code>forge-platform/forge-backend</code></td>
-<td>Build error</td>
-</tr>
-<tr>
-<td>Build Frontend</td>
-<td><code>docker build</code> → <code>forge-platform/forge-frontend</code></td>
+<td>Build</td>
+<td><code>docker build</code> to produce the release image</td>
 <td>Build error</td>
 </tr>
 <tr>
 <td>Security (pip-audit)</td>
-<td>CVE scan on Python deps</td>
+<td>CVE scan on Python dependencies</td>
 <td>Critical CVE</td>
 </tr>
 <tr>
 <td>Security (Trivy)</td>
-<td>Container image scan (backend + frontend)</td>
+<td>Container image scan</td>
 <td>CRITICAL CVE</td>
 </tr>
 <tr>
 <td>Release</td>
-<td><code>docker push</code> to GHCR (<code>ghcr.io</code>)</td>
-<td>Only on <code>main</code> or tags</td>
+<td><code>docker push</code> to <code>ghcr.io/forgeplatform/*</code></td>
+<td>Only on <code>main</code> branch or tag push</td>
 </tr>
 </tbody>
 </table>
@@ -139,37 +133,32 @@ builds across all three repositories: <code>forge-backend</code>, <code>forge-fr
 </tr>
 <tr>
 <td>Build, Security</td>
-<td><code>main</code>, <code>devel</code>, or tag builds</td>
+<td><code>main</code> branch builds and tag builds</td>
 </tr>
 <tr>
 <td>Release</td>
-<td><code>main</code> branch or tag builds</td>
+<td><code>main</code> branch builds and tag builds (push to <code>ghcr.io</code>)</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="jenkins-credentials-required">Jenkins Credentials Required</h2>
+<h2 id="github-actions-secrets">GitHub Actions Secrets</h2>
+<p>For the release stage, each repo needs the following secret:</p>
 <table>
 <thead>
 <tr>
-<th>Credential ID</th>
-<th>Type</th>
+<th>Secret</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>forge-git-creds</code></td>
-<td>SSH Key</td>
-<td>Access to <code>github.com/forgeplatform</code> repos</td>
-</tr>
-<tr>
-<td><code>forge-harbor-creds</code></td>
-<td>Username/Password</td>
-<td>GHCR login (<code>ghcr.io</code>)</td>
+<td><code>GITHUB_TOKEN</code></td>
+<td>Provided automatically by GitHub Actions. Used with the built-in <code>permissions: packages: write</code> to push to <code>ghcr.io/forgeplatform/*</code></td>
 </tr>
 </tbody>
 </table>
+<p>No third-party credentials are required — everything runs in the GitHub-hosted runner with built-in tokens.</p>
 <hr />
 <h2 id="docker-images">Docker Images</h2>
 <table>
@@ -189,7 +178,7 @@ builds across all three repositories: <code>forge-backend</code>, <code>forge-fr
 <tr>
 <td><code>ghcr.io/forgeplatform/forge-backend:&lt;version&gt;</code></td>
 <td>Same</td>
-<td>Version-tagged</td>
+<td>Version-tagged (CalVer)</td>
 </tr>
 <tr>
 <td><code>ghcr.io/forgeplatform/forge-frontend:latest</code></td>
@@ -201,8 +190,19 @@ builds across all three repositories: <code>forge-backend</code>, <code>forge-fr
 <td>Same</td>
 <td>Version-tagged</td>
 </tr>
+<tr>
+<td><code>ghcr.io/forgeplatform/forge-assistant:latest</code></td>
+<td><code>forge-assistant/Dockerfile</code></td>
+<td>FastAPI + Ollama + ChromaDB (preview)</td>
+</tr>
+<tr>
+<td><code>ghcr.io/forgeplatform/forge-operator:&lt;version&gt;</code></td>
+<td><code>forge-operator/Dockerfile</code></td>
+<td>Kubernetes operator</td>
+</tr>
 </tbody>
 </table>
+<p>All images are <strong>public</strong> — no pull secret required for <code>docker pull</code> or <code>helm install</code>.</p>
 <hr />
 <h2 id="versioning">Versioning</h2>
 <p>Forge uses <strong>CalVer</strong> (Calendar Versioning):</p>
@@ -213,9 +213,9 @@ builds across all three repositories: <code>forge-backend</code>, <code>forge-fr
 </code></pre></div>
 
 <p>The version is derived from the git tag on <code>forge-deploy</code>:</p>
-<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>tag<span class="w"> </span>-a<span class="w"> </span>v2026.03.0<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Forge 2026.03.0&quot;</span>
-git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>v2026.03.0
-<span class="c1"># Jenkins automatically: checkout → lint → test → build → security → push to Harbor</span>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>tag<span class="w"> </span>-a<span class="w"> </span>v2026.05.0<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Forge 2026.05.0&quot;</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>v2026.05.0
+<span class="c1"># GitHub Actions automatically: checkout → lint → test → build → security → push to ghcr.io</span>
 </code></pre></div>
 
 <hr />
@@ -224,7 +224,7 @@ git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </
 <div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forge-backend
 
 <span class="c1"># Lint</span>
-flake8<span class="w"> </span>forge/<span class="w"> </span>--count<span class="w"> </span>--statistics
+ruff<span class="w"> </span>check<span class="w"> </span>forge/
 
 <span class="c1"># Tests</span>
 <span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span>forge.settings.development<span class="w"> </span><span class="se">\</span>
@@ -253,24 +253,22 @@ docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </
 <hr />
 <h2 id="release-process">Release Process</h2>
 <ol>
-<li>Ensure all tests pass on both backend and frontend</li>
+<li>Ensure all tests pass on both backend and frontend (GitHub Actions on PR/push must be green)</li>
 <li>Update docs and release notes</li>
-<li>Commit to <code>forge-deploy</code>: <code>git commit -m "chore: prepare release v2026.04.0"</code></li>
-<li>Tag: <code>git tag -a v2026.04.0 -m "Forge 2026.04.0"</code></li>
-<li>Push tag: <code>git push origin v2026.04.0</code></li>
-<li>Jenkins automatically:</li>
-<li>Checks out <code>forge-backend</code> and <code>forge-frontend</code> (same branch/tag)</li>
-<li>Runs lint + tests on both</li>
+<li>Commit to <code>forge-deploy</code>: <code>git commit -m "chore: prepare release v2026.05.0"</code></li>
+<li>Tag: <code>git tag -a v2026.05.0 -m "Forge 2026.05.0"</code></li>
+<li>Push tag: <code>git push origin v2026.05.0</code></li>
+<li>GitHub Actions automatically:</li>
+<li>Runs lint + tests</li>
 <li>Builds Docker images with version tag</li>
 <li>Scans for vulnerabilities</li>
-<li>Pushes <code>forge-platform/forge-backend:&lt;version&gt;</code> and <code>forge-platform/forge-frontend:&lt;version&gt;</code> to Harbor registry</li>
+<li>Pushes <code>ghcr.io/forgeplatform/forge-backend:&lt;version&gt;</code> and friends to GHCR</li>
 </ol>
 <h3 id="watch-out">Watch out</h3>
 <ul>
 <li><strong>Never release without passing tests.</strong></li>
-<li><strong>Tag format must have <code>v</code> prefix:</strong> <code>v2026.03.0</code>, not <code>2026.03.0</code>.</li>
-<li><strong>Harbor login</strong> must be configured in Jenkins credentials (<code>forge-harbor-creds</code>) before the first release.</li>
-<li><strong>Both repos must have a matching branch</strong> — pipeline checks out the same branch name from all repos.</li>
+<li><strong>Tag format must have <code>v</code> prefix:</strong> <code>v2026.05.0</code>, not <code>2026.05.0</code>.</li>
+<li><strong>Image visibility</strong> — when a new package is first pushed to <code>ghcr.io</code>, GitHub creates it as <strong>private</strong> by default. You must manually flip it to public via the Packages settings (<code>https://github.com/orgs/forgeplatform/packages</code>).</li>
 </ul>
   </main>
 </div>

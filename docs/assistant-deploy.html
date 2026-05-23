@@ -192,16 +192,15 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 </blockquote>
 <hr />
 <h2 id="cicd-pipeline">CI/CD Pipeline</h2>
-<p>The included <code>Jenkinsfile</code> provides a complete pipeline:</p>
+<p>The repository ships with a <strong>GitHub Actions</strong> workflow in <code>.github/workflows/ci.yml</code>:</p>
 <ol>
 <li><strong>Lint</strong> — ruff check on Python code</li>
 <li><strong>Test</strong> — pytest with JUnit XML reporting</li>
 <li><strong>Build</strong> — Docker image build</li>
 <li><strong>Scan</strong> — Trivy container vulnerability scan</li>
-<li><strong>Push</strong> — Push to Harbor registry (main branch only)</li>
-<li><strong>Deploy</strong> — SSH deploy to production (main branch only)</li>
+<li><strong>Push</strong> — Push to <code>ghcr.io/forgeplatform/forge-assistant</code> (main branch and version tags only)</li>
 </ol>
-<p>Tests must pass before any image is built or pushed.</p>
+<p>Tests must pass before any image is built or pushed. Releases use the built-in <code>GITHUB_TOKEN</code> with <code>packages: write</code> — no external secrets required.</p>
   </main>
 </div>
 <footer class="footer">
