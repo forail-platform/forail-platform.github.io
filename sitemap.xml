@@ -35,4 +35,6 @@
   <url><loc>https://forgeplatform.github.io/dev/frontend.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://forgeplatform.github.io/dev/task-engine.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://forgeplatform.github.io/dev/testing.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://forgeplatform.github.io/docs/kubernetes.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://forgeplatform.github.io/docs/operator-v1.html</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
 </urlset>
