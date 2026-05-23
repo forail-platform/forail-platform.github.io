@@ -119,7 +119,7 @@ builds across all three repositories: <code>forge-backend</code>, <code>forge-fr
 </tr>
 <tr>
 <td>Release</td>
-<td><code>docker push</code> to Harbor (<code>registry.cloudforyour.work</code>)</td>
+<td><code>docker push</code> to GHCR (<code>ghcr.io</code>)</td>
 <td>Only on <code>main</code> or tags</td>
 </tr>
 </tbody>
@@ -161,12 +161,12 @@ builds across all three repositories: <code>forge-backend</code>, <code>forge-fr
 <tr>
 <td><code>forge-git-creds</code></td>
 <td>SSH Key</td>
-<td>Access to <code>git.cloudforyour.work</code> repos</td>
+<td>Access to <code>github.com/forgeplatform</code> repos</td>
 </tr>
 <tr>
 <td><code>forge-harbor-creds</code></td>
 <td>Username/Password</td>
-<td>Harbor login (<code>registry.cloudforyour.work</code>)</td>
+<td>GHCR login (<code>ghcr.io</code>)</td>
 </tr>
 </tbody>
 </table>
@@ -182,22 +182,22 @@ builds across all three repositories: <code>forge-backend</code>, <code>forge-fr
 </thead>
 <tbody>
 <tr>
-<td><code>registry.cloudforyour.work/forge-platform/forge-backend:latest</code></td>
+<td><code>ghcr.io/forgeplatform/forge-backend:latest</code></td>
 <td><code>forge-backend/Dockerfile</code></td>
 <td>Django API + task engine</td>
 </tr>
 <tr>
-<td><code>registry.cloudforyour.work/forge-platform/forge-backend:&lt;version&gt;</code></td>
+<td><code>ghcr.io/forgeplatform/forge-backend:&lt;version&gt;</code></td>
 <td>Same</td>
 <td>Version-tagged</td>
 </tr>
 <tr>
-<td><code>registry.cloudforyour.work/forge-platform/forge-frontend:latest</code></td>
+<td><code>ghcr.io/forgeplatform/forge-frontend:latest</code></td>
 <td><code>forge-frontend/Dockerfile</code></td>
 <td>React SPA + nginx</td>
 </tr>
 <tr>
-<td><code>registry.cloudforyour.work/forge-platform/forge-frontend:&lt;version&gt;</code></td>
+<td><code>ghcr.io/forgeplatform/forge-frontend:&lt;version&gt;</code></td>
 <td>Same</td>
 <td>Version-tagged</td>
 </tr>
@@ -234,7 +234,7 @@ flake8<span class="w"> </span>forge/<span class="w"> </span>--count<span class="
 pip<span class="w"> </span>install<span class="w"> </span>pip-audit<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pip-audit<span class="w"> </span>-r<span class="w"> </span>requirements/requirements.txt
 
 <span class="c1"># Build image</span>
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>registry.cloudforyour.work/forge-platform/forge-backend:latest<span class="w"> </span>.
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forgeplatform/forge-backend:latest<span class="w"> </span>.
 </code></pre></div>
 
 <h3 id="frontend">Frontend</h3>
@@ -247,7 +247,7 @@ npx<span class="w"> </span>tsc<span class="w"> </span>--noEmit
 npx<span class="w"> </span>vitest<span class="w"> </span>run
 
 <span class="c1"># Build image</span>
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>registry.cloudforyour.work/forge-platform/forge-frontend:latest<span class="w"> </span>.
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forgeplatform/forge-frontend:latest<span class="w"> </span>.
 </code></pre></div>
 
 <hr />

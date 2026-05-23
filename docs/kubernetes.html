@@ -220,15 +220,10 @@
 <li>Optional but recommended: cert-manager (real TLS) or a hand-rolled <code>kubernetes.io/tls</code> Secret named <code>forge-tls</code></li>
 </ul>
 
-<h3 id="harbor-pull-secret">Harbor pull-secret</h3>
-<p>Forge images live on the project’s private Harbor at <code>registry.cloudforyour.work/forge-platform/*</code>. Create the pull-secret <em>before</em> install:</p>
-<pre><code>kubectl create namespace forge
-
-kubectl -n forge create secret docker-registry harbor-pull \
-    --docker-server=registry.cloudforyour.work \
-    --docker-username=&lt;your-user&gt; \
-    --docker-password=&lt;your-token&gt;</code></pre>
-<p>If you mirror the images to your own registry, override <code>images.backend.repository</code> + <code>images.frontend.repository</code> in <code>values.yaml</code> and replace this Secret accordingly.</p>
+<h3 id="image-registry">Container images</h3>
+<p>Forge images are published to the public GitHub Container Registry: <code>ghcr.io/forgeplatform/*</code>. No pull secret is required.</p>
+<pre><code>kubectl create namespace forge</code></pre>
+<p>If you mirror the images to your own registry, override <code>images.backend.repository</code> + <code>images.frontend.repository</code> in <code>values.yaml</code> and add an <code>imagePullSecrets</code> entry pointing at your in-cluster docker-registry Secret.</p>
 
 <h3 id="tls-secret">TLS secret</h3>
 <p>Pre-create a TLS Secret if you want HTTPS on first boot. Self-signed is fine for dev:</p>
@@ -367,7 +362,7 @@ kubectl -n forge cp forge-web-xxx:/var/backups/forge/forge-&lt;ts&gt;.sql.gz ./f
 <table>
 <thead><tr><th>Path</th><th>Default</th><th>Why you’d change it</th></tr></thead>
 <tbody>
-<tr><td><code>images.backend.repository</code></td><td><code>registry.cloudforyour.work/forge-platform/forge-backend</code></td><td>Mirror to your own registry</td></tr>
+<tr><td><code>images.backend.repository</code></td><td><code>ghcr.io/forgeplatform/forge-backend</code></td><td>Mirror to your own registry</td></tr>
 <tr><td><code>images.backend.tag</code></td><td><code>latest</code></td><td>Pin to a CalVer release</td></tr>
 <tr><td><code>secrets.forgeAdminPassword</code></td><td><code>changeme-admin</code></td><td>Always — it’s a placeholder</td></tr>
 <tr><td><code>ingress.host</code></td><td><code>forge.lan</code></td><td>Your real DNS name</td></tr>

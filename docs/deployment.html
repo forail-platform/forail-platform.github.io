@@ -81,22 +81,22 @@
 <tbody>
 <tr>
 <td>forge-web</td>
-<td><code>registry.cloudforyour.work/forge-platform/forge-backend</code></td>
+<td><code>ghcr.io/forgeplatform/forge-backend</code></td>
 <td>Django API (uwsgi + daphne + nginx-internal)</td>
 </tr>
 <tr>
 <td>forge-task</td>
-<td><code>registry.cloudforyour.work/forge-platform/forge-backend</code></td>
+<td><code>ghcr.io/forgeplatform/forge-backend</code></td>
 <td>Task execution (dispatcher, callback, receptor)</td>
 </tr>
 <tr>
 <td>forge-init</td>
-<td><code>registry.cloudforyour.work/forge-platform/forge-backend</code></td>
+<td><code>ghcr.io/forgeplatform/forge-backend</code></td>
 <td>One-shot: migrations, admin user, provisioning</td>
 </tr>
 <tr>
 <td>forge-frontend</td>
-<td><code>registry.cloudforyour.work/forge-platform/forge-frontend</code></td>
+<td><code>ghcr.io/forgeplatform/forge-frontend</code></td>
 <td>React SPA served by nginx</td>
 </tr>
 <tr>
@@ -163,8 +163,8 @@
 <h2 id="building-docker-images">Building Docker Images</h2>
 <h3 id="backend">Backend</h3>
 <div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forge-backend
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>registry.cloudforyour.work/forge-platform/forge-backend:latest<span class="w"> </span>.
-docker<span class="w"> </span>push<span class="w"> </span>registry.cloudforyour.work/forge-platform/forge-backend:latest
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forgeplatform/forge-backend:latest<span class="w"> </span>.
+docker<span class="w"> </span>push<span class="w"> </span>ghcr.io/forgeplatform/forge-backend:latest
 </code></pre></div>
 
 <p>The Dockerfile is a multi-stage build:
@@ -172,8 +172,8 @@ docker<span class="w"> </span>push<span class="w"> </span>registry.cloudforyour.
 2. <strong>runtime</strong> (Ubuntu 24.04): minimal image with runtime deps, receptor, supervisor</p>
 <h3 id="frontend">Frontend</h3>
 <div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forge-frontend
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>registry.cloudforyour.work/forge-platform/forge-frontend:latest<span class="w"> </span>.
-docker<span class="w"> </span>push<span class="w"> </span>registry.cloudforyour.work/forge-platform/forge-frontend:latest
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forgeplatform/forge-frontend:latest<span class="w"> </span>.
+docker<span class="w"> </span>push<span class="w"> </span>ghcr.io/forgeplatform/forge-frontend:latest
 </code></pre></div>
 
 <p>The Dockerfile is a multi-stage build:
@@ -303,12 +303,12 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 </tr>
 <tr>
 <td><code>FORGE_BACKEND_IMAGE</code></td>
-<td><code>registry.cloudforyour.work/forge-platform/forge-backend</code></td>
+<td><code>ghcr.io/forgeplatform/forge-backend</code></td>
 <td>Backend Docker image</td>
 </tr>
 <tr>
 <td><code>FORGE_FRONTEND_IMAGE</code></td>
-<td><code>registry.cloudforyour.work/forge-platform/forge-frontend</code></td>
+<td><code>ghcr.io/forgeplatform/forge-frontend</code></td>
 <td>Frontend Docker image</td>
 </tr>
 <tr>
@@ -449,7 +449,7 @@ docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </sp
 <span class="w">  </span>-e<span class="w"> </span><span class="nv">REDIS_HOST</span><span class="o">=</span>redis.example.com<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-e<span class="w"> </span><span class="nv">FORGE_NODE_TYPE</span><span class="o">=</span>execution<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-e<span class="w"> </span><span class="nv">FORGE_NODE_NAME</span><span class="o">=</span>exec-node-1<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>registry.cloudforyour.work/forge-platform/forge-backend:latest<span class="w"> </span>launch_awx_task.sh
+<span class="w">  </span>ghcr.io/forgeplatform/forge-backend:latest<span class="w"> </span>launch_awx_task.sh
 
 <span class="c1"># On the control node:</span>
 docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-web<span class="w"> </span>forge-manage<span class="w"> </span>provision_instance<span class="w"> </span>--hostname<span class="o">=</span>exec-node-1<span class="w"> </span>--node-type<span class="o">=</span>execution

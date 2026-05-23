@@ -427,7 +427,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
    docker run -d --name forge-receptor \
      -e RECEPTOR_NODE_TYPE=execution \
      -e RECEPTOR_PEER=tcp://control.forge.example.com:2222 \
-     registry.cloudforyour.work/forge-platform/forge-receptor:2026.04.0</code></li>
+     ghcr.io/forgeplatform/forge-receptor:2026.04.0</code></li>
 <li>In the UI: <strong>Admin → Instances → Add</strong> and register the new node:</li>
 </ol>
 <table>
@@ -467,7 +467,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
    docker run -d --name forge-receptor \
      -e RECEPTOR_NODE_TYPE=hop \
      -e RECEPTOR_PEER=tcp://control.forge.example.com:2222 \
-     registry.cloudforyour.work/forge-platform/forge-receptor:2026.04.0</code></li>
+     ghcr.io/forgeplatform/forge-receptor:2026.04.0</code></li>
 <li>In the UI: <strong>Admin → Instances → Add</strong> with <strong>Node Type = hop</strong>.</li>
 <li>From any execution node behind the hop, set its peer to the hop instead of the control node.</li>
 <li>Confirm in <strong>Topology</strong> that the hop appears between the control and the workers.</li>
@@ -611,7 +611,7 @@ sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</
 <li>Patch the host OS monthly (<code>unattended-upgrades</code> on Debian/Ubuntu).</li>
 <li>Run scheduled image scans:
    <code>bash
-   trivy image registry.cloudforyour.work/forge-platform/forge-backend:2026.04.0</code></li>
+   trivy image ghcr.io/forgeplatform/forge-backend:2026.04.0</code></li>
 </ol>
 <hr />
 <h1 id="troubleshooting_1">TROUBLESHOOTING</h1>
@@ -864,13 +864,13 @@ docker compose exec forge-web awx-manage createsuperuser</code></p>
 <tr>
 <td><code>FORGE_BACKEND_IMAGE</code></td>
 <td>no</td>
-<td><code>registry.cloudforyour.work/forge-platform/forge-backend</code></td>
+<td><code>ghcr.io/forgeplatform/forge-backend</code></td>
 <td>Backend image</td>
 </tr>
 <tr>
 <td><code>FORGE_FRONTEND_IMAGE</code></td>
 <td>no</td>
-<td><code>registry.cloudforyour.work/forge-platform/forge-frontend</code></td>
+<td><code>ghcr.io/forgeplatform/forge-frontend</code></td>
 <td>Frontend image</td>
 </tr>
 <tr>
