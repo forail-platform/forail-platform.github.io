@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Authentication & RBAC — Forge Developer Docs</title>
-  <meta name="description" content="Authentication & RBAC — developer documentation for the Forge infrastructure automation platform.">
+  <title>Authentication & RBAC — Forail Developer Docs</title>
+  <meta name="description" content="Authentication & RBAC — developer documentation for the Forail infrastructure automation platform.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/dev/auth-rbac.html">
+  <link rel="canonical" href="https://forail-platform.github.io/dev/auth-rbac.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,13 +17,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="../docs/index.html">User Docs</a></li>
       <li><a href="index.html" style="color: var(--primary);">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -50,7 +50,7 @@
   </aside>
   <main class="docs-content">
 <h1 id="05-authentication-rbac">05 — Authentication &amp; RBAC</h1>
-<p>Forge supports multiple authentication methods and has a powerful role-based
+<p>Forail supports multiple authentication methods and has a powerful role-based
 access control system. This document covers how users authenticate and how
 permissions work.</p>
 <hr />
@@ -115,31 +115,31 @@ permissions work.</p>
 <p>For scripts, automation, and integrations.</p>
 <h3 id="creating-a-token">Creating a token</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Via CLI</span>
-forge-manage<span class="w"> </span>create_oauth2_token<span class="w"> </span>--user<span class="o">=</span>admin
+forail-manage<span class="w"> </span>create_oauth2_token<span class="w"> </span>--user<span class="o">=</span>admin
 
 <span class="c1"># Via API</span>
 curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;scope&quot;: &quot;write&quot;}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://forge.example.com/api/v2/tokens/
+<span class="w">  </span>https://forail.example.com/api/v2/tokens/
 </code></pre></div>
 
 <h3 id="usage">Usage</h3>
 <div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;Authorization: Bearer &lt;token&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://forge.example.com/api/v2/job_templates/
+<span class="w">  </span>https://forail.example.com/api/v2/job_templates/
 </code></pre></div>
 
 <p><strong>Watch out:</strong>
 - Token scope: <code>read</code> (GET only) or <code>write</code> (everything)
 - Default token expiry is very long (~1000 years). For security, rotate tokens
-  periodically and delete old ones: <code>forge-manage cleanup_tokens</code></p>
+  periodically and delete old ones: <code>forail-manage cleanup_tokens</code></p>
 <hr />
 <h2 id="sso-ldap">SSO — LDAP</h2>
 <p>LDAP is configured via the API: <code>PATCH /api/v2/settings/ldap/</code></p>
 <h3 id="what-happens-during-ldap-login">What happens during LDAP login</h3>
 <ol>
-<li>User enters username/password in the Forge login form</li>
-<li>Forge connects to the LDAP server with a service account</li>
+<li>User enters username/password in the Forail login form</li>
+<li>Forail connects to the LDAP server with a service account</li>
 <li>Searches for the user's DN based on <code>AUTH_LDAP_USER_SEARCH</code></li>
 <li>Attempts to bind as the user with the entered password</li>
 <li>If successful — maps LDAP attributes to Django user fields</li>
@@ -154,12 +154,12 @@ curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class=
   <code>ldap://</code> (port 389) sends passwords in plaintext.</p>
 </li>
 <li>
-<p><strong>Organization/Team Map</strong> — Maps LDAP groups to Forge organizations and teams.
+<p><strong>Organization/Team Map</strong> — Maps LDAP groups to Forail organizations and teams.
   <code>remove_users: true</code> means users NOT in the LDAP group will be <strong>removed</strong>
   from the organization on their next login. Be careful with this.</p>
 </li>
 <li>
-<p><strong>Multiple LDAP servers</strong> — Forge supports up to 5 LDAP servers (AUTH_LDAP_1 through AUTH_LDAP_5).
+<p><strong>Multiple LDAP servers</strong> — Forail supports up to 5 LDAP servers (AUTH_LDAP_1 through AUTH_LDAP_5).
   Each has its own configuration.</p>
 </li>
 </ul>
@@ -171,7 +171,7 @@ curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class=
 - IDP (Identity Provider) configuration: entity_id, SSO URL, X.509 certificate
 - Attribute mapping: which SAML attributes correspond to email, name, etc.</p>
 <p><strong>Watch out:</strong>
-- The SAML metadata endpoint is at <code>https://forge.example.com/sso/metadata/saml/</code>
+- The SAML metadata endpoint is at <code>https://forail.example.com/sso/metadata/saml/</code>
   — give this to your IDP for automatic configuration.
 - SAML requires valid HTTPS certificates on both sides.</p>
 <hr />
@@ -182,7 +182,7 @@ curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class=
 - Organization/Team mapping (optional)</p>
 <p><strong>Watch out:</strong>
 - The callback URL you must register with the provider:
-  <code>https://forge.example.com/sso/complete/github-org/</code>
+  <code>https://forail.example.com/sso/complete/github-org/</code>
 - GitHub Enterprise has separate configuration with custom URLs.</p>
 <hr />
 <h2 id="rbac-role-based-access-control">RBAC — Role-Based Access Control</h2>
@@ -288,14 +288,14 @@ within that organization. You don't need to add roles individually.</p>
 <h3 id="give-a-user-access-to-run-a-specific-template">Give a user access to run a specific template</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># 1. Find the role IDs on the template</span>
 curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://forge.example.com/api/v2/job_templates/5/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://forail.example.com/api/v2/job_templates/5/<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.summary_fields.object_roles&#39;</span>
 
 <span class="c1"># 2. Assign execute_role (e.g., ID 43) to user (ID 7)</span>
 curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;id&quot;: 7}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://forge.example.com/api/v2/roles/43/users/
+<span class="w">  </span>https://forail.example.com/api/v2/roles/43/users/
 </code></pre></div>
 
 <h3 id="give-a-team-admin-access-to-an-inventory">Give a team admin access to an inventory</h3>
@@ -303,22 +303,22 @@ curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class=
 curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;id&quot;: 3}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://forge.example.com/api/v2/roles/55/teams/
+<span class="w">  </span>https://forail.example.com/api/v2/roles/55/teams/
 </code></pre></div>
 
 <h3 id="create-a-read-only-auditor-user">Create a read-only auditor user</h3>
 <div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;username&quot;: &quot;auditor&quot;, &quot;password&quot;: &quot;Pass123!&quot;, &quot;is_system_auditor&quot;: true}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://forge.example.com/api/v2/users/
+<span class="w">  </span>https://forail.example.com/api/v2/users/
 </code></pre></div>
 
 <h3 id="check-what-access-a-user-has">Check what access a user has</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># All roles for a user</span>
-curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class="w"> </span>https://forge.example.com/api/v2/users/7/roles/
+curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class="w"> </span>https://forail.example.com/api/v2/users/7/roles/
 
 <span class="c1"># Can the user launch a template?</span>
-curl<span class="w"> </span>-u<span class="w"> </span>user7:password<span class="w"> </span>https://forge.example.com/api/v2/job_templates/5/launch/
+curl<span class="w"> </span>-u<span class="w"> </span>user7:password<span class="w"> </span>https://forail.example.com/api/v2/job_templates/5/launch/
 <span class="c1"># 200 = yes, 403 = no execute_role</span>
 </code></pre></div>
 
@@ -348,9 +348,9 @@ curl<span class="w"> </span>-u<span class="w"> </span>user7:password<span class=
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../docs/index.html">User Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Event-Driven Automation — Forge Platform Docs</title>
-  <meta name="description" content="Event-driven automation in Forge Platform — webhook receivers trigger Ansible jobs from GitHub, GitLab, Prometheus Alertmanager, and external systems. EDA without Ansible Rulebook.">
-  <meta name="keywords" content="Forge Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <title>Event-Driven Automation — Forail Platform Docs</title>
+  <meta name="description" content="Event-driven automation in Forail Platform — webhook receivers trigger Ansible jobs from GitHub, GitLab, Prometheus Alertmanager, and external systems. EDA without Ansible Rulebook.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
   <meta name="author" content="Krstan Vjestica">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/docs/event-driven.html">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/event-driven.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Event-Driven Automation — Forge Platform Docs">
-  <meta property="og:description" content="Event-driven automation in Forge Platform — webhook receivers trigger Ansible jobs from GitHub, GitLab, Prometheus Alertmanager, and external systems. EDA without Ansible Rulebook.">
-  <meta property="og:url" content="https://forgeplatform.github.io/docs/event-driven.html">
-  <meta property="og:site_name" content="Forge Platform">
+  <meta property="og:title" content="Event-Driven Automation — Forail Platform Docs">
+  <meta property="og:description" content="Event-driven automation in Forail Platform — webhook receivers trigger Ansible jobs from GitHub, GitLab, Prometheus Alertmanager, and external systems. EDA without Ansible Rulebook.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/event-driven.html">
+  <meta property="og:site_name" content="Forail Platform">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Event-Driven Automation — Forge Platform Docs">
-  <meta name="twitter:description" content="Event-driven automation in Forge Platform — webhook receivers trigger Ansible jobs from GitHub, GitLab, Prometheus Alertmanager, and external systems. EDA without Ansible Rulebook.">
-  <meta name="twitter:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta name="twitter:title" content="Event-Driven Automation — Forail Platform Docs">
+  <meta name="twitter:description" content="Event-driven automation in Forail Platform — webhook receivers trigger Ansible jobs from GitHub, GitLab, Prometheus Alertmanager, and external systems. EDA without Ansible Rulebook.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"TechArticle","headline":"Event-Driven Automation","description":"Event-driven automation in Forge Platform — webhook receivers trigger Ansible jobs from GitHub, GitLab, Prometheus Alertmanager, and external systems. EDA without Ansible Rulebook.","url":"https://forgeplatform.github.io/docs/event-driven.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forge Platform","url":"https://forgeplatform.github.io/"},"image":"https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"Event-Driven Automation","description":"Event-driven automation in Forail Platform — webhook receivers trigger Ansible jobs from GitHub, GitLab, Prometheus Alertmanager, and external systems. EDA without Ansible Rulebook.","url":"https://forail-platform.github.io/docs/event-driven.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
       <li><a href="../dev/index.html">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -84,9 +84,9 @@
   </aside>
   <main class="docs-content">
 <h1 id="event-driven-automation-eda">Event-Driven Automation (EDA)</h1>
-<p>Forge EDA enables webhook-based event routing with user-defined rules.
+<p>Forail EDA enables webhook-based event routing with user-defined rules.
 When an external system sends a webhook (GitHub push, Alertmanager alert,
-PagerDuty incident, etc.), Forge evaluates conditions and automatically
+PagerDuty incident, etc.), Forail evaluates conditions and automatically
 launches job templates, workflows, or sends notifications.</p>
 <hr />
 <h2 id="architecture">Architecture</h2>
@@ -104,7 +104,7 @@ launches job templates, workflows, or sends notifications.</p>
                                       └── Log results + AuditEvent
 </code></pre></div>
 
-<p>Outbound webhooks work in reverse — when a job completes, Forge POSTs
+<p>Outbound webhooks work in reverse — when a job completes, Forail POSTs
 a signed JSON payload to configured external URLs.</p>
 <hr />
 <h2 id="models">Models</h2>
@@ -534,19 +534,19 @@ All conditions must match (AND logic). Empty conditions = always match.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>forge_eda_event_type</code></td>
+<td><code>forail_eda_event_type</code></td>
 <td>Event type (e.g. <code>push</code>)</td>
 </tr>
 <tr>
-<td><code>forge_eda_event_guid</code></td>
+<td><code>forail_eda_event_guid</code></td>
 <td>Unique event ID</td>
 </tr>
 <tr>
-<td><code>forge_eda_rule_name</code></td>
+<td><code>forail_eda_rule_name</code></td>
 <td>Rule name that fired</td>
 </tr>
 <tr>
-<td><code>forge_eda_payload</code></td>
+<td><code>forail_eda_payload</code></td>
 <td>Full webhook payload</td>
 </tr>
 </tbody>
@@ -575,21 +575,21 @@ All conditions must match (AND logic). Empty conditions = always match.</p>
 <tr>
 <td><code>webhook_generic</code></td>
 <td>HMAC-SHA256</td>
-<td><code>X-Forge-Signature</code></td>
+<td><code>X-Forail-Signature</code></td>
 </tr>
 <tr>
 <td><code>alertmanager</code></td>
 <td>HMAC-SHA256</td>
-<td><code>X-Forge-Signature</code></td>
+<td><code>X-Forail-Signature</code></td>
 </tr>
 <tr>
 <td>Others</td>
 <td>HMAC-SHA256</td>
-<td><code>X-Forge-Signature</code></td>
+<td><code>X-Forail-Signature</code></td>
 </tr>
 </tbody>
 </table>
-<p><strong>X-Forge-Signature format:</strong> <code>sha256=&lt;hex_digest&gt;</code></p>
+<p><strong>X-Forail-Signature format:</strong> <code>sha256=&lt;hex_digest&gt;</code></p>
 <p>To sign a payload with the webhook key:</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;{&quot;event&quot;:&quot;test&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>dgst<span class="w"> </span>-sha256<span class="w"> </span>-hmac<span class="w"> </span><span class="s1">&#39;YOUR_WEBHOOK_KEY&#39;</span>
 </code></pre></div>
@@ -608,7 +608,7 @@ All conditions must match (AND logic). Empty conditions = always match.</p>
 <hr />
 <h2 id="quick-start">Quick Start</h2>
 <h3 id="1-create-an-event-rule">1. Create an Event Rule</h3>
-<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://forge.example.com/api/v2/event_rules/<span class="w"> </span><span class="se">\</span>
+<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://forail.example.com/api/v2/event_rules/<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer &lt;token&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
@@ -627,18 +627,18 @@ All conditions must match (AND logic). Empty conditions = always match.</p>
 
 <h3 id="2-copy-the-webhook-url-and-key">2. Copy the webhook URL and key</h3>
 <p>From the response, note the <code>webhook_url</code> and retrieve the key:</p>
-<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>https://forge.example.com/api/v2/event_rules/1/webhook_key/<span class="w"> </span><span class="se">\</span>
+<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>https://forail.example.com/api/v2/event_rules/1/webhook_key/<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer &lt;token&gt;&quot;</span>
 </code></pre></div>
 
 <h3 id="3-configure-github-webhook">3. Configure GitHub webhook</h3>
 <p>In your GitHub repository Settings &gt; Webhooks:
-- <strong>Payload URL</strong>: <code>https://forge.example.com/api/v2/eda_webhooks/github-deploy/</code>
+- <strong>Payload URL</strong>: <code>https://forail.example.com/api/v2/eda_webhooks/github-deploy/</code>
 - <strong>Content type</strong>: <code>application/json</code>
 - <strong>Secret</strong>: The webhook key from step 2
 - <strong>Events</strong>: Push events</p>
 <h3 id="4-test-with-dry-run">4. Test with dry-run</h3>
-<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://forge.example.com/api/v2/event_rules/1/test/<span class="w"> </span><span class="se">\</span>
+<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://forail.example.com/api/v2/event_rules/1/test/<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer &lt;token&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
@@ -667,9 +667,9 @@ All conditions must match (AND logic). Empty conditions = always match.</p>
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../dev/index.html">Dev Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

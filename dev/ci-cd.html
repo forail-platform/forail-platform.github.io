@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CI/CD Pipeline — Forge Developer Docs</title>
-  <meta name="description" content="CI/CD Pipeline — developer documentation for the Forge infrastructure automation platform.">
+  <title>CI/CD Pipeline — Forail Developer Docs</title>
+  <meta name="description" content="CI/CD Pipeline — developer documentation for the Forail infrastructure automation platform.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/dev/ci-cd.html">
+  <link rel="canonical" href="https://forail-platform.github.io/dev/ci-cd.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,13 +17,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="../docs/index.html">User Docs</a></li>
       <li><a href="index.html" style="color: var(--primary);">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -50,14 +50,14 @@
   </aside>
   <main class="docs-content">
 <h1 id="08-cicd-pipeline">08 — CI/CD Pipeline</h1>
-<p>Forge Platform uses <strong>GitHub Actions</strong> as the public CI/CD pipeline. Each repository has its own workflow in <code>.github/workflows/</code> that runs on push and pull request.</p>
+<p>Forail Platform uses <strong>GitHub Actions</strong> as the public CI/CD pipeline. Each repository has its own workflow in <code>.github/workflows/</code> that runs on push and pull request.</p>
 <hr />
 <h2 id="pipeline-overview">Pipeline Overview</h2>
 <div class="codehilite"><pre><span></span><code>┌──────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌──────────┐   ┌─────────┐
 │ Checkout │──►│  Lint  │──►│  Test  │──►│ Build  │──►│ Security │──►│ Release │
 └──────────┘   └────────┘   └────────┘   └────────┘   └──────────┘   └─────────┘
   GitHub         ruff /        pytest /     docker        pip-audit      docker push
-  Actions        tsc           vitest       build         trivy          ghcr.io/forgeplatform
+  Actions        tsc           vitest       build         trivy          ghcr.io/forail-platform
 </code></pre></div>
 
 <p>Each repo's workflow file: <strong><code>.github/workflows/ci.yml</code></strong></p>
@@ -113,7 +113,7 @@
 </tr>
 <tr>
 <td>Release</td>
-<td><code>docker push</code> to <code>ghcr.io/forgeplatform/*</code></td>
+<td><code>docker push</code> to <code>ghcr.io/forail-platform/*</code></td>
 <td>Only on <code>main</code> branch or tag push</td>
 </tr>
 </tbody>
@@ -154,7 +154,7 @@
 <tbody>
 <tr>
 <td><code>GITHUB_TOKEN</code></td>
-<td>Provided automatically by GitHub Actions. Used with the built-in <code>permissions: packages: write</code> to push to <code>ghcr.io/forgeplatform/*</code></td>
+<td>Provided automatically by GitHub Actions. Used with the built-in <code>permissions: packages: write</code> to push to <code>ghcr.io/forail-platform/*</code></td>
 </tr>
 </tbody>
 </table>
@@ -171,33 +171,33 @@
 </thead>
 <tbody>
 <tr>
-<td><code>ghcr.io/forgeplatform/forge-backend:latest</code></td>
-<td><code>forge-backend/Dockerfile</code></td>
+<td><code>ghcr.io/forail-platform/forail-backend:latest</code></td>
+<td><code>forail-backend/Dockerfile</code></td>
 <td>Django API + task engine</td>
 </tr>
 <tr>
-<td><code>ghcr.io/forgeplatform/forge-backend:&lt;version&gt;</code></td>
+<td><code>ghcr.io/forail-platform/forail-backend:&lt;version&gt;</code></td>
 <td>Same</td>
 <td>Version-tagged (CalVer)</td>
 </tr>
 <tr>
-<td><code>ghcr.io/forgeplatform/forge-frontend:latest</code></td>
-<td><code>forge-frontend/Dockerfile</code></td>
+<td><code>ghcr.io/forail-platform/forail-frontend:latest</code></td>
+<td><code>forail-frontend/Dockerfile</code></td>
 <td>React SPA + nginx</td>
 </tr>
 <tr>
-<td><code>ghcr.io/forgeplatform/forge-frontend:&lt;version&gt;</code></td>
+<td><code>ghcr.io/forail-platform/forail-frontend:&lt;version&gt;</code></td>
 <td>Same</td>
 <td>Version-tagged</td>
 </tr>
 <tr>
-<td><code>ghcr.io/forgeplatform/forge-assistant:latest</code></td>
-<td><code>forge-assistant/Dockerfile</code></td>
+<td><code>ghcr.io/forail-platform/forail-assistant:latest</code></td>
+<td><code>forail-assistant/Dockerfile</code></td>
 <td>FastAPI + Ollama + ChromaDB (preview)</td>
 </tr>
 <tr>
-<td><code>ghcr.io/forgeplatform/forge-operator:&lt;version&gt;</code></td>
-<td><code>forge-operator/Dockerfile</code></td>
+<td><code>ghcr.io/forail-platform/forail-operator:&lt;version&gt;</code></td>
+<td><code>forail-operator/Dockerfile</code></td>
 <td>Kubernetes operator</td>
 </tr>
 </tbody>
@@ -205,15 +205,15 @@
 <p>All images are <strong>public</strong> — no pull secret required for <code>docker pull</code> or <code>helm install</code>.</p>
 <hr />
 <h2 id="versioning">Versioning</h2>
-<p>Forge uses <strong>CalVer</strong> (Calendar Versioning):</p>
+<p>Forail uses <strong>CalVer</strong> (Calendar Versioning):</p>
 <div class="codehilite"><pre><span></span><code>YYYY.MM.PATCH
 2026.03.0     # First release of March 2026
 2026.03.1     # Patch release
 2026.04.0     # April release
 </code></pre></div>
 
-<p>The version is derived from the git tag on <code>forge-deploy</code>:</p>
-<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>tag<span class="w"> </span>-a<span class="w"> </span>v2026.05.0<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Forge 2026.05.0&quot;</span>
+<p>The version is derived from the git tag on <code>forail-deploy</code>:</p>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>tag<span class="w"> </span>-a<span class="w"> </span>v2026.05.0<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Forail 2026.05.0&quot;</span>
 git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>v2026.05.0
 <span class="c1"># GitHub Actions automatically: checkout → lint → test → build → security → push to ghcr.io</span>
 </code></pre></div>
@@ -221,24 +221,24 @@ git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </
 <hr />
 <h2 id="running-ci-locally">Running CI Locally</h2>
 <h3 id="backend">Backend</h3>
-<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forge-backend
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forail-backend
 
 <span class="c1"># Lint</span>
-ruff<span class="w"> </span>check<span class="w"> </span>forge/
+ruff<span class="w"> </span>check<span class="w"> </span>forail/
 
 <span class="c1"># Tests</span>
-<span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span>forge.settings.development<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>forge/main/tests/unit/<span class="w"> </span>-q
+<span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span>forail.settings.development<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>forail/main/tests/unit/<span class="w"> </span>-q
 
 <span class="c1"># Security</span>
 pip<span class="w"> </span>install<span class="w"> </span>pip-audit<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pip-audit<span class="w"> </span>-r<span class="w"> </span>requirements/requirements.txt
 
 <span class="c1"># Build image</span>
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forgeplatform/forge-backend:latest<span class="w"> </span>.
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forail-platform/forail-backend:latest<span class="w"> </span>.
 </code></pre></div>
 
 <h3 id="frontend">Frontend</h3>
-<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forge-frontend
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forail-frontend
 
 <span class="c1"># Lint</span>
 npx<span class="w"> </span>tsc<span class="w"> </span>--noEmit
@@ -247,7 +247,7 @@ npx<span class="w"> </span>tsc<span class="w"> </span>--noEmit
 npx<span class="w"> </span>vitest<span class="w"> </span>run
 
 <span class="c1"># Build image</span>
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forgeplatform/forge-frontend:latest<span class="w"> </span>.
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forail-platform/forail-frontend:latest<span class="w"> </span>.
 </code></pre></div>
 
 <hr />
@@ -255,20 +255,20 @@ docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </
 <ol>
 <li>Ensure all tests pass on both backend and frontend (GitHub Actions on PR/push must be green)</li>
 <li>Update docs and release notes</li>
-<li>Commit to <code>forge-deploy</code>: <code>git commit -m "chore: prepare release v2026.05.0"</code></li>
-<li>Tag: <code>git tag -a v2026.05.0 -m "Forge 2026.05.0"</code></li>
+<li>Commit to <code>forail-deploy</code>: <code>git commit -m "chore: prepare release v2026.05.0"</code></li>
+<li>Tag: <code>git tag -a v2026.05.0 -m "Forail 2026.05.0"</code></li>
 <li>Push tag: <code>git push origin v2026.05.0</code></li>
 <li>GitHub Actions automatically:</li>
 <li>Runs lint + tests</li>
 <li>Builds Docker images with version tag</li>
 <li>Scans for vulnerabilities</li>
-<li>Pushes <code>ghcr.io/forgeplatform/forge-backend:&lt;version&gt;</code> and friends to GHCR</li>
+<li>Pushes <code>ghcr.io/forail-platform/forail-backend:&lt;version&gt;</code> and friends to GHCR</li>
 </ol>
 <h3 id="watch-out">Watch out</h3>
 <ul>
 <li><strong>Never release without passing tests.</strong></li>
 <li><strong>Tag format must have <code>v</code> prefix:</strong> <code>v2026.05.0</code>, not <code>2026.05.0</code>.</li>
-<li><strong>Image visibility</strong> — when a new package is first pushed to <code>ghcr.io</code>, GitHub creates it as <strong>private</strong> by default. You must manually flip it to public via the Packages settings (<code>https://github.com/orgs/forgeplatform/packages</code>).</li>
+<li><strong>Image visibility</strong> — when a new package is first pushed to <code>ghcr.io</code>, GitHub creates it as <strong>private</strong> by default. You must manually flip it to public via the Packages settings (<code>https://github.com/orgs/forail-platform/packages</code>).</li>
 </ul>
   </main>
 </div>
@@ -276,9 +276,9 @@ docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../docs/index.html">User Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

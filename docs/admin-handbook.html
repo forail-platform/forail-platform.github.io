@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Administrator Handbook — Forge Platform Docs</title>
-  <meta name="description" content="Forge Platform Administrator Handbook — system administration, user and RBAC management, scaling, backup/restore, troubleshooting, monitoring, and security hardening best practices.">
-  <meta name="keywords" content="Forge Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <title>Administrator Handbook — Forail Platform Docs</title>
+  <meta name="description" content="Forail Platform Administrator Handbook — system administration, user and RBAC management, scaling, backup/restore, troubleshooting, monitoring, and security hardening best practices.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
   <meta name="author" content="Krstan Vjestica">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/docs/admin-handbook.html">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/admin-handbook.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Administrator Handbook — Forge Platform Docs">
-  <meta property="og:description" content="Forge Platform Administrator Handbook — system administration, user and RBAC management, scaling, backup/restore, troubleshooting, monitoring, and security hardening best practices.">
-  <meta property="og:url" content="https://forgeplatform.github.io/docs/admin-handbook.html">
-  <meta property="og:site_name" content="Forge Platform">
+  <meta property="og:title" content="Administrator Handbook — Forail Platform Docs">
+  <meta property="og:description" content="Forail Platform Administrator Handbook — system administration, user and RBAC management, scaling, backup/restore, troubleshooting, monitoring, and security hardening best practices.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/admin-handbook.html">
+  <meta property="og:site_name" content="Forail Platform">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Administrator Handbook — Forge Platform Docs">
-  <meta name="twitter:description" content="Forge Platform Administrator Handbook — system administration, user and RBAC management, scaling, backup/restore, troubleshooting, monitoring, and security hardening best practices.">
-  <meta name="twitter:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta name="twitter:title" content="Administrator Handbook — Forail Platform Docs">
+  <meta name="twitter:description" content="Forail Platform Administrator Handbook — system administration, user and RBAC management, scaling, backup/restore, troubleshooting, monitoring, and security hardening best practices.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"TechArticle","headline":"Administrator Handbook","description":"Forge Platform Administrator Handbook — system administration, user and RBAC management, scaling, backup/restore, troubleshooting, monitoring, and security hardening best practices.","url":"https://forgeplatform.github.io/docs/admin-handbook.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forge Platform","url":"https://forgeplatform.github.io/"},"image":"https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"Administrator Handbook","description":"Forail Platform Administrator Handbook — system administration, user and RBAC management, scaling, backup/restore, troubleshooting, monitoring, and security hardening best practices.","url":"https://forail-platform.github.io/docs/admin-handbook.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
       <li><a href="../dev/index.html">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -83,8 +83,8 @@
     <a href="../index.html">Home</a>
   </aside>
   <main class="docs-content">
-<h1 id="forge-platform-administrator-handbook">Forge Platform — Administrator Handbook</h1>
-<p>Operational guide for installing, running, and maintaining a Forge Platform deployment. Each section is step-by-step with concrete example values you can copy. Click any item in the table of contents to jump straight to it.</p>
+<h1 id="forail-platform-administrator-handbook">Forail Platform — Administrator Handbook</h1>
+<p>Operational guide for installing, running, and maintaining a Forail Platform deployment. Each section is step-by-step with concrete example values you can copy. Click any item in the table of contents to jump straight to it.</p>
 <p>For day-to-day UI usage, see the companion <a href="HANDBOOK.md">User Handbook</a>.</p>
 <hr />
 <h2 id="table-of-contents">Table of Contents</h2>
@@ -145,7 +145,7 @@
 <hr />
 <h1 id="install-first-boot_1">INSTALL &amp; FIRST BOOT</h1>
 <h2 id="prerequisites">Prerequisites</h2>
-<p>Hardware and software needed before installing Forge.</p>
+<p>Hardware and software needed before installing Forail.</p>
 <p><strong>Step by step</strong></p>
 <ol>
 <li>Provision a host (VM or bare metal) with:</li>
@@ -153,7 +153,7 @@
 <li>8 vCPU, 16 GB RAM, 200 GB disk (recommended for production)</li>
 <li>Install <strong>Docker</strong> ≥ 24 and <strong>Docker Compose plugin</strong> ≥ 2.20.</li>
 <li>Open inbound ports <strong>80</strong> and <strong>443</strong> in your firewall.</li>
-<li>Register a DNS A record pointing at the host (e.g. <code>forge.example.com</code>).</li>
+<li>Register a DNS A record pointing at the host (e.g. <code>forail.example.com</code>).</li>
 <li>Make sure the system clock is in sync with NTP.</li>
 </ol>
 <p><strong>Example — Ubuntu 24.04 fresh box</strong></p>
@@ -169,10 +169,10 @@ newgrp<span class="w"> </span>docker
 <p>The standard installation uses the compose file shipped in this repo.</p>
 <p><strong>Step by step</strong></p>
 <ol>
-<li>Clone or copy <code>forge-deploy</code> to the target host:
+<li>Clone or copy <code>forail-deploy</code> to the target host:
    <code>bash
-   git clone https://github.com/forgeplatform/forge-devops.git /opt/forge
-   cd /opt/forge</code></li>
+   git clone https://github.com/forail-platform/forail-devops.git /opt/forail
+   cd /opt/forail</code></li>
 <li>Copy the example env file and edit it:
    <code>bash
    cp .env.example .env
@@ -186,17 +186,17 @@ newgrp<span class="w"> </span>docker
    docker compose up -d</code></li>
 <li>Tail the init container until it finishes:
    <code>bash
-   docker compose logs -f forge-init</code></li>
+   docker compose logs -f forail-init</code></li>
 <li>When you see <code>==&gt; Init complete.</code> you can hit <code>https://&lt;your-host&gt;</code> in a browser.</li>
 </ol>
 <p><strong>Example <code>.env</code> for first install</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="na">POSTGRES_PASSWORD</span><span class="o">=</span><span class="s">Sup3rS3cret-pg</span>
-<span class="na">FORGE_SECRET_KEY</span><span class="o">=</span><span class="s">$(openssl rand -hex 25)</span>
-<span class="na">FORGE_BROADCAST_WEBSOCKET_SECRET</span><span class="o">=</span><span class="s">$(openssl rand -hex 25)</span>
-<span class="na">FORGE_ADMIN_PASSWORD</span><span class="o">=</span><span class="s">ChangeMe!Now</span>
-<span class="na">FORGE_CSRF_TRUSTED_ORIGINS</span><span class="o">=</span><span class="s">https://forge.example.com</span>
-<span class="na">FORGE_ALLOWED_HOSTS</span><span class="o">=</span><span class="s">forge.example.com</span>
-<span class="na">FORGE_TAG</span><span class="o">=</span><span class="s">2026.04.0</span>
+<span class="na">FORAIL_SECRET_KEY</span><span class="o">=</span><span class="s">$(openssl rand -hex 25)</span>
+<span class="na">FORAIL_BROADCAST_WEBSOCKET_SECRET</span><span class="o">=</span><span class="s">$(openssl rand -hex 25)</span>
+<span class="na">FORAIL_ADMIN_PASSWORD</span><span class="o">=</span><span class="s">ChangeMe!Now</span>
+<span class="na">FORAIL_CSRF_TRUSTED_ORIGINS</span><span class="o">=</span><span class="s">https://forail.example.com</span>
+<span class="na">FORAIL_ALLOWED_HOSTS</span><span class="o">=</span><span class="s">forail.example.com</span>
+<span class="na">FORAIL_TAG</span><span class="o">=</span><span class="s">2026.04.0</span>
 </code></pre></div>
 
 <blockquote>
@@ -207,10 +207,10 @@ newgrp<span class="w"> </span>docker
 <p>What to do the first time you log in.</p>
 <p><strong>Step by step</strong></p>
 <ol>
-<li>Open <code>https://forge.example.com</code>.</li>
-<li>Log in as <code>admin</code> / your <code>FORGE_ADMIN_PASSWORD</code>.</li>
+<li>Open <code>https://forail.example.com</code>.</li>
+<li>Log in as <code>admin</code> / your <code>FORAIL_ADMIN_PASSWORD</code>.</li>
 <li>Click <strong>Settings → License</strong> and upload the license file (if applicable).</li>
-<li>Click <strong>Settings → System</strong> → set <strong>Base URL</strong> to <code>https://forge.example.com</code>.</li>
+<li>Click <strong>Settings → System</strong> → set <strong>Base URL</strong> to <code>https://forail.example.com</code>.</li>
 <li>Click <strong>Organizations → Add</strong> and create your first organization (e.g. <code>Platform</code>).</li>
 <li>Click <strong>Users → Add</strong> and create at least one named admin (do not keep using the default <code>admin</code>).</li>
 <li>Log out, log back in as the new admin, and disable the default admin from <strong>Users → admin → Disable</strong>.</li>
@@ -226,7 +226,7 @@ newgrp<span class="w"> </span>docker
 <tbody>
 <tr>
 <td>Base URL</td>
-<td><code>https://forge.example.com</code></td>
+<td><code>https://forail.example.com</code></td>
 </tr>
 <tr>
 <td>First org</td>
@@ -240,7 +240,7 @@ newgrp<span class="w"> </span>docker
 </table>
 <hr />
 <h2 id="tls-ssl-setup">TLS / SSL Setup</h2>
-<p>Forge ships with a self-signed cert. Replace it with a real one before exposing the box.</p>
+<p>Forail ships with a self-signed cert. Replace it with a real one before exposing the box.</p>
 <p><strong>Step by step — Let's Encrypt with certbot</strong></p>
 <ol>
 <li>Stop the nginx service so port 80 is free for the ACME challenge:
@@ -248,20 +248,20 @@ newgrp<span class="w"> </span>docker
    docker compose stop nginx</code></li>
 <li>Run certbot in standalone mode:
    <code>bash
-   sudo certbot certonly --standalone -d forge.example.com</code></li>
+   sudo certbot certonly --standalone -d forail.example.com</code></li>
 <li>Copy the new cert/key into the nginx mount point:
    <code>bash
-   sudo cp /etc/letsencrypt/live/forge.example.com/fullchain.pem nginx/ssl/forge.crt
-   sudo cp /etc/letsencrypt/live/forge.example.com/privkey.pem   nginx/ssl/forge.key</code></li>
+   sudo cp /etc/letsencrypt/live/forail.example.com/fullchain.pem nginx/ssl/forail.crt
+   sudo cp /etc/letsencrypt/live/forail.example.com/privkey.pem   nginx/ssl/forail.key</code></li>
 <li>Restart nginx:
    <code>bash
    docker compose up -d nginx</code></li>
 <li>Verify:
    <code>bash
-   curl -I https://forge.example.com</code></li>
+   curl -I https://forail.example.com</code></li>
 </ol>
 <p><strong>Example renewal cron</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="mf">0</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="n">certbot</span><span class="w"> </span><span class="n">renew</span><span class="w"> </span><span class="o">--</span><span class="n">pre</span><span class="o">-</span><span class="n">hook</span><span class="w"> </span><span class="s">&quot;docker compose -f /opt/forge/docker-compose.yml stop nginx&quot;</span><span class="w"> </span><span class="o">--</span><span class="nb">pos</span><span class="n">t</span><span class="o">-</span><span class="n">hook</span><span class="w"> </span><span class="s">&quot;cp /etc/letsencrypt/live/forge.example.com/fullchain.pem /opt/forge/nginx/ssl/forge.crt &amp;&amp; cp /etc/letsencrypt/live/forge.example.com/privkey.pem /opt/forge/nginx/ssl/forge.key &amp;&amp; docker compose -f /opt/forge/docker-compose.yml up -d nginx&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="mf">0</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="n">certbot</span><span class="w"> </span><span class="n">renew</span><span class="w"> </span><span class="o">--</span><span class="n">pre</span><span class="o">-</span><span class="n">hook</span><span class="w"> </span><span class="s">&quot;docker compose -f /opt/forail/docker-compose.yml stop nginx&quot;</span><span class="w"> </span><span class="o">--</span><span class="nb">pos</span><span class="n">t</span><span class="o">-</span><span class="n">hook</span><span class="w"> </span><span class="s">&quot;cp /etc/letsencrypt/live/forail.example.com/fullchain.pem /opt/forail/nginx/ssl/forail.crt &amp;&amp; cp /etc/letsencrypt/live/forail.example.com/privkey.pem /opt/forail/nginx/ssl/forail.key &amp;&amp; docker compose -f /opt/forail/docker-compose.yml up -d nginx&quot;</span>
 </code></pre></div>
 
 <hr />
@@ -269,7 +269,7 @@ newgrp<span class="w"> </span>docker
 <p>Things every new install should do on day one.</p>
 <p><strong>Step by step</strong></p>
 <ol>
-<li>Change <code>FORGE_ADMIN_PASSWORD</code> in <code>.env</code> to a strong value, then <code>docker compose up -d forge-init</code> to apply.</li>
+<li>Change <code>FORAIL_ADMIN_PASSWORD</code> in <code>.env</code> to a strong value, then <code>docker compose up -d forail-init</code> to apply.</li>
 <li>In <strong>Settings → Authentication</strong>, disable any auth backend you don't use (LDAP, SAML, OIDC).</li>
 <li>In <strong>Settings → System</strong>, enable <strong>Session Cookie Secure</strong> and set <strong>Session Timeout</strong> to <code>3600</code>.</li>
 <li>Create at least two named admin users so no single account is the only way in.</li>
@@ -290,11 +290,11 @@ docker<span class="w"> </span>compose<span class="w"> </span>stop
 docker<span class="w"> </span>compose<span class="w"> </span>down
 
 <span class="c1"># Restart a single service</span>
-docker<span class="w"> </span>compose<span class="w"> </span>restart<span class="w"> </span>forge-web
+docker<span class="w"> </span>compose<span class="w"> </span>restart<span class="w"> </span>forail-web
 </code></pre></div>
 
 <p><strong>Example — restart only the task workers after editing settings</strong></p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>restart<span class="w"> </span>forge-task
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>restart<span class="w"> </span>forail-task
 </code></pre></div>
 
 <hr />
@@ -304,17 +304,17 @@ docker<span class="w"> </span>compose<span class="w"> </span>restart<span class=
 docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f
 
 <span class="c1"># One service</span>
-docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>forge-web
+docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>forail-web
 
 <span class="c1"># Last 200 lines, no follow</span>
-docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>--tail<span class="o">=</span><span class="m">200</span><span class="w"> </span>forge-task
+docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>--tail<span class="o">=</span><span class="m">200</span><span class="w"> </span>forail-task
 
 <span class="c1"># Filter by timestamp</span>
-docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>--since<span class="o">=</span>1h<span class="w"> </span>forge-web
+docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>--since<span class="o">=</span>1h<span class="w"> </span>forail-web
 </code></pre></div>
 
 <p><strong>Example — find the most recent error in the web service</strong></p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>--since<span class="o">=</span>24h<span class="w"> </span>forge-web<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>error<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-20
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>--since<span class="o">=</span>24h<span class="w"> </span>forail-web<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>error<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-20
 </code></pre></div>
 
 <hr />
@@ -322,19 +322,19 @@ docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"
 <p>The stack ships with two healthcheck scripts you can run manually or from monitoring.</p>
 <p><strong>Step by step</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Web service</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-web<span class="w"> </span>/scripts/healthcheck-web.sh
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-web<span class="w"> </span>/scripts/healthcheck-web.sh
 
 <span class="c1"># Task service</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-task<span class="w"> </span>/scripts/healthcheck-task.sh
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-task<span class="w"> </span>/scripts/healthcheck-task.sh
 </code></pre></div>
 
 <p><strong>Example — uptime check from outside</strong></p>
-<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-fsS<span class="w"> </span>https://forge.example.com/api/v2/ping/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>OK
+<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-fsS<span class="w"> </span>https://forail.example.com/api/v2/ping/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span>OK
 </code></pre></div>
 
 <hr />
 <h2 id="backup">Backup</h2>
-<p>Daily backups are mandatory. Forge ships <code>scripts/backup.sh</code> which dumps Postgres and rotates old archives.</p>
+<p>Daily backups are mandatory. Forail ships <code>scripts/backup.sh</code> which dumps Postgres and rotates old archives.</p>
 <p><strong>Step by step</strong></p>
 <ol>
 <li>Run a one-off backup to verify it works:
@@ -345,14 +345,14 @@ docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">ex
    ls -lh /var/lib/awx/backups/</code></li>
 <li>Schedule a nightly cron on the host:
    <code>cron
-   0 2 * * * docker compose -f /opt/forge/docker-compose.yml exec -T postgres /scripts/backup.sh &gt;&gt; /var/log/forge-backup.log 2&gt;&amp;1</code></li>
+   0 2 * * * docker compose -f /opt/forail/docker-compose.yml exec -T postgres /scripts/backup.sh &gt;&gt; /var/log/forail-backup.log 2&gt;&amp;1</code></li>
 <li>Copy the backups off-host (S3, rsync, etc.):
    <code>cron
-   30 2 * * * aws s3 sync /var/lib/awx/backups/ s3://acme-forge-backups/</code></li>
+   30 2 * * * aws s3 sync /var/lib/awx/backups/ s3://acme-forail-backups/</code></li>
 </ol>
 <p><strong>Example output</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="o">==&gt;</span><span class="w"> </span><span class="n">Starting</span><span class="w"> </span><span class="n">backup</span><span class="o">...</span>
-<span class="o">==&gt;</span><span class="w"> </span><span class="n">Backup</span><span class="w"> </span><span class="n">saved</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">awx</span><span class="o">/</span><span class="n">backups</span><span class="o">/</span><span class="n">forge_backup_20260411_020000</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">==&gt;</span><span class="w"> </span><span class="n">Backup</span><span class="w"> </span><span class="n">saved</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">awx</span><span class="o">/</span><span class="n">backups</span><span class="o">/</span><span class="n">forail_backup_20260411_020000</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">gz</span>
 <span class="o">==&gt;</span><span class="w"> </span><span class="n">Removing</span><span class="w"> </span><span class="n">backups</span><span class="w"> </span><span class="n">older</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">days</span><span class="o">...</span>
 <span class="o">==&gt;</span><span class="w"> </span><span class="n">Backup</span><span class="w"> </span><span class="n">complete</span><span class="o">.</span>
 </code></pre></div>
@@ -367,19 +367,19 @@ docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">ex
 <ol>
 <li><strong>Stop</strong> the application services so nothing writes to the DB:
    <code>bash
-   docker compose stop forge-web forge-task</code></li>
+   docker compose stop forail-web forail-task</code></li>
 <li>Run the restore (omit the filename to use the most recent backup):
    <code>bash
-   docker compose exec -T postgres /scripts/restore.sh /var/lib/awx/backups/forge_backup_20260411_020000.sql.gz</code></li>
+   docker compose exec -T postgres /scripts/restore.sh /var/lib/awx/backups/forail_backup_20260411_020000.sql.gz</code></li>
 <li>Restart the application:
    <code>bash
-   docker compose up -d forge-web forge-task</code></li>
+   docker compose up -d forail-web forail-task</code></li>
 <li>Verify in the UI: log in and check <strong>Activity</strong> for the expected history.</li>
 </ol>
 <p><strong>Example — restore yesterday's backup</strong></p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>stop<span class="w"> </span>forge-web<span class="w"> </span>forge-task
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>stop<span class="w"> </span>forail-web<span class="w"> </span>forail-task
 docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>postgres<span class="w"> </span>/scripts/restore.sh
-docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>forge-web<span class="w"> </span>forge-task
+docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>forail-web<span class="w"> </span>forail-task
 </code></pre></div>
 
 <blockquote>
@@ -392,25 +392,25 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 <ol>
 <li>Read the <a href="RELEASE_NOTES_v2026.04.0.md">release notes</a> for breaking changes.</li>
 <li>Take a backup (see <a href="#backup">Backup</a>).</li>
-<li>Edit <code>.env</code> and bump <code>FORGE_TAG</code>:
+<li>Edit <code>.env</code> and bump <code>FORAIL_TAG</code>:
    <code>ini
-   FORGE_TAG=2026.05.0</code></li>
+   FORAIL_TAG=2026.05.0</code></li>
 <li>Pull the new images:
    <code>bash
    docker compose pull</code></li>
-<li>Bring the new stack up — <code>forge-init</code> runs migrations automatically:
+<li>Bring the new stack up — <code>forail-init</code> runs migrations automatically:
    <code>bash
    docker compose up -d</code></li>
 <li>Tail init:
    <code>bash
-   docker compose logs -f forge-init</code></li>
+   docker compose logs -f forail-init</code></li>
 <li>Smoke-test:
    <code>bash
-   curl -fsS https://forge.example.com/api/v2/ping/</code></li>
+   curl -fsS https://forail.example.com/api/v2/ping/</code></li>
 <li>Watch <strong>Jobs</strong> for 10 minutes — make sure new launches work.</li>
 </ol>
 <p><strong>Example — minor version bump</strong></p>
-<div class="codehilite"><pre><span></span><code>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/^FORGE_TAG=.*/FORGE_TAG=2026.04.1/&#39;</span><span class="w"> </span>.env
+<div class="codehilite"><pre><span></span><code>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/^FORAIL_TAG=.*/FORAIL_TAG=2026.04.1/&#39;</span><span class="w"> </span>.env
 docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </code></pre></div>
 
@@ -421,7 +421,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <ol>
 <li>Set the previous tag in <code>.env</code>:
    <code>ini
-   FORGE_TAG=2026.04.0</code></li>
+   FORAIL_TAG=2026.04.0</code></li>
 <li>Pull and bring up:
    <code>bash
    docker compose pull
@@ -431,7 +431,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 </ol>
 <p><strong>Example</strong></p>
 <blockquote>
-<p>Upgraded to <code>2026.05.0</code> at 02:30, jobs started failing at 02:45 → set <code>FORGE_TAG=2026.04.0</code> → pull → up → restore <code>forge_backup_20260411_020000.sql.gz</code> → service restored at 02:55.</p>
+<p>Upgraded to <code>2026.05.0</code> at 02:30, jobs started failing at 02:45 → set <code>FORAIL_TAG=2026.04.0</code> → pull → up → restore <code>forail_backup_20260411_020000.sql.gz</code> → service restored at 02:55.</p>
 </blockquote>
 <hr />
 <h1 id="scaling-topology_1">SCALING &amp; TOPOLOGY</h1>
@@ -442,10 +442,10 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <li>Provision a new host with Docker.</li>
 <li>On the new host, install Receptor and bring it up as an execution node, pointing at the control node:
    <code>bash
-   docker run -d --name forge-receptor \
+   docker run -d --name forail-receptor \
      -e RECEPTOR_NODE_TYPE=execution \
-     -e RECEPTOR_PEER=tcp://control.forge.example.com:2222 \
-     ghcr.io/forgeplatform/forge-receptor:2026.04.0</code></li>
+     -e RECEPTOR_PEER=tcp://control.forail.example.com:2222 \
+     ghcr.io/forail-platform/forail-receptor:2026.04.0</code></li>
 <li>In the UI: <strong>Admin → Instances → Add</strong> and register the new node:</li>
 </ol>
 <table>
@@ -482,10 +482,10 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <li>Provision the hop host inside the boundary.</li>
 <li>Run a Receptor container with <code>RECEPTOR_NODE_TYPE=hop</code>:
    <code>bash
-   docker run -d --name forge-receptor \
+   docker run -d --name forail-receptor \
      -e RECEPTOR_NODE_TYPE=hop \
-     -e RECEPTOR_PEER=tcp://control.forge.example.com:2222 \
-     ghcr.io/forgeplatform/forge-receptor:2026.04.0</code></li>
+     -e RECEPTOR_PEER=tcp://control.forail.example.com:2222 \
+     ghcr.io/forail-platform/forail-receptor:2026.04.0</code></li>
 <li>In the UI: <strong>Admin → Instances → Add</strong> with <strong>Node Type = hop</strong>.</li>
 <li>From any execution node behind the hop, set its peer to the hop instead of the control node.</li>
 <li>Confirm in <strong>Topology</strong> that the hop appears between the control and the workers.</li>
@@ -512,16 +512,16 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <li>Read <a href="../k8s/"><code>k8s/</code></a> — it includes Deployments, Services, ConfigMap, Secret, Ingress.</li>
 <li>Create a namespace:
    <code>bash
-   kubectl create namespace forge</code></li>
+   kubectl create namespace forail</code></li>
 <li>Create the secrets (translate your <code>.env</code>):
    <code>bash
-   kubectl -n forge create secret generic forge-env --from-env-file=.env</code></li>
+   kubectl -n forail create secret generic forail-env --from-env-file=.env</code></li>
 <li>Apply the manifests:
    <code>bash
-   kubectl -n forge apply -f k8s/</code></li>
+   kubectl -n forail apply -f k8s/</code></li>
 <li>Watch the rollout:
    <code>bash
-   kubectl -n forge get pods -w</code></li>
+   kubectl -n forail get pods -w</code></li>
 </ol>
 <blockquote>
 <p>Migration from compose to k8s is a one-shot: dump Postgres, import into the k8s-managed Postgres (or external RDS).</p>
@@ -529,7 +529,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <hr />
 <h1 id="observability_1">OBSERVABILITY</h1>
 <h2 id="enabling-opentelemetry">Enabling OpenTelemetry</h2>
-<p>The stack ships with <code>forge-otel-collector</code>. You only need to point it at your backend.</p>
+<p>The stack ships with <code>forail-otel-collector</code>. You only need to point it at your backend.</p>
 <p><strong>Step by step</strong></p>
 <ol>
 <li>Edit <code>otel/collector-config.yaml</code>.</li>
@@ -542,9 +542,9 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
          authorization: "Bearer YOUR_TOKEN"</code></li>
 <li>Restart the collector:
    <code>bash
-   docker compose restart forge-otel-collector</code></li>
+   docker compose restart forail-otel-collector</code></li>
 <li>In <strong>Settings → Observability</strong>, set:</li>
-<li><strong>OTLP Endpoint</strong> = <code>http://forge-otel-collector:4318</code></li>
+<li><strong>OTLP Endpoint</strong> = <code>http://forail-otel-collector:4318</code></li>
 <li><strong>Sampling rate</strong> = <code>0.1</code> (10%)</li>
 <li>Save. Within a minute, traces appear in your APM tool.</li>
 </ol>
@@ -554,7 +554,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <p><strong>Step by step</strong></p>
 <ol>
 <li>Open Grafana → <strong>Dashboards → Import</strong>.</li>
-<li>Upload <code>grafana/forge-overview.json</code>.</li>
+<li>Upload <code>grafana/forail-overview.json</code>.</li>
 <li>Pick your Prometheus datasource.</li>
 <li>Save. The dashboard shows job throughput, web/task latency, queue depth.</li>
 </ol>
@@ -573,17 +573,17 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <hr />
 <h1 id="security_1">SECURITY</h1>
 <h2 id="rotating-secrets">Rotating Secrets</h2>
-<p>Secrets to rotate periodically: <code>FORGE_SECRET_KEY</code>, <code>POSTGRES_PASSWORD</code>, <code>FORGE_ADMIN_PASSWORD</code>, <code>FORGE_BROADCAST_WEBSOCKET_SECRET</code>.</p>
-<p><strong>Step by step — rotate <code>FORGE_SECRET_KEY</code></strong></p>
+<p>Secrets to rotate periodically: <code>FORAIL_SECRET_KEY</code>, <code>POSTGRES_PASSWORD</code>, <code>FORAIL_ADMIN_PASSWORD</code>, <code>FORAIL_BROADCAST_WEBSOCKET_SECRET</code>.</p>
+<p><strong>Step by step — rotate <code>FORAIL_SECRET_KEY</code></strong></p>
 <ol>
 <li><strong>Take a backup first.</strong></li>
 <li>Generate a new key:
    <code>bash
    openssl rand -hex 25</code></li>
-<li>Edit <code>.env</code>, replace <code>FORGE_SECRET_KEY=...</code>.</li>
+<li>Edit <code>.env</code>, replace <code>FORAIL_SECRET_KEY=...</code>.</li>
 <li>Restart web + task:
    <code>bash
-   docker compose up -d forge-web forge-task</code></li>
+   docker compose up -d forail-web forail-task</code></li>
 <li><strong>All sessions are invalidated</strong> — users must re-login. Encrypted credentials in the DB are unaffected (they use a separate Fernet key).</li>
 </ol>
 <blockquote>
@@ -596,12 +596,12 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <li>Open <strong>Settings → Authentication → OIDC</strong>.</li>
 <li>Fill in:</li>
 <li><strong>Provider URL</strong> — <code>https://login.example.com</code></li>
-<li><strong>Client ID</strong> — <code>forge-prod</code></li>
+<li><strong>Client ID</strong> — <code>forail-prod</code></li>
 <li><strong>Client Secret</strong> — <em>(from IdP)</em></li>
-<li><strong>Redirect URI</strong> — <code>https://forge.example.com/sso/complete/oidc/</code></li>
+<li><strong>Redirect URI</strong> — <code>https://forail.example.com/sso/complete/oidc/</code></li>
 <li>Save → click <strong>Test</strong> to verify discovery.</li>
 <li>Test login from a private browser window.</li>
-<li>Map IdP groups to Forge teams under <strong>Settings → Authentication → Group Mapping</strong>.</li>
+<li>Map IdP groups to Forail teams under <strong>Settings → Authentication → Group Mapping</strong>.</li>
 </ol>
 <hr />
 <h2 id="firewall-network-hardening">Firewall &amp; Network Hardening</h2>
@@ -624,12 +624,12 @@ sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</
 <h2 id="security-updates">Security Updates</h2>
 <p><strong>Step by step</strong></p>
 <ol>
-<li>Subscribe to the Forge release announcement channel.</li>
+<li>Subscribe to the Forail release announcement channel.</li>
 <li>Run <code>docker compose pull</code> weekly to pick up base-image patches when you bump tag.</li>
 <li>Patch the host OS monthly (<code>unattended-upgrades</code> on Debian/Ubuntu).</li>
 <li>Run scheduled image scans:
    <code>bash
-   trivy image ghcr.io/forgeplatform/forge-backend:2026.04.0</code></li>
+   trivy image ghcr.io/forail-platform/forail-backend:2026.04.0</code></li>
 </ol>
 <hr />
 <h1 id="troubleshooting_1">TROUBLESHOOTING</h1>
@@ -653,7 +653,7 @@ sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</
 <li>Logs: <code>docker compose logs --tail=100 postgres</code></li>
 <li>Can the web container reach it?
    <code>bash
-   docker compose exec forge-web pg_isready -h postgres -U forge</code></li>
+   docker compose exec forail-web pg_isready -h postgres -U forail</code></li>
 <li>If postgres is healthy but web cannot connect → check <code>POSTGRES_PASSWORD</code> matches in <code>.env</code> and the DB volume.</li>
 <li>If postgres won't start → look for <code>PANIC</code> lines (disk full, corrupt WAL).</li>
 </ol>
@@ -663,12 +663,12 @@ sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</
 <p><strong>Step by step</strong></p>
 <ol>
 <li>Check capacity: <strong>Admin → Instances</strong> → is total used == total capacity?</li>
-<li>Check task workers: <code>docker compose ps forge-task</code> — running?</li>
+<li>Check task workers: <code>docker compose ps forail-task</code> — running?</li>
 <li>Check Redis: <code>docker compose exec redis redis-cli ping</code> should return <code>PONG</code>.</li>
-<li>Check Receptor: <code>docker compose exec forge-task receptorctl status</code>.</li>
+<li>Check Receptor: <code>docker compose exec forail-task receptorctl status</code>.</li>
 <li>As a last resort, restart the task service:
    <code>bash
-   docker compose restart forge-task</code></li>
+   docker compose restart forail-task</code></li>
 </ol>
 <hr />
 <h2 id="receptor-mesh-issues">Receptor / Mesh Issues</h2>
@@ -677,10 +677,10 @@ sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</
 <li>Open <strong>Topology</strong> — any red links?</li>
 <li>From the control node:
    <code>bash
-   docker compose exec forge-task receptorctl status</code></li>
+   docker compose exec forail-task receptorctl status</code></li>
 <li>From a worker:
    <code>bash
-   docker exec forge-receptor receptorctl status</code></li>
+   docker exec forail-receptor receptorctl status</code></li>
 <li>Verify TCP reachability between nodes on <strong>2222</strong>.</li>
 <li>Restart the affected receptor container.</li>
 </ol>
@@ -689,11 +689,11 @@ sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</
 <p>Symptom: browser shows nginx 502 Bad Gateway.</p>
 <p><strong>Step by step</strong></p>
 <ol>
-<li><code>docker compose ps</code> — is <code>forge-frontend</code> healthy?</li>
-<li><code>docker compose logs --tail=50 forge-frontend</code></li>
+<li><code>docker compose ps</code> — is <code>forail-frontend</code> healthy?</li>
+<li><code>docker compose logs --tail=50 forail-frontend</code></li>
 <li><code>docker compose logs --tail=50 nginx</code></li>
 <li>Common cause: frontend container OOM-killed → bump memory in compose.</li>
-<li>Restart: <code>docker compose restart forge-frontend nginx</code>.</li>
+<li>Restart: <code>docker compose restart forail-frontend nginx</code>.</li>
 </ol>
 <hr />
 <h2 id="disk-filling-up">Disk Filling Up</h2>
@@ -706,7 +706,7 @@ sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</
 <li>If the backup directory → lower <code>BACKUP_RETENTION_DAYS</code> and rerun backup.</li>
 <li>If Postgres data dir → check for runaway audit log growth, vacuum:
    <code>bash
-   docker compose exec postgres psql -U forge -d forge -c "VACUUM FULL VERBOSE;"</code></li>
+   docker compose exec postgres psql -U forail -d forail -c "VACUUM FULL VERBOSE;"</code></li>
 </ol>
 <hr />
 <h2 id="reset-admin-password">Reset Admin Password</h2>
@@ -714,7 +714,7 @@ sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</
 <ol>
 <li>Exec into the web container:
    <code>bash
-   docker compose exec forge-web bash</code></li>
+   docker compose exec forail-web bash</code></li>
 <li>Run the management command:
    <code>bash
    awx-manage changepassword admin</code></li>
@@ -724,7 +724,7 @@ sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</
 <blockquote>
 <p>If <code>admin</code> was disabled and you have no other admin user:
 <code>bash
-docker compose exec forge-web awx-manage createsuperuser</code></p>
+docker compose exec forail-web awx-manage createsuperuser</code></p>
 </blockquote>
 <hr />
 <h1 id="reference_1">REFERENCE</h1>
@@ -752,37 +752,37 @@ docker compose exec forge-web awx-manage createsuperuser</code></p>
 <td>Cache + Celery broker</td>
 </tr>
 <tr>
-<td><code>forge-init</code></td>
-<td><code>forge-backend</code></td>
+<td><code>forail-init</code></td>
+<td><code>forail-backend</code></td>
 <td>—</td>
 <td>Migrations + initial setup, exits on success</td>
 </tr>
 <tr>
-<td><code>forge-web</code></td>
-<td><code>forge-backend</code></td>
+<td><code>forail-web</code></td>
+<td><code>forail-backend</code></td>
 <td>8050 (uWSGI), 8051 (Daphne)</td>
 <td>REST API + WebSocket</td>
 </tr>
 <tr>
-<td><code>forge-task</code></td>
-<td><code>forge-backend</code></td>
+<td><code>forail-task</code></td>
+<td><code>forail-backend</code></td>
 <td>—</td>
 <td>Celery workers + dispatcher + ws relay</td>
 </tr>
 <tr>
-<td><code>forge-frontend</code></td>
-<td><code>forge-frontend</code></td>
+<td><code>forail-frontend</code></td>
+<td><code>forail-frontend</code></td>
 <td>80</td>
 <td>Static React UI</td>
 </tr>
 <tr>
-<td><code>forge-opa</code></td>
+<td><code>forail-opa</code></td>
 <td><code>openpolicyagent/opa</code></td>
 <td>8181</td>
 <td>Policy-as-Code sidecar</td>
 </tr>
 <tr>
-<td><code>forge-otel-collector</code></td>
+<td><code>forail-otel-collector</code></td>
 <td><code>otel/collector</code></td>
 <td>4317/4318</td>
 <td>OpenTelemetry pipeline</td>
@@ -816,83 +816,83 @@ docker compose exec forge-web awx-manage createsuperuser</code></p>
 <tr>
 <td><code>POSTGRES_USER</code></td>
 <td>no</td>
-<td><code>forge</code></td>
+<td><code>forail</code></td>
 <td>DB user</td>
 </tr>
 <tr>
 <td><code>POSTGRES_DB</code></td>
 <td>no</td>
-<td><code>forge</code></td>
+<td><code>forail</code></td>
 <td>DB name</td>
 </tr>
 <tr>
-<td><code>FORGE_SECRET_KEY</code></td>
+<td><code>FORAIL_SECRET_KEY</code></td>
 <td>yes</td>
 <td>—</td>
 <td>Django <code>SECRET_KEY</code> (50+ chars)</td>
 </tr>
 <tr>
-<td><code>FORGE_BROADCAST_WEBSOCKET_SECRET</code></td>
+<td><code>FORAIL_BROADCAST_WEBSOCKET_SECRET</code></td>
 <td>yes</td>
 <td>—</td>
 <td>WS broadcast secret</td>
 </tr>
 <tr>
-<td><code>FORGE_ADMIN_USER</code></td>
+<td><code>FORAIL_ADMIN_USER</code></td>
 <td>no</td>
 <td><code>admin</code></td>
 <td>Bootstrap admin username</td>
 </tr>
 <tr>
-<td><code>FORGE_ADMIN_PASSWORD</code></td>
+<td><code>FORAIL_ADMIN_PASSWORD</code></td>
 <td>yes</td>
 <td>—</td>
 <td>Bootstrap admin password</td>
 </tr>
 <tr>
-<td><code>FORGE_ADMIN_EMAIL</code></td>
+<td><code>FORAIL_ADMIN_EMAIL</code></td>
 <td>no</td>
 <td><code>admin@example.com</code></td>
 <td>Bootstrap admin email</td>
 </tr>
 <tr>
-<td><code>FORGE_CSRF_TRUSTED_ORIGINS</code></td>
+<td><code>FORAIL_CSRF_TRUSTED_ORIGINS</code></td>
 <td>yes</td>
 <td>—</td>
 <td>Comma-separated <code>https://...</code> origins</td>
 </tr>
 <tr>
-<td><code>FORGE_ALLOWED_HOSTS</code></td>
+<td><code>FORAIL_ALLOWED_HOSTS</code></td>
 <td>no</td>
 <td><code>*</code></td>
 <td>Django ALLOWED_HOSTS</td>
 </tr>
 <tr>
-<td><code>FORGE_NODE_NAME</code></td>
+<td><code>FORAIL_NODE_NAME</code></td>
 <td>no</td>
-<td><code>forge-node</code></td>
+<td><code>forail-node</code></td>
 <td>This node's name in mesh</td>
 </tr>
 <tr>
-<td><code>FORGE_NODE_TYPE</code></td>
+<td><code>FORAIL_NODE_TYPE</code></td>
 <td>no</td>
 <td><code>hybrid</code></td>
 <td><code>control</code> / <code>execution</code> / <code>hybrid</code></td>
 </tr>
 <tr>
-<td><code>FORGE_BACKEND_IMAGE</code></td>
+<td><code>FORAIL_BACKEND_IMAGE</code></td>
 <td>no</td>
-<td><code>ghcr.io/forgeplatform/forge-backend</code></td>
+<td><code>ghcr.io/forail-platform/forail-backend</code></td>
 <td>Backend image</td>
 </tr>
 <tr>
-<td><code>FORGE_FRONTEND_IMAGE</code></td>
+<td><code>FORAIL_FRONTEND_IMAGE</code></td>
 <td>no</td>
-<td><code>ghcr.io/forgeplatform/forge-frontend</code></td>
+<td><code>ghcr.io/forail-platform/forail-frontend</code></td>
 <td>Frontend image</td>
 </tr>
 <tr>
-<td><code>FORGE_TAG</code></td>
+<td><code>FORAIL_TAG</code></td>
 <td>no</td>
 <td><code>latest</code></td>
 <td>Image tag (use a real version, not <code>latest</code>)</td>
@@ -907,15 +907,15 @@ docker compose exec forge-web awx-manage createsuperuser</code></p>
 </table>
 <hr />
 <h2 id="file-layout">File Layout</h2>
-<div class="codehilite"><pre><span></span><code><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">forge</span><span class="o">/</span>
+<div class="codehilite"><pre><span></span><code><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">forail</span><span class="o">/</span>
 <span class="err">├──</span><span class="w"> </span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span><span class="o">.</span><span class="n">yml</span><span class="w">      </span><span class="c1"># primary stack definition</span>
 <span class="err">├──</span><span class="w"> </span><span class="o">.</span><span class="n">env</span><span class="w">                    </span><span class="c1"># local secrets — never commit</span>
 <span class="err">├──</span><span class="w"> </span><span class="n">nginx</span><span class="o">/</span>
 <span class="err">│</span><span class="w">   </span><span class="err">├──</span><span class="w"> </span><span class="n">nginx</span><span class="o">.</span><span class="n">conf</span>
 <span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">ssl</span><span class="o">/</span>
-<span class="err">│</span><span class="w">       </span><span class="err">├──</span><span class="w"> </span><span class="n">forge</span><span class="o">.</span><span class="n">crt</span>
-<span class="err">│</span><span class="w">       </span><span class="err">└──</span><span class="w"> </span><span class="n">forge</span><span class="o">.</span><span class="n">key</span>
-<span class="err">├──</span><span class="w"> </span><span class="n">settings</span><span class="o">/</span><span class="w">               </span><span class="c1"># Django settings overrides mounted into forge-web/task</span>
+<span class="err">│</span><span class="w">       </span><span class="err">├──</span><span class="w"> </span><span class="n">forail</span><span class="o">.</span><span class="n">crt</span>
+<span class="err">│</span><span class="w">       </span><span class="err">└──</span><span class="w"> </span><span class="n">forail</span><span class="o">.</span><span class="n">key</span>
+<span class="err">├──</span><span class="w"> </span><span class="n">settings</span><span class="o">/</span><span class="w">               </span><span class="c1"># Django settings overrides mounted into forail-web/task</span>
 <span class="err">├──</span><span class="w"> </span><span class="n">otel</span><span class="o">/</span>
 <span class="err">│</span><span class="w">   </span><span class="err">└──</span><span class="w"> </span><span class="n">collector</span><span class="o">-</span><span class="n">config</span><span class="o">.</span><span class="n">yaml</span>
 <span class="err">├──</span><span class="w"> </span><span class="n">grafana</span><span class="o">/</span>
@@ -941,9 +941,9 @@ docker compose exec forge-web awx-manage createsuperuser</code></p>
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../dev/index.html">Dev Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

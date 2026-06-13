@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IaC Scanning — Forge Platform Docs</title>
-  <meta name="description" content="IaC scanning in Forge Platform — Terraform, CloudFormation, and Pulumi static analysis with Checkov integration. Catch misconfigurations and security issues before deployment.">
-  <meta name="keywords" content="Forge Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <title>IaC Scanning — Forail Platform Docs</title>
+  <meta name="description" content="IaC scanning in Forail Platform — Terraform, CloudFormation, and Pulumi static analysis with Checkov integration. Catch misconfigurations and security issues before deployment.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
   <meta name="author" content="Krstan Vjestica">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/docs/iac-scanning.html">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/iac-scanning.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="IaC Scanning — Forge Platform Docs">
-  <meta property="og:description" content="IaC scanning in Forge Platform — Terraform, CloudFormation, and Pulumi static analysis with Checkov integration. Catch misconfigurations and security issues before deployment.">
-  <meta property="og:url" content="https://forgeplatform.github.io/docs/iac-scanning.html">
-  <meta property="og:site_name" content="Forge Platform">
+  <meta property="og:title" content="IaC Scanning — Forail Platform Docs">
+  <meta property="og:description" content="IaC scanning in Forail Platform — Terraform, CloudFormation, and Pulumi static analysis with Checkov integration. Catch misconfigurations and security issues before deployment.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/iac-scanning.html">
+  <meta property="og:site_name" content="Forail Platform">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="IaC Scanning — Forge Platform Docs">
-  <meta name="twitter:description" content="IaC scanning in Forge Platform — Terraform, CloudFormation, and Pulumi static analysis with Checkov integration. Catch misconfigurations and security issues before deployment.">
-  <meta name="twitter:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta name="twitter:title" content="IaC Scanning — Forail Platform Docs">
+  <meta name="twitter:description" content="IaC scanning in Forail Platform — Terraform, CloudFormation, and Pulumi static analysis with Checkov integration. Catch misconfigurations and security issues before deployment.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"TechArticle","headline":"IaC Scanning","description":"IaC scanning in Forge Platform — Terraform, CloudFormation, and Pulumi static analysis with Checkov integration. Catch misconfigurations and security issues before deployment.","url":"https://forgeplatform.github.io/docs/iac-scanning.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forge Platform","url":"https://forgeplatform.github.io/"},"image":"https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"IaC Scanning","description":"IaC scanning in Forail Platform — Terraform, CloudFormation, and Pulumi static analysis with Checkov integration. Catch misconfigurations and security issues before deployment.","url":"https://forail-platform.github.io/docs/iac-scanning.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
       <li><a href="../dev/index.html">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -90,7 +90,7 @@ launch time. Where Policy-as-Code (doc 19) reasons about <strong>metadata</stron
 about what is <strong>inside</strong> the playbook: <code>shell:</code> with unquoted variables,
 unpinned role sources, hard-coded secrets, Python dependencies with
 known CVEs.</p>
-<p>Three open-source CLIs run as subprocesses out of the forge venv:</p>
+<p>Three open-source CLIs run as subprocesses out of the forail venv:</p>
 <ul>
 <li><strong>ansible-lint</strong> — Ansible rules catalog (MIT)</li>
 <li><strong>checkov</strong> — multi-IaC scanner incl. Ansible (Apache 2.0)</li>
@@ -130,7 +130,7 @@ denials short-circuit before we spend CPU on a scan.</p>
 <p>When <code>SCANNER_ENABLED=False</code>, <code>run_scanners_for_launch</code> returns an
 empty allow-immediately <code>ScanRunResult</code>.</p>
 <hr />
-<h2 id="models-forgemainmodelsscannerpy">Models — <code>forge/main/models/scanner.py</code></h2>
+<h2 id="models-forailmainmodelsscannerpy">Models — <code>forail/main/models/scanner.py</code></h2>
 <h3 id="scannercommonmodelnamenotunique"><code>Scanner(CommonModelNameNotUnique)</code></h3>
 <table>
 <thead>
@@ -273,7 +273,7 @@ empty allow-immediately <code>ScanRunResult</code>.</p>
 </tr>
 </tbody>
 </table>
-<p>Migration: <code>forge/main/migrations/0203_scanner.py</code>. All three models are
+<p>Migration: <code>forail/main/migrations/0203_scanner.py</code>. All three models are
 registered with <code>permission_registry</code> and <code>activity_stream_registrar</code>.</p>
 <h3 id="pure-helpers">Pure helpers</h3>
 <p>Exported from the model module and unit-tested without Django bootstrap:</p>
@@ -285,13 +285,13 @@ registered with <code>permission_registry</code> and <code>activity_stream_regis
 
 <p>Severity ordering: <code>info(0) &lt; low(1) &lt; medium(2) &lt; high(3) &lt; critical(4)</code>.</p>
 <hr />
-<h2 id="tool-adapters-forgemainscanningtools">Tool adapters — <code>forge/main/scanning/tools/</code></h2>
+<h2 id="tool-adapters-forailmainscanningtools">Tool adapters — <code>forail/main/scanning/tools/</code></h2>
 <p>One file per tool. Each exposes the same interface used by the runner:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">build_command</span><span class="p">(</span><span class="n">target_path</span><span class="p">,</span> <span class="n">config</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 <span class="n">parse_output</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="p">,</span> <span class="n">returncode</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">NormalizedFinding</span><span class="p">]</span>
 </code></pre></div>
 
-<p><code>NormalizedFinding</code> (from <code>forge.main.scanning.types</code>) has
+<p><code>NormalizedFinding</code> (from <code>forail.main.scanning.types</code>) has
 <code>rule_id, severity, file_path, line, message</code>.</p>
 <table>
 <thead>
@@ -319,10 +319,10 @@ registered with <code>permission_registry</code> and <code>activity_stream_regis
 </tr>
 </tbody>
 </table>
-<p>A tool registry in <code>forge/main/scanning/tools/__init__.py</code> exposes
+<p>A tool registry in <code>forail/main/scanning/tools/__init__.py</code> exposes
 <code>get_adapter(tool_name)</code> used by the runner.</p>
 <hr />
-<h2 id="runner-forgemainscanningrunnerpy">Runner — <code>forge/main/scanning/runner.py</code></h2>
+<h2 id="runner-forailmainscanningrunnerpy">Runner — <code>forail/main/scanning/runner.py</code></h2>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run_scanners_for_launch</span><span class="p">(</span><span class="n">unified_job</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ScanRunResult</span><span class="p">:</span>
 </code></pre></div>
 
@@ -361,7 +361,7 @@ registered with <code>permission_registry</code> and <code>activity_stream_regis
 <p>When a scanner blocks, <code>ScanResult.unified_job</code> is set to <code>NULL</code> so
 the FK cascade doesn't lose the audit row when the view deletes the job.</p>
 <hr />
-<h2 id="settings-forgemainconfpy">Settings — <code>forge/main/conf.py</code></h2>
+<h2 id="settings-forailmainconfpy">Settings — <code>forail/main/conf.py</code></h2>
 <p>Registered under the <strong>Security</strong> category:</p>
 <table>
 <thead>
@@ -399,11 +399,11 @@ the FK cascade doesn't lose the audit row when the view deletes the job.</p>
 <p>Same three launch views as Policy-as-Code, inserted <strong>after</strong> the OPA
 hook so a policy denial short-circuits the scan:</p>
 <ul>
-<li><code>forge/api/views/job_templates.py</code> → <code>JobTemplateLaunch.post</code></li>
-<li><code>forge/api/views/workflows.py</code> → <code>WorkflowJobTemplateLaunch.post</code></li>
-<li><code>forge/api/views/ad_hoc_commands.py</code> → <code>AdHocCommandList.create</code></li>
+<li><code>forail/api/views/job_templates.py</code> → <code>JobTemplateLaunch.post</code></li>
+<li><code>forail/api/views/workflows.py</code> → <code>WorkflowJobTemplateLaunch.post</code></li>
+<li><code>forail/api/views/ad_hoc_commands.py</code> → <code>AdHocCommandList.create</code></li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">forge.main.scanning.runner</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_scanners_for_launch</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">forail.main.scanning.runner</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_scanners_for_launch</span>
 <span class="n">scan_result</span> <span class="o">=</span> <span class="n">run_scanners_for_launch</span><span class="p">(</span><span class="n">new_job</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span>
 <span class="k">if</span> <span class="ow">not</span> <span class="n">scan_result</span><span class="o">.</span><span class="n">allowed</span><span class="p">:</span>
     <span class="n">new_job</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
@@ -484,9 +484,9 @@ hook so a policy denial short-circuits the scan:</p>
 <hr />
 <h2 id="deployment">Deployment</h2>
 <ul>
-<li>The scanner CLIs live inside the <code>forge-backend</code> image, installed
+<li>The scanner CLIs live inside the <code>forail-backend</code> image, installed
   into <code>/var/lib/awx/venv/awx</code> so Django subprocess calls find them
-  on PATH. See <code>forge-backend/Dockerfile</code>:</li>
+  on PATH. See <code>forail-backend/Dockerfile</code>:</li>
 </ul>
 <p><code>dockerfile
   RUN /var/lib/awx/venv/awx/bin/pip install --no-cache-dir \
@@ -494,8 +494,8 @@ hook so a policy denial short-circuits the scan:</p>
           'checkov==3.2.*' \
           'pip-audit==2.7.*'</code></p>
 <ul>
-<li>No new compose service is needed. The <code>forge_projects</code> named volume
-  is already mounted on all forge containers (via the <code>x-forge-common</code>
+<li>No new compose service is needed. The <code>forail_projects</code> named volume
+  is already mounted on all forail containers (via the <code>x-forail-common</code>
   anchor in <code>docker-compose.yml</code>), so the runner sees the project
   checkout path on disk.</li>
 </ul>
@@ -525,9 +525,9 @@ hook so a policy denial short-circuits the scan:</p>
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../dev/index.html">Dev Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

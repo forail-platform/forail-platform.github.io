@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Docker Deployment — Forge Platform Docs</title>
-  <meta name="description" content="Deploy Forge Platform with Docker Compose: install, configure, scale, and operate the open-source Ansible automation platform on a single host. Production-ready compose stack with PostgreSQL, Redis, Nginx, and OpenTelemetry.">
-  <meta name="keywords" content="Forge Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <title>Docker Deployment — Forail Platform Docs</title>
+  <meta name="description" content="Deploy Forail Platform with Docker Compose: install, configure, scale, and operate the open-source Ansible automation platform on a single host. Production-ready compose stack with PostgreSQL, Redis, Nginx, and OpenTelemetry.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
   <meta name="author" content="Krstan Vjestica">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/docs/deployment.html">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/deployment.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Docker Deployment — Forge Platform Docs">
-  <meta property="og:description" content="Deploy Forge Platform with Docker Compose: install, configure, scale, and operate the open-source Ansible automation platform on a single host. Production-ready compose stack with PostgreSQL, Redis, Nginx, and OpenTelemetry.">
-  <meta property="og:url" content="https://forgeplatform.github.io/docs/deployment.html">
-  <meta property="og:site_name" content="Forge Platform">
+  <meta property="og:title" content="Docker Deployment — Forail Platform Docs">
+  <meta property="og:description" content="Deploy Forail Platform with Docker Compose: install, configure, scale, and operate the open-source Ansible automation platform on a single host. Production-ready compose stack with PostgreSQL, Redis, Nginx, and OpenTelemetry.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/deployment.html">
+  <meta property="og:site_name" content="Forail Platform">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Docker Deployment — Forge Platform Docs">
-  <meta name="twitter:description" content="Deploy Forge Platform with Docker Compose: install, configure, scale, and operate the open-source Ansible automation platform on a single host. Production-ready compose stack with PostgreSQL, Redis, Nginx, and OpenTelemetry.">
-  <meta name="twitter:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta name="twitter:title" content="Docker Deployment — Forail Platform Docs">
+  <meta name="twitter:description" content="Deploy Forail Platform with Docker Compose: install, configure, scale, and operate the open-source Ansible automation platform on a single host. Production-ready compose stack with PostgreSQL, Redis, Nginx, and OpenTelemetry.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"TechArticle","headline":"Docker Deployment","description":"Deploy Forge Platform with Docker Compose: install, configure, scale, and operate the open-source Ansible automation platform on a single host. Production-ready compose stack with PostgreSQL, Redis, Nginx, and OpenTelemetry.","url":"https://forgeplatform.github.io/docs/deployment.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forge Platform","url":"https://forgeplatform.github.io/"},"image":"https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"Docker Deployment","description":"Deploy Forail Platform with Docker Compose: install, configure, scale, and operate the open-source Ansible automation platform on a single host. Production-ready compose stack with PostgreSQL, Redis, Nginx, and OpenTelemetry.","url":"https://forail-platform.github.io/docs/deployment.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
       <li><a href="../dev/index.html">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -84,10 +84,10 @@
   </aside>
   <main class="docs-content">
 <h1 id="07-docker-deployment">07 — Docker &amp; Deployment</h1>
-<p>How to build, configure, and deploy Forge Platform to production.</p>
+<p>How to build, configure, and deploy Forail Platform to production.</p>
 <hr />
 <h2 id="architecture">Architecture</h2>
-<p>Forge Platform uses a separated architecture with independent Docker images:</p>
+<p>Forail Platform uses a separated architecture with independent Docker images:</p>
 <table>
 <thead>
 <tr>
@@ -98,23 +98,23 @@
 </thead>
 <tbody>
 <tr>
-<td>forge-web</td>
-<td><code>ghcr.io/forgeplatform/forge-backend</code></td>
+<td>forail-web</td>
+<td><code>ghcr.io/forail-platform/forail-backend</code></td>
 <td>Django API (uwsgi + daphne + nginx-internal)</td>
 </tr>
 <tr>
-<td>forge-task</td>
-<td><code>ghcr.io/forgeplatform/forge-backend</code></td>
+<td>forail-task</td>
+<td><code>ghcr.io/forail-platform/forail-backend</code></td>
 <td>Task execution (dispatcher, callback, receptor)</td>
 </tr>
 <tr>
-<td>forge-init</td>
-<td><code>ghcr.io/forgeplatform/forge-backend</code></td>
+<td>forail-init</td>
+<td><code>ghcr.io/forail-platform/forail-backend</code></td>
 <td>One-shot: migrations, admin user, provisioning</td>
 </tr>
 <tr>
-<td>forge-frontend</td>
-<td><code>ghcr.io/forgeplatform/forge-frontend</code></td>
+<td>forail-frontend</td>
+<td><code>ghcr.io/forail-platform/forail-frontend</code></td>
 <td>React SPA served by nginx</td>
 </tr>
 <tr>
@@ -135,8 +135,8 @@
 </tbody>
 </table>
 <h3 id="startup-order">Startup Order</h3>
-<div class="codehilite"><pre><span></span><code>postgres ──► redis ──► forge-init ──► forge-web ──► forge-task ──► nginx
-                                                     forge-frontend ──┘
+<div class="codehilite"><pre><span></span><code>postgres ──► redis ──► forail-init ──► forail-web ──► forail-task ──► nginx
+                                                     forail-frontend ──┘
 </code></pre></div>
 
 <p>Each service waits for the previous one to be healthy before starting.</p>
@@ -152,27 +152,27 @@
 <tbody>
 <tr>
 <td><code>/api/*</code></td>
-<td>forge-web:8013</td>
+<td>forail-web:8013</td>
 <td>REST API</td>
 </tr>
 <tr>
 <td><code>/sso/*</code></td>
-<td>forge-web:8013</td>
+<td>forail-web:8013</td>
 <td>SSO/SAML/LDAP</td>
 </tr>
 <tr>
 <td><code>/api/login/</code></td>
-<td>forge-web:8013</td>
+<td>forail-web:8013</td>
 <td>Login (rate-limited)</td>
 </tr>
 <tr>
 <td><code>/(api/)?websocket/</code></td>
-<td>forge-web:8013</td>
+<td>forail-web:8013</td>
 <td>WebSocket (upgrade)</td>
 </tr>
 <tr>
 <td><code>/*</code> (everything else)</td>
-<td>forge-frontend:80</td>
+<td>forail-frontend:80</td>
 <td>React SPA</td>
 </tr>
 </tbody>
@@ -180,18 +180,18 @@
 <hr />
 <h2 id="building-docker-images">Building Docker Images</h2>
 <h3 id="backend">Backend</h3>
-<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forge-backend
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forgeplatform/forge-backend:latest<span class="w"> </span>.
-docker<span class="w"> </span>push<span class="w"> </span>ghcr.io/forgeplatform/forge-backend:latest
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forail-backend
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forail-platform/forail-backend:latest<span class="w"> </span>.
+docker<span class="w"> </span>push<span class="w"> </span>ghcr.io/forail-platform/forail-backend:latest
 </code></pre></div>
 
 <p>The Dockerfile is a multi-stage build:
 1. <strong>builder</strong> (Ubuntu 24.04): installs Python deps, builds sdist, runs collectstatic
 2. <strong>runtime</strong> (Ubuntu 24.04): minimal image with runtime deps, receptor, supervisor</p>
 <h3 id="frontend">Frontend</h3>
-<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forge-frontend
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forgeplatform/forge-frontend:latest<span class="w"> </span>.
-docker<span class="w"> </span>push<span class="w"> </span>ghcr.io/forgeplatform/forge-frontend:latest
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forail-frontend
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forail-platform/forail-frontend:latest<span class="w"> </span>.
+docker<span class="w"> </span>push<span class="w"> </span>ghcr.io/forail-platform/forail-frontend:latest
 </code></pre></div>
 
 <p>The Dockerfile is a multi-stage build:
@@ -206,7 +206,7 @@ docker<span class="w"> </span>push<span class="w"> </span>ghcr.io/forgeplatform/
 <li>Domain name with SSL certificate (or self-signed for testing)</li>
 </ul>
 <h3 id="quick-start">Quick Start</h3>
-<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forge-deploy
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forail-deploy
 
 <span class="c1"># 1. Create configuration</span>
 cp<span class="w"> </span>.env.example<span class="w"> </span>.env
@@ -216,30 +216,30 @@ cp<span class="w"> </span>.env.example<span class="w"> </span>.env
 mkdir<span class="w"> </span>-p<span class="w"> </span>nginx/ssl
 
 <span class="c1"># Let&#39;s Encrypt (production):</span>
-certbot<span class="w"> </span>certonly<span class="w"> </span>--standalone<span class="w"> </span>-d<span class="w"> </span>forge.example.com
-cp<span class="w"> </span>/etc/letsencrypt/live/forge.example.com/fullchain.pem<span class="w"> </span>nginx/ssl/
-cp<span class="w"> </span>/etc/letsencrypt/live/forge.example.com/privkey.pem<span class="w"> </span>nginx/ssl/
+certbot<span class="w"> </span>certonly<span class="w"> </span>--standalone<span class="w"> </span>-d<span class="w"> </span>forail.example.com
+cp<span class="w"> </span>/etc/letsencrypt/live/forail.example.com/fullchain.pem<span class="w"> </span>nginx/ssl/
+cp<span class="w"> </span>/etc/letsencrypt/live/forail.example.com/privkey.pem<span class="w"> </span>nginx/ssl/
 
 <span class="c1"># Or self-signed (testing):</span>
 openssl<span class="w"> </span>req<span class="w"> </span>-x509<span class="w"> </span>-nodes<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-newkey<span class="w"> </span>rsa:2048<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-keyout<span class="w"> </span>nginx/ssl/privkey.pem<span class="w"> </span>-out<span class="w"> </span>nginx/ssl/fullchain.pem<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-subj<span class="w"> </span><span class="s2">&quot;/CN=forge.example.com&quot;</span>
+<span class="w">  </span>-subj<span class="w"> </span><span class="s2">&quot;/CN=forail.example.com&quot;</span>
 
 <span class="c1"># 3. Deploy</span>
 docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 
 <span class="c1"># 4. Watch initialization</span>
-docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>forge-init
+docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>forail-init
 
 <span class="c1"># 5. Verify</span>
-curl<span class="w"> </span>-k<span class="w"> </span>https://forge.example.com/api/v2/ping/
+curl<span class="w"> </span>-k<span class="w"> </span>https://forail.example.com/api/v2/ping/
 </code></pre></div>
 
 <h3 id="deploy-in-vagrant-testing">Deploy in Vagrant (testing)</h3>
-<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forge-deploy
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forail-deploy
 vagrant<span class="w"> </span>up<span class="w">          </span><span class="c1"># Ubuntu 24.04 VM + Docker + Compose + SSL + .env auto-generated</span>
 vagrant<span class="w"> </span>ssh
-<span class="nb">cd</span><span class="w"> </span>/forge-deploy
+<span class="nb">cd</span><span class="w"> </span>/forail-deploy
 docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 
 <span class="c1"># Access from host: https://192.168.56.22/</span>
@@ -263,24 +263,24 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 <td><code>openssl rand -hex 16</code></td>
 </tr>
 <tr>
-<td><code>FORGE_SECRET_KEY</code></td>
+<td><code>FORAIL_SECRET_KEY</code></td>
 <td>Django crypto key</td>
 <td><code>openssl rand -hex 32</code></td>
 </tr>
 <tr>
-<td><code>FORGE_BROADCAST_WEBSOCKET_SECRET</code></td>
+<td><code>FORAIL_BROADCAST_WEBSOCKET_SECRET</code></td>
 <td>WS auth secret</td>
 <td><code>openssl rand -hex 32</code></td>
 </tr>
 <tr>
-<td><code>FORGE_ADMIN_PASSWORD</code></td>
+<td><code>FORAIL_ADMIN_PASSWORD</code></td>
 <td>Admin password</td>
 <td>Strong password</td>
 </tr>
 <tr>
-<td><code>FORGE_CSRF_TRUSTED_ORIGINS</code></td>
+<td><code>FORAIL_CSRF_TRUSTED_ORIGINS</code></td>
 <td>CSRF origins</td>
-<td><code>https://forge.example.com</code></td>
+<td><code>https://forail.example.com</code></td>
 </tr>
 </tbody>
 </table>
@@ -295,42 +295,42 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 </thead>
 <tbody>
 <tr>
-<td><code>FORGE_ALLOWED_HOSTS</code></td>
+<td><code>FORAIL_ALLOWED_HOSTS</code></td>
 <td><code>*</code></td>
 <td>Allowed HTTP hosts</td>
 </tr>
 <tr>
-<td><code>FORGE_ADMIN_USER</code></td>
+<td><code>FORAIL_ADMIN_USER</code></td>
 <td><code>admin</code></td>
 <td>Admin username</td>
 </tr>
 <tr>
-<td><code>FORGE_ADMIN_EMAIL</code></td>
+<td><code>FORAIL_ADMIN_EMAIL</code></td>
 <td><code>admin@example.com</code></td>
 <td>Admin email</td>
 </tr>
 <tr>
-<td><code>FORGE_NODE_NAME</code></td>
-<td><code>forge-node</code></td>
+<td><code>FORAIL_NODE_NAME</code></td>
+<td><code>forail-node</code></td>
 <td>Instance hostname</td>
 </tr>
 <tr>
-<td><code>FORGE_NODE_TYPE</code></td>
+<td><code>FORAIL_NODE_TYPE</code></td>
 <td><code>hybrid</code></td>
 <td><code>hybrid</code>, <code>control</code>, or <code>execution</code></td>
 </tr>
 <tr>
-<td><code>FORGE_BACKEND_IMAGE</code></td>
-<td><code>ghcr.io/forgeplatform/forge-backend</code></td>
+<td><code>FORAIL_BACKEND_IMAGE</code></td>
+<td><code>ghcr.io/forail-platform/forail-backend</code></td>
 <td>Backend Docker image</td>
 </tr>
 <tr>
-<td><code>FORGE_FRONTEND_IMAGE</code></td>
-<td><code>ghcr.io/forgeplatform/forge-frontend</code></td>
+<td><code>FORAIL_FRONTEND_IMAGE</code></td>
+<td><code>ghcr.io/forail-platform/forail-frontend</code></td>
 <td>Frontend Docker image</td>
 </tr>
 <tr>
-<td><code>FORGE_TAG</code></td>
+<td><code>FORAIL_TAG</code></td>
 <td><code>latest</code></td>
 <td>Image tag</td>
 </tr>
@@ -349,23 +349,23 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 <h3 id="watch-out">Watch out</h3>
 <ul>
 <li>
-<p><strong><code>FORGE_SECRET_KEY</code> MUST REMAIN THE SAME</strong> between upgrades. If you change it,
+<p><strong><code>FORAIL_SECRET_KEY</code> MUST REMAIN THE SAME</strong> between upgrades. If you change it,
   all sessions, tokens, and encrypted credentials become invalid.</p>
 </li>
 <li>
-<p><strong><code>FORGE_CSRF_TRUSTED_ORIGINS</code> must include the full URL</strong> with <code>https://</code>. Without
+<p><strong><code>FORAIL_CSRF_TRUSTED_ORIGINS</code> must include the full URL</strong> with <code>https://</code>. Without
   it, the login form won't work (403 CSRF error).</p>
 </li>
 </ul>
 <hr />
 <h2 id="ssltls">SSL/TLS</h2>
 <h3 id="lets-encrypt-recommended-for-production">Let's Encrypt (recommended for production)</h3>
-<div class="codehilite"><pre><span></span><code>certbot<span class="w"> </span>certonly<span class="w"> </span>--standalone<span class="w"> </span>-d<span class="w"> </span>forge.example.com
-cp<span class="w"> </span>/etc/letsencrypt/live/forge.example.com/<span class="o">{</span>fullchain,privkey<span class="o">}</span>.pem<span class="w"> </span>nginx/ssl/
+<div class="codehilite"><pre><span></span><code>certbot<span class="w"> </span>certonly<span class="w"> </span>--standalone<span class="w"> </span>-d<span class="w"> </span>forail.example.com
+cp<span class="w"> </span>/etc/letsencrypt/live/forail.example.com/<span class="o">{</span>fullchain,privkey<span class="o">}</span>.pem<span class="w"> </span>nginx/ssl/
 </code></pre></div>
 
 <p>Auto-renewal (crontab):</p>
-<div class="codehilite"><pre><span></span><code><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>certbot<span class="w"> </span>renew<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cp<span class="w"> </span>/etc/letsencrypt/live/forge.example.com/*.pem<span class="w"> </span>/path/to/nginx/ssl/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>restart<span class="w"> </span>nginx
+<div class="codehilite"><pre><span></span><code><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>certbot<span class="w"> </span>renew<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>cp<span class="w"> </span>/etc/letsencrypt/live/forail.example.com/*.pem<span class="w"> </span>/path/to/nginx/ssl/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>restart<span class="w"> </span>nginx
 </code></pre></div>
 
 <h3 id="security-notes">Security Notes</h3>
@@ -378,54 +378,54 @@ cp<span class="w"> </span>/etc/letsencrypt/live/forge.example.com/<span class="o
 <hr />
 <h2 id="backup-restore">Backup &amp; Restore</h2>
 <h3 id="backup">Backup</h3>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-task<span class="w"> </span>bash<span class="w"> </span>/etc/forge/backup.sh
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-task<span class="w"> </span>bash<span class="w"> </span>/etc/forail/backup.sh
 
 <span class="c1"># With custom retention (30 days)</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-task<span class="w"> </span>bash<span class="w"> </span>/etc/forge/backup.sh<span class="w"> </span><span class="m">30</span>
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-task<span class="w"> </span>bash<span class="w"> </span>/etc/forail/backup.sh<span class="w"> </span><span class="m">30</span>
 </code></pre></div>
 
 <h3 id="scheduled-backup-crontab">Scheduled backup (crontab)</h3>
-<div class="codehilite"><pre><span></span><code><span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/path/to/forge-deploy<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>forge-task<span class="w"> </span>bash<span class="w"> </span>/etc/forge/backup.sh
+<div class="codehilite"><pre><span></span><code><span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/path/to/forail-deploy<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>forail-task<span class="w"> </span>bash<span class="w"> </span>/etc/forail/backup.sh
 </code></pre></div>
 
 <h3 id="restore">Restore</h3>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>stop<span class="w"> </span>forge-web<span class="w"> </span>forge-task
-gunzip<span class="w"> </span>-c<span class="w"> </span>forge_backup_20260317.sql.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>forge<span class="w"> </span>forge
-docker<span class="w"> </span>compose<span class="w"> </span>start<span class="w"> </span>forge-web<span class="w"> </span>forge-task
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>stop<span class="w"> </span>forail-web<span class="w"> </span>forail-task
+gunzip<span class="w"> </span>-c<span class="w"> </span>forail_backup_20260317.sql.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>forail<span class="w"> </span>forail
+docker<span class="w"> </span>compose<span class="w"> </span>start<span class="w"> </span>forail-web<span class="w"> </span>forail-task
 </code></pre></div>
 
 <hr />
 <h2 id="health-checks">Health Checks</h2>
 <div class="codehilite"><pre><span></span><code><span class="c1"># API ping (no auth)</span>
-curl<span class="w"> </span>-k<span class="w"> </span>https://forge.example.com/api/v2/ping/
+curl<span class="w"> </span>-k<span class="w"> </span>https://forail.example.com/api/v2/ping/
 
 <span class="c1"># Instance capacity (auth required)</span>
-curl<span class="w"> </span>-k<span class="w"> </span>-u<span class="w"> </span>admin:password<span class="w"> </span>https://forge.example.com/api/v2/instances/
+curl<span class="w"> </span>-k<span class="w"> </span>-u<span class="w"> </span>admin:password<span class="w"> </span>https://forail.example.com/api/v2/instances/
 
 <span class="c1"># Service status</span>
 docker<span class="w"> </span>compose<span class="w"> </span>ps
 
 <span class="c1"># Supervisor processes</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-web<span class="w"> </span>supervisorctl<span class="w"> </span>status
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-task<span class="w"> </span>supervisorctl<span class="w"> </span>status
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-web<span class="w"> </span>supervisorctl<span class="w"> </span>status
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-task<span class="w"> </span>supervisorctl<span class="w"> </span>status
 </code></pre></div>
 
 <hr />
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="container-wont-start">Container won't start</h3>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>forge-init<span class="w">    </span><span class="c1"># Check migrations and init</span>
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>forail-init<span class="w">    </span><span class="c1"># Check migrations and init</span>
 <span class="c1"># &quot;database does not exist&quot; → POSTGRES_DB mismatch</span>
 <span class="c1"># &quot;authentication failed&quot; → POSTGRES_PASSWORD mismatch</span>
 </code></pre></div>
 
 <h3 id="cant-log-in-403-csrf">Can't log in (403 CSRF)</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Check FORGE_CSRF_TRUSTED_ORIGINS in .env</span>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Check FORAIL_CSRF_TRUSTED_ORIGINS in .env</span>
 <span class="c1"># Must be full URL with https:// (e.g., https://192.168.56.22)</span>
 </code></pre></div>
 
 <h3 id="server-error-500-on-root-page">Server Error (500 on root page)</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Check if frontend container is running</span>
-docker<span class="w"> </span>compose<span class="w"> </span>ps<span class="w"> </span>forge-frontend
+docker<span class="w"> </span>compose<span class="w"> </span>ps<span class="w"> </span>forail-frontend
 <span class="c1"># Must be healthy</span>
 
 <span class="c1"># Check nginx routing</span>
@@ -433,45 +433,45 @@ docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"
 </code></pre></div>
 
 <h3 id="jobs-not-running">Jobs not running</h3>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-task<span class="w"> </span>supervisorctl<span class="w"> </span>status
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-task<span class="w"> </span>supervisorctl<span class="w"> </span>status
 <span class="c1"># All 4 must be RUNNING: receptor, dispatcher, callback-receiver, wsrelay</span>
 
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-web<span class="w"> </span>forge-manage<span class="w"> </span>list_instances
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-web<span class="w"> </span>forail-manage<span class="w"> </span>list_instances
 </code></pre></div>
 
 <h3 id="forgotten-admin-password">Forgotten admin password</h3>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-web<span class="w"> </span>forge-manage<span class="w"> </span>update_password<span class="w"> </span>--username<span class="o">=</span>admin<span class="w"> </span>--password<span class="o">=</span>NewPass123!
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-web<span class="w"> </span>forail-manage<span class="w"> </span>update_password<span class="w"> </span>--username<span class="o">=</span>admin<span class="w"> </span>--password<span class="o">=</span>NewPass123!
 </code></pre></div>
 
 <hr />
 <h2 id="upgrading">Upgrading</h2>
-<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forge-deploy
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forail-deploy
 
 <span class="c1"># 1. Pull new images</span>
 docker<span class="w"> </span>compose<span class="w"> </span>pull
 
-<span class="c1"># 2. Recreate containers (migrations run automatically via forge-init)</span>
+<span class="c1"># 2. Recreate containers (migrations run automatically via forail-init)</span>
 docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 
 <span class="c1"># 3. Verify</span>
 docker<span class="w"> </span>compose<span class="w"> </span>ps
-curl<span class="w"> </span>-k<span class="w"> </span>https://forge.example.com/api/v2/ping/
+curl<span class="w"> </span>-k<span class="w"> </span>https://forail.example.com/api/v2/ping/
 </code></pre></div>
 
 <hr />
 <h2 id="scaling">Scaling</h2>
 <h3 id="adding-an-execution-node">Adding an execution node</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># On the execution node:</span>
-docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>forge-task<span class="w"> </span><span class="se">\</span>
+docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>forail-task<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-e<span class="w"> </span><span class="nv">DATABASE_HOST</span><span class="o">=</span>db.example.com<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-e<span class="w"> </span><span class="nv">REDIS_HOST</span><span class="o">=</span>redis.example.com<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-e<span class="w"> </span><span class="nv">FORGE_NODE_TYPE</span><span class="o">=</span>execution<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-e<span class="w"> </span><span class="nv">FORGE_NODE_NAME</span><span class="o">=</span>exec-node-1<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>ghcr.io/forgeplatform/forge-backend:latest<span class="w"> </span>launch_awx_task.sh
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">FORAIL_NODE_TYPE</span><span class="o">=</span>execution<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">FORAIL_NODE_NAME</span><span class="o">=</span>exec-node-1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>ghcr.io/forail-platform/forail-backend:latest<span class="w"> </span>launch_awx_task.sh
 
 <span class="c1"># On the control node:</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-web<span class="w"> </span>forge-manage<span class="w"> </span>provision_instance<span class="w"> </span>--hostname<span class="o">=</span>exec-node-1<span class="w"> </span>--node-type<span class="o">=</span>execution
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-web<span class="w"> </span>forge-manage<span class="w"> </span>register_queue<span class="w"> </span>--queuename<span class="o">=</span>default<span class="w"> </span>--hostnames<span class="o">=</span>exec-node-1
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-web<span class="w"> </span>forail-manage<span class="w"> </span>provision_instance<span class="w"> </span>--hostname<span class="o">=</span>exec-node-1<span class="w"> </span>--node-type<span class="o">=</span>execution
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-web<span class="w"> </span>forail-manage<span class="w"> </span>register_queue<span class="w"> </span>--queuename<span class="o">=</span>default<span class="w"> </span>--hostnames<span class="o">=</span>exec-node-1
 </code></pre></div>
 
 <h3 id="recommended-hardware">Recommended Hardware</h3>
@@ -511,9 +511,9 @@ docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">ex
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../dev/index.html">Dev Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

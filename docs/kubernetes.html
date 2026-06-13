@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kubernetes Deployment — Forge Platform Docs</title>
-  <meta name="description" content="Deploy Forge Platform on Kubernetes with the official Helm chart and the v1.0.0 operator: 9 CRDs (Organization, Team, Project, Inventory, Credential, JobTemplate, Schedule, Workflow, ForgeInstance) with multi-cluster routing and OLM bundle.">
-  <meta name="keywords" content="Forge Platform Kubernetes, Helm chart Ansible, AWX Kubernetes, Ansible operator, OLM bundle, GitOps Ansible, ghcr.io">
+  <title>Kubernetes Deployment — Forail Platform Docs</title>
+  <meta name="description" content="Deploy Forail Platform on Kubernetes with the official Helm chart and the v1.0.0 operator: 9 CRDs (Organization, Team, Project, Inventory, Credential, JobTemplate, Schedule, Workflow, ForailInstance) with multi-cluster routing and OLM bundle.">
+  <meta name="keywords" content="Forail Platform Kubernetes, Helm chart Ansible, AWX Kubernetes, Ansible operator, OLM bundle, GitOps Ansible, ghcr.io">
   <meta name="author" content="Krstan Vjestica">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/docs/kubernetes.html">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/kubernetes.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Kubernetes Deployment — Forge Platform Docs">
-  <meta property="og:description" content="Deploy Forge Platform on Kubernetes with the official Helm chart and the v1.0.0 operator: 9 CRDs, multi-cluster routing, and OLM bundle.">
-  <meta property="og:url" content="https://forgeplatform.github.io/docs/kubernetes.html">
-  <meta property="og:site_name" content="Forge Platform">
+  <meta property="og:title" content="Kubernetes Deployment — Forail Platform Docs">
+  <meta property="og:description" content="Deploy Forail Platform on Kubernetes with the official Helm chart and the v1.0.0 operator: 9 CRDs, multi-cluster routing, and OLM bundle.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/kubernetes.html">
+  <meta property="og:site_name" content="Forail Platform">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Kubernetes Deployment — Forge Platform Docs">
-  <meta name="twitter:description" content="Deploy Forge Platform on Kubernetes with the official Helm chart and operator v1.0.0 (9 CRDs, multi-cluster, OLM bundle).">
-  <meta name="twitter:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta name="twitter:title" content="Kubernetes Deployment — Forail Platform Docs">
+  <meta name="twitter:description" content="Deploy Forail Platform on Kubernetes with the official Helm chart and operator v1.0.0 (9 CRDs, multi-cluster, OLM bundle).">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"TechArticle","headline":"Kubernetes Deployment","description":"Deploy Forge Platform on Kubernetes with the official Helm chart and the v1.0.0 operator.","url":"https://forgeplatform.github.io/docs/kubernetes.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forge Platform","url":"https://forgeplatform.github.io/"},"image":"https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"Kubernetes Deployment","description":"Deploy Forail Platform on Kubernetes with the official Helm chart and the v1.0.0 operator.","url":"https://forail-platform.github.io/docs/kubernetes.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
       <li><a href="../dev/index.html">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -84,7 +84,7 @@
   <main class="docs-content">
 
 <h1 id="kubernetes-deployment">Kubernetes Deployment</h1>
-<p>Forge Platform deploys natively on Kubernetes via the official Helm chart at <a href="https://github.com/forgeplatform/forge-helm"><code>forgeplatform/forge-helm</code></a>, with an optional operator at <a href="https://github.com/forgeplatform/forge-operator"><code>forgeplatform/forge-operator</code></a> (v1.0.0) that lets you manage <strong>nine</strong> Forge resource kinds — organizations, teams, projects, inventories, credentials, job templates, schedules, workflows (DAG), and remote Forge instances — declaratively as Kubernetes Custom Resources, with support for routing different CRs to different Forge backends.</p>
+<p>Forail Platform deploys natively on Kubernetes via the official Helm chart at <a href="https://github.com/forail-platform/forail-helm"><code>forail-platform/forail-helm</code></a>, with an optional operator at <a href="https://github.com/forail-platform/forail-operator"><code>forail-platform/forail-operator</code></a> (v1.0.0) that lets you manage <strong>nine</strong> Forail resource kinds — organizations, teams, projects, inventories, credentials, job templates, schedules, workflows (DAG), and remote Forail instances — declaratively as Kubernetes Custom Resources, with support for routing different CRs to different Forail backends.</p>
 <p>This page is the long-form companion to the Docker Compose <a href="deployment.html">Deployment</a> guide. If you already run a Kubernetes cluster, the Helm path is the recommended deployment for production: it manages secrets natively, supports rolling upgrades, and integrates with Ingress controllers, External Secrets, and the wider ecosystem.</p>
 
 <hr />
@@ -108,49 +108,49 @@
 <hr />
 
 <h2 id="architecture-on-kubernetes">Architecture on Kubernetes</h2>
-<p>The chart deploys six application workloads plus the Forge backend itself. Every workload runs as its own <code>Deployment</code> (or <code>StatefulSet</code> for stateful data), and is fronted by a <code>ClusterIP</code> <code>Service</code> for in-cluster traffic. Ingress traffic enters through a single <code>Ingress</code> resource that fans out by URL path.</p>
+<p>The chart deploys six application workloads plus the Forail backend itself. Every workload runs as its own <code>Deployment</code> (or <code>StatefulSet</code> for stateful data), and is fronted by a <code>ClusterIP</code> <code>Service</code> for in-cluster traffic. Ingress traffic enters through a single <code>Ingress</code> resource that fans out by URL path.</p>
 
 <pre><code>                        ┌──────────────────┐
-                        │   Ingress (TLS)  │  forge.lan
+                        │   Ingress (TLS)  │  forail.lan
                         │  Traefik / NGINX │
                         └─────────┬────────┘
               ┌───────────────────┼─────────────────────┐
               │       /api/admin/static/sso/websocket   │  /
               ▼                                          ▼
       ┌───────────────┐                          ┌────────────────┐
-      │   forge-web   │  Django + uwsgi + daphne │ forge-frontend │  React SPA
+      │   forail-web   │  Django + uwsgi + daphne │ forail-frontend │  React SPA
       │  (Deployment) │  ports: 8013 8015        │  (Deployment)  │  port: 80
       └──┬──────┬──┬──┘                          └────────────────┘
          │      │  │
-         │      │  └──── OPA (sidecar via service forge-opa:8181) ──── policy decisions
+         │      │  └──── OPA (sidecar via service forail-opa:8181) ──── policy decisions
          │      │
-         │      └──── OTel Collector (forge-otel-collector:4317) ──── traces / metrics
+         │      └──── OTel Collector (forail-otel-collector:4317) ──── traces / metrics
          │
-         ├──── Postgres (StatefulSet, forge-postgres:5432, PVC 8 Gi)
+         ├──── Postgres (StatefulSet, forail-postgres:5432, PVC 8 Gi)
          │
-         ├──── Redis (Deployment, forge-redis:6379, PVC 2 Gi)
+         ├──── Redis (Deployment, forail-redis:6379, PVC 2 Gi)
          │
-         └──── forge-task (Deployment, no Service)
+         └──── forail-task (Deployment, no Service)
                 ├── ansible-runner + podman in privileged container
                 ├── Receptor mesh (control socket /var/run/awx-receptor/receptor.sock)
-                └── shared PVC forge-projects (mounted in both web + task)</code></pre>
+                └── shared PVC forail-projects (mounted in both web + task)</code></pre>
 
 <p>Two extra resources run as one-shots / CRDs:</p>
 <ul>
-<li><strong><code>forge-init</code> Job</strong> — runs once per release revision: applies migrations, creates the admin user, provisions the instance, registers the <code>controlplane</code> + <code>default</code> queues, seeds preload data, and writes <code>CSRF_TRUSTED_ORIGINS</code> into the DB. Suffixed with <code>{{ .Release.Revision }}</code> so each upgrade gets a fresh Job (Job spec is immutable, so re-applying the same name would fail).</li>
-<li><strong>forge-operator</strong> — runs in its own namespace, watches <code>Organization</code> / <code>Team</code> / <code>Project</code> / <code>Inventory</code> / <code>Credential</code> / <code>JobTemplate</code> / <code>Schedule</code> / <code>Workflow</code> / <code>ForgeInstance</code> CRs cluster-wide, and reconciles each into a Forge REST API. Authenticates with an OAuth2 personal access token issued by Forge; the optional <code>ForgeInstance</code> CR lets one operator deployment fan out to multiple Forge backends.</li>
+<li><strong><code>forail-init</code> Job</strong> — runs once per release revision: applies migrations, creates the admin user, provisions the instance, registers the <code>controlplane</code> + <code>default</code> queues, seeds preload data, and writes <code>CSRF_TRUSTED_ORIGINS</code> into the DB. Suffixed with <code>{{ .Release.Revision }}</code> so each upgrade gets a fresh Job (Job spec is immutable, so re-applying the same name would fail).</li>
+<li><strong>forail-operator</strong> — runs in its own namespace, watches <code>Organization</code> / <code>Team</code> / <code>Project</code> / <code>Inventory</code> / <code>Credential</code> / <code>JobTemplate</code> / <code>Schedule</code> / <code>Workflow</code> / <code>ForailInstance</code> CRs cluster-wide, and reconciles each into a Forail REST API. Authenticates with an OAuth2 personal access token issued by Forail; the optional <code>ForailInstance</code> CR lets one operator deployment fan out to multiple Forail backends.</li>
 </ul>
 
 <hr />
 
 <h2 id="namespaces">Namespaces</h2>
-<p>The chart and operator each install into their own namespace. This separation lets you grant the operator only the permissions it needs and lets you upgrade Forge without touching the operator (or vice versa).</p>
+<p>The chart and operator each install into their own namespace. This separation lets you grant the operator only the permissions it needs and lets you upgrade Forail without touching the operator (or vice versa).</p>
 <table>
 <thead><tr><th>Namespace</th><th>Contents</th><th>Created by</th></tr></thead>
 <tbody>
-<tr><td><code>forge</code></td><td>Postgres, Redis, OPA, OTel Collector, forge-web, forge-task, forge-frontend, forge-init Job, Ingress, all chart Secrets and ConfigMaps</td><td><code>helm install forge ./forge-helm -n forge --create-namespace</code> (or pre-created if you need to seed pull-secrets first)</td></tr>
-<tr><td><code>forge-operator</code></td><td>The operator <code>Deployment</code>, its <code>ServiceAccount</code> + <code>ClusterRole</code> + <code>ClusterRoleBinding</code>, and one <code>Secret</code> holding the Forge OAuth2 token</td><td><code>helm install forge-operator ./forge-operator/helm -n forge-operator --create-namespace</code></td></tr>
-<tr><td><em>any</em></td><td>The nine CRD instances (<code>Organization</code>, <code>Team</code>, <code>Project</code>, <code>Inventory</code>, <code>Credential</code>, <code>JobTemplate</code>, <code>Schedule</code>, <code>Workflow</code>, <code>ForgeInstance</code>). Each CR is namespace-scoped; the operator watches all namespaces and reconciles them centrally against Forge.</td><td>You — <code>kubectl apply -f cr.yaml</code></td></tr>
+<tr><td><code>forail</code></td><td>Postgres, Redis, OPA, OTel Collector, forail-web, forail-task, forail-frontend, forail-init Job, Ingress, all chart Secrets and ConfigMaps</td><td><code>helm install forail ./forail-helm -n forail --create-namespace</code> (or pre-created if you need to seed pull-secrets first)</td></tr>
+<tr><td><code>forail-operator</code></td><td>The operator <code>Deployment</code>, its <code>ServiceAccount</code> + <code>ClusterRole</code> + <code>ClusterRoleBinding</code>, and one <code>Secret</code> holding the Forail OAuth2 token</td><td><code>helm install forail-operator ./forail-operator/helm -n forail-operator --create-namespace</code></td></tr>
+<tr><td><em>any</em></td><td>The nine CRD instances (<code>Organization</code>, <code>Team</code>, <code>Project</code>, <code>Inventory</code>, <code>Credential</code>, <code>JobTemplate</code>, <code>Schedule</code>, <code>Workflow</code>, <code>ForailInstance</code>). Each CR is namespace-scoped; the operator watches all namespaces and reconciles them centrally against Forail.</td><td>You — <code>kubectl apply -f cr.yaml</code></td></tr>
 </tbody>
 </table>
 <p>The chart’s top-level <code>namespace.create</code> value defaults to <code>false</code> because pre-creating the namespace is the common path: you usually want to <code>kubectl create</code> it first so you can drop in the Harbor pull-secret and a TLS secret <em>before</em> the Pods start trying to mount them.</p>
@@ -160,46 +160,46 @@
 <h2 id="networking">Networking</h2>
 
 <h3 id="services">Services and ports</h3>
-<p>Every workload that other workloads (or the Ingress) need to reach gets a <code>ClusterIP</code> <code>Service</code>. forge-task is the only one without a Service — nothing reaches into it; it pulls work off Redis and pushes it through Receptor.</p>
+<p>Every workload that other workloads (or the Ingress) need to reach gets a <code>ClusterIP</code> <code>Service</code>. forail-task is the only one without a Service — nothing reaches into it; it pulls work off Redis and pushes it through Receptor.</p>
 <table>
 <thead><tr><th>Service</th><th>Ports</th><th>Selector</th><th>Reached by</th></tr></thead>
 <tbody>
-<tr><td><code>forge-web</code></td><td>8013 (HTTP API), 8015 (websocket)</td><td><code>component=web</code></td><td>Ingress, forge-task callback, forge-operator</td></tr>
-<tr><td><code>forge-frontend</code></td><td>80 (HTTP)</td><td><code>component=frontend</code></td><td>Ingress (path <code>/</code>)</td></tr>
-<tr><td><code>forge-postgres</code></td><td>5432</td><td><code>component=postgres</code></td><td>forge-web, forge-task, forge-init</td></tr>
-<tr><td><code>forge-redis</code></td><td>6379</td><td><code>component=redis</code></td><td>forge-web, forge-task</td></tr>
-<tr><td><code>forge-opa</code></td><td>8181 (REST policy decision API)</td><td><code>component=opa</code></td><td>forge-web (policy checks)</td></tr>
-<tr><td><code>forge-otel-collector</code></td><td>4317 (gRPC), 4318 (HTTP)</td><td><code>component=otel-collector</code></td><td>forge-web, forge-task (traces + metrics)</td></tr>
+<tr><td><code>forail-web</code></td><td>8013 (HTTP API), 8015 (websocket)</td><td><code>component=web</code></td><td>Ingress, forail-task callback, forail-operator</td></tr>
+<tr><td><code>forail-frontend</code></td><td>80 (HTTP)</td><td><code>component=frontend</code></td><td>Ingress (path <code>/</code>)</td></tr>
+<tr><td><code>forail-postgres</code></td><td>5432</td><td><code>component=postgres</code></td><td>forail-web, forail-task, forail-init</td></tr>
+<tr><td><code>forail-redis</code></td><td>6379</td><td><code>component=redis</code></td><td>forail-web, forail-task</td></tr>
+<tr><td><code>forail-opa</code></td><td>8181 (REST policy decision API)</td><td><code>component=opa</code></td><td>forail-web (policy checks)</td></tr>
+<tr><td><code>forail-otel-collector</code></td><td>4317 (gRPC), 4318 (HTTP)</td><td><code>component=otel-collector</code></td><td>forail-web, forail-task (traces + metrics)</td></tr>
 </tbody>
 </table>
 
 <h3 id="cluster-dns">Cluster DNS</h3>
-<p>Workloads reach each other through the cluster DNS at <code>&lt;service&gt;.&lt;namespace&gt;.svc.cluster.local</code>. Inside the <code>forge</code> namespace the bare service name resolves too, so <code>forge.otel.endpoint</code> defaults to <code>http://forge-otel-collector:4317</code>. The operator reaches the API at the FQDN <code>http://forge-web.forge.svc.cluster.local:8013</code> because it lives in a different namespace.</p>
+<p>Workloads reach each other through the cluster DNS at <code>&lt;service&gt;.&lt;namespace&gt;.svc.cluster.local</code>. Inside the <code>forail</code> namespace the bare service name resolves too, so <code>forail.otel.endpoint</code> defaults to <code>http://forail-otel-collector:4317</code>. The operator reaches the API at the FQDN <code>http://forail-web.forail.svc.cluster.local:8013</code> because it lives in a different namespace.</p>
 
 <h3 id="ingress">Ingress and URL routing</h3>
-<p>A single <code>Ingress</code> resource named <code>forge</code> routes <code>forge.lan</code> by URL path. The chart’s default uses Traefik (the chart’s <code>ingress.className: traefik</code>), but any IngressController works — change <code>className</code> to <code>nginx</code>, <code>contour</code>, etc. Path order matters because Forge owns five distinct path prefixes that must take precedence over the SPA catch-all.</p>
+<p>A single <code>Ingress</code> resource named <code>forail</code> routes <code>forail.lan</code> by URL path. The chart’s default uses Traefik (the chart’s <code>ingress.className: traefik</code>), but any IngressController works — change <code>className</code> to <code>nginx</code>, <code>contour</code>, etc. Path order matters because Forail owns five distinct path prefixes that must take precedence over the SPA catch-all.</p>
 <table>
 <thead><tr><th>Path</th><th>Target Service</th><th>Why</th></tr></thead>
 <tbody>
-<tr><td><code>/api</code></td><td><code>forge-web:8013</code></td><td>REST API (<code>/api/v2/*</code>)</td></tr>
-<tr><td><code>/admin</code></td><td><code>forge-web:8013</code></td><td>Django admin</td></tr>
-<tr><td><code>/sso</code></td><td><code>forge-web:8013</code></td><td>SAML / OIDC / social-auth callbacks</td></tr>
-<tr><td><code>/websocket</code></td><td><code>forge-web:8015</code></td><td>Job event streaming over WS</td></tr>
-<tr><td><code>/static/forge</code></td><td><code>forge-frontend:80</code></td><td>SPA assets — must come <em>before</em> <code>/static</code> below</td></tr>
-<tr><td><code>/static</code></td><td><code>forge-web:8013</code></td><td>Django staticfiles (admin CSS, DRF browser)</td></tr>
-<tr><td><code>/</code></td><td><code>forge-frontend:80</code></td><td>SPA catch-all</td></tr>
+<tr><td><code>/api</code></td><td><code>forail-web:8013</code></td><td>REST API (<code>/api/v2/*</code>)</td></tr>
+<tr><td><code>/admin</code></td><td><code>forail-web:8013</code></td><td>Django admin</td></tr>
+<tr><td><code>/sso</code></td><td><code>forail-web:8013</code></td><td>SAML / OIDC / social-auth callbacks</td></tr>
+<tr><td><code>/websocket</code></td><td><code>forail-web:8015</code></td><td>Job event streaming over WS</td></tr>
+<tr><td><code>/static/forail</code></td><td><code>forail-frontend:80</code></td><td>SPA assets — must come <em>before</em> <code>/static</code> below</td></tr>
+<tr><td><code>/static</code></td><td><code>forail-web:8013</code></td><td>Django staticfiles (admin CSS, DRF browser)</td></tr>
+<tr><td><code>/</code></td><td><code>forail-frontend:80</code></td><td>SPA catch-all</td></tr>
 </tbody>
 </table>
 
 <h3 id="hostname-tld-pitfall">Hostname TLD pitfall (<code>.local</code> vs <code>.lan</code>)</h3>
-<p>The chart’s <code>ingress.host</code> default is <strong><code>forge.lan</code></strong>, not <code>forge.local</code>. The reason: most desktop Linux distros ship <code>nsswitch.conf</code> with <code>mdns_minimal [NOTFOUND=return]</code> ahead of <code>files</code>, which intercepts every <code>.local</code> lookup, fails it, and bypasses <code>/etc/hosts</code> entirely. The browser then shows <em>Server Not Found</em> even though <code>curl --resolve forge.local:30080:&lt;node-ip&gt; ...</code> works fine. The <code>.lan</code> TLD has no such hijack.</p>
+<p>The chart’s <code>ingress.host</code> default is <strong><code>forail.lan</code></strong>, not <code>forail.local</code>. The reason: most desktop Linux distros ship <code>nsswitch.conf</code> with <code>mdns_minimal [NOTFOUND=return]</code> ahead of <code>files</code>, which intercepts every <code>.local</code> lookup, fails it, and bypasses <code>/etc/hosts</code> entirely. The browser then shows <em>Server Not Found</em> even though <code>curl --resolve forail.local:30080:&lt;node-ip&gt; ...</code> works fine. The <code>.lan</code> TLD has no such hijack.</p>
 <p>For host-based access from a developer laptop, add to <code>/etc/hosts</code>:</p>
-<pre><code>192.168.56.32  forge.lan</code></pre>
+<pre><code>192.168.56.32  forail.lan</code></pre>
 
 <h3 id="exposing-the-cluster">Exposing the cluster</h3>
 <p>How Ingress traffic actually reaches your nodes depends on the IngressController service type:</p>
 <ul>
-<li><strong>NodePort</strong> (test clusters) — Traefik’s service type defaults to <code>NodePort</code> on <code>30080</code> (HTTP) and <code>30443</code> (HTTPS). The browser hits <code>http://forge.lan:30080/</code> and the kernel kube-proxy forwards from any node to the Traefik pod.</li>
+<li><strong>NodePort</strong> (test clusters) — Traefik’s service type defaults to <code>NodePort</code> on <code>30080</code> (HTTP) and <code>30443</code> (HTTPS). The browser hits <code>http://forail.lan:30080/</code> and the kernel kube-proxy forwards from any node to the Traefik pod.</li>
 <li><strong>LoadBalancer</strong> (cloud / MetalLB) — set the IngressController service type to <code>LoadBalancer</code> and use the assigned external IP / DNS name.</li>
 <li><strong>hostNetwork</strong> (bare metal, single-node) — runs the IngressController on the host network so 80/443 are reachable directly.</li>
 </ul>
@@ -208,7 +208,7 @@
 <p>If you build a multi-VM cluster on VirtualBox host-only networks, Flannel’s default <code>--iface</code> auto-detect picks <code>eth0</code> (the NAT adapter). Pod-to-pod traffic across nodes then dies, with symptoms like <code>connect: no route to host</code> from any cross-node service VIP. Patch the Flannel <code>DaemonSet</code> to bind to the host-only interface explicitly:</p>
 <pre><code>kubectl -n kube-flannel patch ds kube-flannel-ds --type=json \
   -p='[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--iface=eth1"}]'</code></pre>
-<p>The <a href="https://github.com/forgeplatform/forge-dev-cluster"><code>forge-dev-cluster</code></a> Vagrant repo bakes this patch into <code>master-init.sh</code>.</p>
+<p>The <a href="https://github.com/forail-platform/forail-dev-cluster"><code>forail-dev-cluster</code></a> Vagrant repo bakes this patch into <code>master-init.sh</code>.</p>
 
 <hr />
 
@@ -217,14 +217,14 @@
 <table>
 <thead><tr><th>PVC</th><th>Default size</th><th>Mode</th><th>Mounted in</th><th>Purpose</th></tr></thead>
 <tbody>
-<tr><td><code>forge-postgres</code></td><td>8 Gi</td><td>RWO</td><td>StatefulSet <code>forge-postgres</code></td><td>Database files</td></tr>
-<tr><td><code>forge-redis</code></td><td>2 Gi</td><td>RWO</td><td>Deployment <code>forge-redis</code></td><td>RDB snapshots / AOF</td></tr>
-<tr><td><code>forge-projects</code></td><td>4 Gi</td><td>RWX</td><td>forge-web + forge-task</td><td>Synced project repos (<code>_&lt;id&gt;__&lt;slug&gt;</code>)</td></tr>
-<tr><td><code>forge-receptor</code></td><td>2 Gi</td><td>RWO</td><td>forge-task</td><td>Receptor work units (<code>/tmp/receptor</code>)</td></tr>
-<tr><td><code>forge-backups</code></td><td>10 Gi</td><td>RWO</td><td>forge-web (mount-only)</td><td>Where <code>backup.sh</code> writes <code>.sql.gz</code> archives</td></tr>
+<tr><td><code>forail-postgres</code></td><td>8 Gi</td><td>RWO</td><td>StatefulSet <code>forail-postgres</code></td><td>Database files</td></tr>
+<tr><td><code>forail-redis</code></td><td>2 Gi</td><td>RWO</td><td>Deployment <code>forail-redis</code></td><td>RDB snapshots / AOF</td></tr>
+<tr><td><code>forail-projects</code></td><td>4 Gi</td><td>RWX</td><td>forail-web + forail-task</td><td>Synced project repos (<code>_&lt;id&gt;__&lt;slug&gt;</code>)</td></tr>
+<tr><td><code>forail-receptor</code></td><td>2 Gi</td><td>RWO</td><td>forail-task</td><td>Receptor work units (<code>/tmp/receptor</code>)</td></tr>
+<tr><td><code>forail-backups</code></td><td>10 Gi</td><td>RWO</td><td>forail-web (mount-only)</td><td>Where <code>backup.sh</code> writes <code>.sql.gz</code> archives</td></tr>
 </tbody>
 </table>
-<p><strong>RWX requirement:</strong> <code>forge-projects</code> is mounted in both <code>forge-web</code> and <code>forge-task</code>. If those Pods land on different nodes, RWX is mandatory. If you’re forced to ReadWriteOnce (e.g. local-path-provisioner on bare metal), pin both Deployments to the same node with a <code>nodeSelector</code> or <code>podAffinity</code>; otherwise the second Pod will sit Pending forever.</p>
+<p><strong>RWX requirement:</strong> <code>forail-projects</code> is mounted in both <code>forail-web</code> and <code>forail-task</code>. If those Pods land on different nodes, RWX is mandatory. If you’re forced to ReadWriteOnce (e.g. local-path-provisioner on bare metal), pin both Deployments to the same node with a <code>nodeSelector</code> or <code>podAffinity</code>; otherwise the second Pod will sit Pending forever.</p>
 <p>Override the StorageClass per-PVC with values like <code>postgres.storage.storageClass: ceph-rbd</code>. Leaving it empty falls back to the cluster default StorageClass.</p>
 
 <hr />
@@ -232,58 +232,58 @@
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
 <li>Kubernetes <strong>1.27+</strong> (tested on 1.30)</li>
-<li>An IngressController (Traefik / NGINX / Contour). <a href="https://github.com/forgeplatform/forge-dev-cluster"><code>forge-dev-cluster</code></a>’s <code>post-cluster-setup.sh</code> installs Traefik via Helm</li>
+<li>An IngressController (Traefik / NGINX / Contour). <a href="https://github.com/forail-platform/forail-dev-cluster"><code>forail-dev-cluster</code></a>’s <code>post-cluster-setup.sh</code> installs Traefik via Helm</li>
 <li>A default <code>StorageClass</code> (or per-PVC overrides) — local-path-provisioner is fine for dev</li>
 <li><code>helm</code> 3.12+</li>
-<li>Optional but recommended: cert-manager (real TLS) or a hand-rolled <code>kubernetes.io/tls</code> Secret named <code>forge-tls</code></li>
+<li>Optional but recommended: cert-manager (real TLS) or a hand-rolled <code>kubernetes.io/tls</code> Secret named <code>forail-tls</code></li>
 </ul>
 
 <h3 id="image-registry">Container images</h3>
-<p>Forge images are published to the public GitHub Container Registry: <code>ghcr.io/forgeplatform/*</code>. No pull secret is required.</p>
-<pre><code>kubectl create namespace forge</code></pre>
+<p>Forail images are published to the public GitHub Container Registry: <code>ghcr.io/forail-platform/*</code>. No pull secret is required.</p>
+<pre><code>kubectl create namespace forail</code></pre>
 <p>If you mirror the images to your own registry, override <code>images.backend.repository</code> + <code>images.frontend.repository</code> in <code>values.yaml</code> and add an <code>imagePullSecrets</code> entry pointing at your in-cluster docker-registry Secret.</p>
 
 <h3 id="tls-secret">TLS secret</h3>
 <p>Pre-create a TLS Secret if you want HTTPS on first boot. Self-signed is fine for dev:</p>
 <pre><code>openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-    -keyout tls.key -out tls.crt -subj '/CN=forge.lan' \
-    -addext 'subjectAltName=DNS:forge.lan,DNS:*.forge.lan'
+    -keyout tls.key -out tls.crt -subj '/CN=forail.lan' \
+    -addext 'subjectAltName=DNS:forail.lan,DNS:*.forail.lan'
 
-kubectl -n forge create secret tls forge-tls --cert=tls.crt --key=tls.key</code></pre>
+kubectl -n forail create secret tls forail-tls --cert=tls.crt --key=tls.key</code></pre>
 
 <hr />
 
-<h2 id="install">Install Forge core</h2>
-<pre><code>git clone git@github.com:forgeplatform/forge-helm.git
-cd forge-helm
+<h2 id="install">Install Forail core</h2>
+<pre><code>git clone git@github.com:forail-platform/forail-helm.git
+cd forail-helm
 
-helm install forge . -n forge \
-    --set forge.admin.user=admin \
-    --set secrets.forgeAdminPassword='&lt;strong-password&gt;' \
+helm install forail . -n forail \
+    --set forail.admin.user=admin \
+    --set secrets.forailAdminPassword='&lt;strong-password&gt;' \
     --set secrets.postgresPassword='&lt;random-32-bytes&gt;' \
-    --set secrets.forgeSecretKey="$(openssl rand -hex 32)" \
-    --set secrets.forgeBroadcastWebsocketSecret="$(openssl rand -hex 32)"</code></pre>
-<p>The install runs synchronously through the <code>forge-init</code> Job. Watch progress with:</p>
-<pre><code>kubectl -n forge get pods -w</code></pre>
-<p>Expected end state — every Pod <code>Running 1/1</code>, <code>forge-init-1</code> <code>Completed</code>:</p>
+    --set secrets.forailSecretKey="$(openssl rand -hex 32)" \
+    --set secrets.forailBroadcastWebsocketSecret="$(openssl rand -hex 32)"</code></pre>
+<p>The install runs synchronously through the <code>forail-init</code> Job. Watch progress with:</p>
+<pre><code>kubectl -n forail get pods -w</code></pre>
+<p>Expected end state — every Pod <code>Running 1/1</code>, <code>forail-init-1</code> <code>Completed</code>:</p>
 <pre><code>NAME                              READY   STATUS      RESTARTS   AGE
-forge-frontend-7f8c5d9c8b-abcde   1/1     Running     0          3m
-forge-init-1-xxxxx                0/1     Completed   0          3m
-forge-opa-6cdfb9d79c-fghij        1/1     Running     0          3m
-forge-otel-collector-...          1/1     Running     0          3m
-forge-postgres-0                  1/1     Running     0          3m
-forge-redis-...                   1/1     Running     0          3m
-forge-task-...                    1/1     Running     0          3m
-forge-web-...                     1/1     Running     0          3m</code></pre>
+forail-frontend-7f8c5d9c8b-abcde   1/1     Running     0          3m
+forail-init-1-xxxxx                0/1     Completed   0          3m
+forail-opa-6cdfb9d79c-fghij        1/1     Running     0          3m
+forail-otel-collector-...          1/1     Running     0          3m
+forail-postgres-0                  1/1     Running     0          3m
+forail-redis-...                   1/1     Running     0          3m
+forail-task-...                    1/1     Running     0          3m
+forail-web-...                     1/1     Running     0          3m</code></pre>
 
 <hr />
 
 <h2 id="install-assistant">Optional: AI Assistant</h2>
-<p>Chart <strong>0.3.0</strong> introduces an optional <code>forge-assistant</code> deployment that wraps the all-in-one image (Ollama + ChromaDB + RAG API in one container). It is disabled by default — enable it on a fresh install or on an upgrade:</p>
-<pre><code>helm upgrade forge . -n forge \
+<p>Chart <strong>0.3.0</strong> introduces an optional <code>forail-assistant</code> deployment that wraps the all-in-one image (Ollama + ChromaDB + RAG API in one container). It is disabled by default — enable it on a fresh install or on an upgrade:</p>
+<pre><code>helm upgrade forail . -n forail \
     --reuse-values \
     --set assistant.enabled=true</code></pre>
-<p>The chart provisions a <code>PersistentVolumeClaim</code> (<code>forge-assistant-data</code>, default <strong>20 Gi</strong>) so the LLM model cache and Chroma vector store survive pod restarts. On first boot the entrypoint pulls the configured model (<code>gemma3:1b</code> by default, ≈800 MB) and the embedding model (<code>nomic-embed-text</code>), then indexes the bundled documentation — allow ~5 minutes before the pod is <code>Ready</code>. The <code>startupProbe</code> is sized for this (<code>failureThreshold: 30</code> at <code>periodSeconds: 10</code>) so the liveness probe will not kill the pod mid-bootstrap.</p>
+<p>The chart provisions a <code>PersistentVolumeClaim</code> (<code>forail-assistant-data</code>, default <strong>20 Gi</strong>) so the LLM model cache and Chroma vector store survive pod restarts. On first boot the entrypoint pulls the configured model (<code>gemma3:1b</code> by default, ≈800 MB) and the embedding model (<code>nomic-embed-text</code>), then indexes the bundled documentation — allow ~5 minutes before the pod is <code>Ready</code>. The <code>startupProbe</code> is sized for this (<code>failureThreshold: 30</code> at <code>periodSeconds: 10</code>) so the liveness probe will not kill the pod mid-bootstrap.</p>
 <p>Key values you may want to override:</p>
 <table>
 <tr><th>Value</th><th>Default</th><th>Notes</th></tr>
@@ -291,37 +291,37 @@ forge-web-...                     1/1     Running     0          3m</code></pre>
 <tr><td><code>assistant.storage.size</code></td><td><code>20Gi</code></td><td>Bump to 30 Gi+ if you change models or grow the indexed corpus.</td></tr>
 <tr><td><code>assistant.resources.limits.memory</code></td><td><code>4Gi</code></td><td>gemma3:1b inference peaks ~1.5 Gi; larger models need 8 Gi+.</td></tr>
 </table>
-<p>The Service is reachable cluster-internally at <code>forge-assistant.forge.svc.cluster.local:8100</code>. Ingress routing is intentionally not wired up by this release — expose it with a follow-up middleware (Traefik <code>stripPrefix</code> on <code>/assistant</code>) once you decide on a URL contract.</p>
+<p>The Service is reachable cluster-internally at <code>forail-assistant.forail.svc.cluster.local:8100</code>. Ingress routing is intentionally not wired up by this release — expose it with a follow-up middleware (Traefik <code>stripPrefix</code> on <code>/assistant</code>) once you decide on a URL contract.</p>
 
 <hr />
 
 <h2 id="install-operator">Install the Operator</h2>
-<p>The operator is shipped separately because not everyone wants declarative-via-CRD management — some teams prefer the UI. Install only after Forge core is healthy (the operator needs to authenticate to it on startup).</p>
+<p>The operator is shipped separately because not everyone wants declarative-via-CRD management — some teams prefer the UI. Install only after Forail core is healthy (the operator needs to authenticate to it on startup).</p>
 
-<h3 id="generate-pat">Generate a Forge OAuth2 PAT</h3>
-<p>The operator authenticates with a personal access token issued by Forge. Generate one inside the running web Pod:</p>
-<pre><code>TOKEN=$(kubectl -n forge exec deploy/forge-web -- \
-    forge-manage create_oauth2_token --user admin | tail -1)
+<h3 id="generate-pat">Generate a Forail OAuth2 PAT</h3>
+<p>The operator authenticates with a personal access token issued by Forail. Generate one inside the running web Pod:</p>
+<pre><code>TOKEN=$(kubectl -n forail exec deploy/forail-web -- \
+    forail-manage create_oauth2_token --user admin | tail -1)
 echo "$TOKEN"</code></pre>
-<p>The token is shown once — copy it now. Revoking it later: <code>forge-manage revoke_oauth2_tokens --user admin</code>.</p>
+<p>The token is shown once — copy it now. Revoking it later: <code>forail-manage revoke_oauth2_tokens --user admin</code>.</p>
 
 <h3 id="install-operator-helm">Install with Helm</h3>
-<pre><code>git clone git@github.com:forgeplatform/forge-operator.git
-cd forge-operator
+<pre><code>git clone git@github.com:forail-platform/forail-operator.git
+cd forail-operator
 
-helm install forge-operator helm/ \
-    -n forge-operator --create-namespace \
-    --set forge.token="$TOKEN" \
-    --set forge.url=http://forge-web.forge.svc.cluster.local:8013</code></pre>
+helm install forail-operator helm/ \
+    -n forail-operator --create-namespace \
+    --set forail.token="$TOKEN" \
+    --set forail.url=http://forail-web.forail.svc.cluster.local:8013</code></pre>
 <p>Verify:</p>
-<pre><code>kubectl -n forge-operator logs deploy/forge-operator -f</code></pre>
-<p>You should see <code>Starting workers</code> for each of the nine reconcilers (<code>organization</code>, <code>team</code>, <code>project</code>, <code>inventory</code>, <code>credential</code>, <code>jobtemplate</code>, <code>schedule</code>, <code>workflow</code>, <code>forgeinstance</code>).</p>
+<pre><code>kubectl -n forail-operator logs deploy/forail-operator -f</code></pre>
+<p>You should see <code>Starting workers</code> for each of the nine reconcilers (<code>organization</code>, <code>team</code>, <code>project</code>, <code>inventory</code>, <code>credential</code>, <code>jobtemplate</code>, <code>schedule</code>, <code>workflow</code>, <code>forailinstance</code>).</p>
 
-<p>For full coverage of the v1.0.0 release — multi-cluster routing via <code>ForgeInstance</code>, the OLM bundle, and the declarative <code>Workflow</code> DAG model — see the dedicated <a href="operator-v1.html">Operator v1.0.0 guide</a>.</p>
+<p>For full coverage of the v1.0.0 release — multi-cluster routing via <code>ForailInstance</code>, the OLM bundle, and the declarative <code>Workflow</code> DAG model — see the dedicated <a href="operator-v1.html">Operator v1.0.0 guide</a>.</p>
 
 <h3 id="custom-resources">Custom Resources</h3>
-<p>Each CR maps to a Forge primary-key after first reconcile (status.<code>forgeId</code>). The operator owns the resource via a finalizer — deleting the CR deletes the Forge resource too. Re-applying a CR after manual edits in the Forge UI overwrites the UI changes (drift is detected on a 60s requeue and reconciled toward the CR).</p>
-<p>Sample CRs live in <a href="https://github.com/forgeplatform/forge-operator/tree/main/config/samples"><code>forge-operator/config/samples/</code></a>:</p>
+<p>Each CR maps to a Forail primary-key after first reconcile (status.<code>forailId</code>). The operator owns the resource via a finalizer — deleting the CR deletes the Forail resource too. Re-applying a CR after manual edits in the Forail UI overwrites the UI changes (drift is detected on a 60s requeue and reconciled toward the CR).</p>
+<p>Sample CRs live in <a href="https://github.com/forail-platform/forail-operator/tree/main/config/samples"><code>forail-operator/config/samples/</code></a>:</p>
 <table>
 <thead><tr><th>Kind</th><th>Maps to</th><th>Sensitive fields</th></tr></thead>
 <tbody>
@@ -333,7 +333,7 @@ helm install forge-operator helm/ \
 <tr><td><code>JobTemplate</code></td><td><code>/api/v2/job_templates</code> with credential / project / inventory references resolved by name</td><td>None</td></tr>
 <tr><td><code>Schedule</code></td><td><code>/api/v2/schedules</code></td><td>None — RFC 5545 RRULE drives recurrence</td></tr>
 <tr><td><code>Workflow</code></td><td><code>/api/v2/workflow_job_templates</code> + node DAG at <code>/workflow_job_templates/{id}/workflow_nodes/</code> + edges</td><td>Declarative <code>spec.nodes[]</code> keyed by <code>identifier</code> with <code>successNodes</code> / <code>failureNodes</code> / <code>alwaysNodes</code> graph references</td></tr>
-<tr><td><code>ForgeInstance</code></td><td>Control-plane only — describes a Forge backend that other CRs target via <code>spec.forgeInstance</code></td><td>Bearer token sourced from a k8s <code>Secret</code> via <code>spec.tokenSecretRef</code></td></tr>
+<tr><td><code>ForailInstance</code></td><td>Control-plane only — describes a Forail backend that other CRs target via <code>spec.forailInstance</code></td><td>Bearer token sourced from a k8s <code>Secret</code> via <code>spec.tokenSecretRef</code></td></tr>
 </tbody>
 </table>
 
@@ -341,16 +341,16 @@ helm install forge-operator helm/ \
 
 <h2 id="verification">Verification</h2>
 <p>After both Helm releases land:</p>
-<pre><code># Forge API healthy
-kubectl -n forge port-forward svc/forge-web 8013:8013 &amp;
+<pre><code># Forail API healthy
+kubectl -n forail port-forward svc/forail-web 8013:8013 &amp;
 curl http://localhost:8013/api/v2/ping/ | jq
 
 # Browser access (assuming /etc/hosts is set)
-open http://forge.lan:30080/
+open http://forail.lan:30080/
 
 # Operator wired up
-kubectl get crd | grep forgeplatform.io
-kubectl apply -f https://raw.githubusercontent.com/forgeplatform/forge-operator/main/config/samples/inventory-sample.yaml
+kubectl get crd | grep forail-platform.io
+kubectl apply -f https://raw.githubusercontent.com/forail-platform/forail-operator/main/config/samples/inventory-sample.yaml
 kubectl get inventory production -o jsonpath='{.status}'</code></pre>
 
 <hr />
@@ -358,18 +358,18 @@ kubectl get inventory production -o jsonpath='{.status}'</code></pre>
 <h2 id="day-2">Day-2 Operations</h2>
 
 <h3 id="upgrade">Upgrade</h3>
-<pre><code>git -C forge-helm pull
-helm upgrade forge ./forge-helm -n forge --reuse-values</code></pre>
-<p>The chart re-runs <code>forge-init</code> on each upgrade (its name embeds <code>{{ .Release.Revision }}</code>). The init script is idempotent. If you upgrade against a populated DB, the migrate step finishes in milliseconds; the heavier preload-data and execution-environment registration steps short-circuit when records already exist.</p>
+<pre><code>git -C forail-helm pull
+helm upgrade forail ./forail-helm -n forail --reuse-values</code></pre>
+<p>The chart re-runs <code>forail-init</code> on each upgrade (its name embeds <code>{{ .Release.Revision }}</code>). The init script is idempotent. If you upgrade against a populated DB, the migrate step finishes in milliseconds; the heavier preload-data and execution-environment registration steps short-circuit when records already exist.</p>
 
 <h3 id="backup">Backup</h3>
-<pre><code>kubectl -n forge exec deploy/forge-web -- /usr/local/bin/backup.sh
-kubectl -n forge cp forge-web-xxx:/var/backups/forge/forge-&lt;ts&gt;.sql.gz ./forge.sql.gz</code></pre>
+<pre><code>kubectl -n forail exec deploy/forail-web -- /usr/local/bin/backup.sh
+kubectl -n forail cp forail-web-xxx:/var/backups/forail/forail-&lt;ts&gt;.sql.gz ./forail.sql.gz</code></pre>
 
-<h3 id="scale-task">Scale forge-task</h3>
-<p>Forge dispatches jobs to any forge-task replica via the Receptor mesh. Increase <code>task.replicas</code> in <code>values.yaml</code> for more concurrent jobs. Keep in mind:</p>
+<h3 id="scale-task">Scale forail-task</h3>
+<p>Forail dispatches jobs to any forail-task replica via the Receptor mesh. Increase <code>task.replicas</code> in <code>values.yaml</code> for more concurrent jobs. Keep in mind:</p>
 <ul>
-<li>forge-task runs <code>privileged: true</code> with podman — restrict it to a node pool you trust</li>
+<li>forail-task runs <code>privileged: true</code> with podman — restrict it to a node pool you trust</li>
 <li>The chart bumps the task memory limit to <strong>4 Gi</strong> by default, because supervisord + dispatcher + Receptor + ansible-runner + an EE container together blow past 2 Gi during the first project sync. Lower this only if you’ve profiled your specific workload.</li>
 </ul>
 
@@ -380,10 +380,10 @@ kubectl -n forge cp forge-web-xxx:/var/backups/forge/forge-&lt;ts&gt;.sql.gz ./f
 <table>
 <thead><tr><th>Path</th><th>Default</th><th>Why you’d change it</th></tr></thead>
 <tbody>
-<tr><td><code>images.backend.repository</code></td><td><code>ghcr.io/forgeplatform/forge-backend</code></td><td>Mirror to your own registry</td></tr>
+<tr><td><code>images.backend.repository</code></td><td><code>ghcr.io/forail-platform/forail-backend</code></td><td>Mirror to your own registry</td></tr>
 <tr><td><code>images.backend.tag</code></td><td><code>latest</code></td><td>Pin to a CalVer release</td></tr>
-<tr><td><code>secrets.forgeAdminPassword</code></td><td><code>changeme-admin</code></td><td>Always — it’s a placeholder</td></tr>
-<tr><td><code>ingress.host</code></td><td><code>forge.lan</code></td><td>Your real DNS name</td></tr>
+<tr><td><code>secrets.forailAdminPassword</code></td><td><code>changeme-admin</code></td><td>Always — it’s a placeholder</td></tr>
+<tr><td><code>ingress.host</code></td><td><code>forail.lan</code></td><td>Your real DNS name</td></tr>
 <tr><td><code>ingress.tls.enabled</code></td><td><code>true</code></td><td>Disable for plain-HTTP test clusters</td></tr>
 <tr><td><code>postgres.storage.size</code></td><td><code>8Gi</code></td><td>Production sizing</td></tr>
 <tr><td><code>postgres.enabled</code></td><td><code>true</code></td><td>Set <code>false</code> + override DB env to point at an external Postgres (RDS, Cloud SQL)</td></tr>
@@ -396,30 +396,30 @@ kubectl -n forge cp forge-web-xxx:/var/backups/forge/forge-&lt;ts&gt;.sql.gz ./f
 
 <h2 id="troubleshooting">Troubleshooting</h2>
 
-<h3 id="ts-mdns">Browser shows “Server Not Found” for <code>forge.local</code></h3>
-<p>That’s the mDNS hijack described <a href="#hostname-tld-pitfall">above</a>. Use the chart default (<code>forge.lan</code>) and update <code>/etc/hosts</code> accordingly. If you’re locked into a <code>.local</code> hostname, edit <code>/etc/nsswitch.conf</code> on every developer laptop to put <code>files</code> before <code>mdns_minimal</code> — but this is system-wide and may break Avahi-discovered devices on the LAN.</p>
+<h3 id="ts-mdns">Browser shows “Server Not Found” for <code>forail.local</code></h3>
+<p>That’s the mDNS hijack described <a href="#hostname-tld-pitfall">above</a>. Use the chart default (<code>forail.lan</code>) and update <code>/etc/hosts</code> accordingly. If you’re locked into a <code>.local</code> hostname, edit <code>/etc/nsswitch.conf</code> on every developer laptop to put <code>files</code> before <code>mdns_minimal</code> — but this is system-wide and may break Avahi-discovered devices on the LAN.</p>
 
 <h3 id="ts-instance-control">Jobs fail with <em>“unknown work type kubernetes-incluster-auth”</em></h3>
-<p>The Forge instance is registered as <code>node_type=control</code> instead of <code>hybrid</code>. Control nodes only orchestrate; they refuse to <em>execute</em> jobs locally and try to dispatch them to a ContainerGroup. The chart’s <code>init.sh</code> runs an explicit ORM update after <code>provision_instance</code> to fix this — if you wrote a custom init, replicate that step:</p>
-<pre><code>forge-manage shell -c "
-from forge.main.models import Instance
+<p>The Forail instance is registered as <code>node_type=control</code> instead of <code>hybrid</code>. Control nodes only orchestrate; they refuse to <em>execute</em> jobs locally and try to dispatch them to a ContainerGroup. The chart’s <code>init.sh</code> runs an explicit ORM update after <code>provision_instance</code> to fix this — if you wrote a custom init, replicate that step:</p>
+<pre><code>forail-manage shell -c "
+from forail.main.models import Instance
 i = Instance.objects.get(hostname='&lt;node&gt;')
 i.node_type = 'hybrid'; i.save(update_fields=['node_type'])
 "</code></pre>
-<p>The same script also flips the auto-created <code>default</code> InstanceGroup off <code>is_container_group=True</code>, which is what the post-migrate signal sets when Forge detects it’s running in k8s.</p>
+<p>The same script also flips the auto-created <code>default</code> InstanceGroup off <code>is_container_group=True</code>, which is what the post-migrate signal sets when Forail detects it’s running in k8s.</p>
 
-<h3 id="ts-task-oom">forge-task pod restarts with exit code 137</h3>
+<h3 id="ts-task-oom">forail-task pod restarts with exit code 137</h3>
 <p>OOMKilled — the default memory limit was 2 Gi in earlier chart versions. Bump <code>task.resources.limits.memory</code> to <code>4Gi</code> (the current default). Memory is tight because supervisord runs uwsgi + dispatcher + Receptor + ansible-runner + a podman EE container concurrently.</p>
 
 <h3 id="ts-receptor-lost">Job error <em>“Error updating status file /tmp/receptor/.../status.lock: no such file or directory”</em></h3>
-<p>The Receptor work-unit directory disappeared. This used to happen when forge-task was OOMKilled mid-job and the pod restart wiped <code>/tmp</code>. Mitigation:</p>
+<p>The Receptor work-unit directory disappeared. This used to happen when forail-task was OOMKilled mid-job and the pod restart wiped <code>/tmp</code>. Mitigation:</p>
 <ol>
 <li>Bump task memory (above)</li>
-<li>The chart now mounts <code>forge-receptor</code> PVC at <code>/tmp/receptor</code> so work units survive Pod restarts</li>
+<li>The chart now mounts <code>forail-receptor</code> PVC at <code>/tmp/receptor</code> so work units survive Pod restarts</li>
 </ol>
 
 <h3 id="ts-cross-node">Pods on different nodes can’t reach each other (VirtualBox only)</h3>
-<p>See the <a href="#cni-quirk">CNI quirk</a> note — Flannel must be patched to bind to the host-only interface (<code>eth1</code>), not the NAT-mode <code>eth0</code>. <code>forge-dev-cluster</code> bakes this into provisioning.</p>
+<p>See the <a href="#cni-quirk">CNI quirk</a> note — Flannel must be patched to bind to the host-only interface (<code>eth1</code>), not the NAT-mode <code>eth0</code>. <code>forail-dev-cluster</code> bakes this into provisioning.</p>
 
 <hr />
 
@@ -427,10 +427,10 @@ i.node_type = 'hybrid'; i.save(update_fields=['node_type'])
 <table>
 <thead><tr><th>Repo</th><th>What it ships</th></tr></thead>
 <tbody>
-<tr><td><a href="https://github.com/forgeplatform/forge-helm"><code>forge-helm</code></a></td><td>The Helm chart described on this page</td></tr>
-<tr><td><a href="https://github.com/forgeplatform/forge-operator"><code>forge-operator</code></a></td><td>The Kubernetes operator with 4 CRDs</td></tr>
-<tr><td><a href="https://github.com/forgeplatform/forge-dev-cluster"><code>forge-dev-cluster</code></a></td><td>4-VM Vagrant + VirtualBox cluster (2 master + 2 worker, k8s 1.30) for chart and operator integration testing — includes the Flannel <code>eth1</code> patch and a <code>post-cluster-setup.sh</code> that installs Traefik, local-path-provisioner, and the <code>forge</code> namespace prerequisites</td></tr>
-<tr><td><a href="https://github.com/forgeplatform/forge-devops"><code>forge-devops</code></a></td><td>The Docker Compose deployment described on the <a href="deployment.html">Deployment</a> page — same image set, single-host topology</td></tr>
+<tr><td><a href="https://github.com/forail-platform/forail-helm"><code>forail-helm</code></a></td><td>The Helm chart described on this page</td></tr>
+<tr><td><a href="https://github.com/forail-platform/forail-operator"><code>forail-operator</code></a></td><td>The Kubernetes operator with 4 CRDs</td></tr>
+<tr><td><a href="https://github.com/forail-platform/forail-dev-cluster"><code>forail-dev-cluster</code></a></td><td>4-VM Vagrant + VirtualBox cluster (2 master + 2 worker, k8s 1.30) for chart and operator integration testing — includes the Flannel <code>eth1</code> patch and a <code>post-cluster-setup.sh</code> that installs Traefik, local-path-provisioner, and the <code>forail</code> namespace prerequisites</td></tr>
+<tr><td><a href="https://github.com/forail-platform/forail-devops"><code>forail-devops</code></a></td><td>The Docker Compose deployment described on the <a href="deployment.html">Deployment</a> page — same image set, single-host topology</td></tr>
 </tbody>
 </table>
 
@@ -440,9 +440,9 @@ i.node_type = 'hybrid'; i.save(update_fields=['node_type'])
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../dev/index.html">Dev Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

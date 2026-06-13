@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Task Engine — Forge Developer Docs</title>
-  <meta name="description" content="Task Engine — developer documentation for the Forge infrastructure automation platform.">
+  <title>Task Engine — Forail Developer Docs</title>
+  <meta name="description" content="Task Engine — developer documentation for the Forail infrastructure automation platform.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/dev/task-engine.html">
+  <link rel="canonical" href="https://forail-platform.github.io/dev/task-engine.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,13 +17,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="../docs/index.html">User Docs</a></li>
       <li><a href="index.html" style="color: var(--primary);">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -147,7 +147,7 @@ Effective     = whichever is smaller
   (default 5). Reducing forks on the template allows more concurrent jobs.</p>
 </li>
 <li>
-<p><strong><code>list_instances</code>:</strong> Use <code>forge-manage list_instances</code> to see capacity.
+<p><strong><code>list_instances</code>:</strong> Use <code>forail-manage list_instances</code> to see capacity.
   If <code>remaining</code> = 0, jobs are waiting.</p>
 </li>
 <li>
@@ -253,7 +253,7 @@ Without this, a query for one job's events would scan millions of rows.</p>
 </tbody>
 </table>
 <h3 id="checking-status">Checking status</h3>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-task<span class="w"> </span>supervisorctl<span class="w"> </span>status
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-task<span class="w"> </span>supervisorctl<span class="w"> </span>status
 <span class="c1"># All 4 processes must be RUNNING</span>
 </code></pre></div>
 
@@ -275,10 +275,10 @@ This guarantees reproducibility — the same playbook produces the same result r
 <h2 id="troubleshooting">Troubleshooting</h2>
 <h3 id="job-stuck-in-pending">Job stuck in "pending"</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># 1. Is the dispatcher running?</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-task<span class="w"> </span>supervisorctl<span class="w"> </span>status<span class="w"> </span>dispatcher
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-task<span class="w"> </span>supervisorctl<span class="w"> </span>status<span class="w"> </span>dispatcher
 
 <span class="c1"># 2. Is Redis running?</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-task<span class="w"> </span>redis-cli<span class="w"> </span>-h<span class="w"> </span>redis<span class="w"> </span>ping
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-task<span class="w"> </span>redis-cli<span class="w"> </span>-h<span class="w"> </span>redis<span class="w"> </span>ping
 
 <span class="c1"># 3. How many tasks are waiting in the queue?</span>
 docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>redis<span class="w"> </span>redis-cli<span class="w"> </span>-n<span class="w"> </span><span class="m">0</span><span class="w"> </span>LLEN<span class="w"> </span>celery
@@ -286,22 +286,22 @@ docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">ex
 
 <h3 id="job-stuck-in-waiting">Job stuck in "waiting"</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Check node capacity</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-web<span class="w"> </span>awx-manage<span class="w"> </span>list_instances
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-web<span class="w"> </span>awx-manage<span class="w"> </span>list_instances
 <span class="c1"># If remaining = 0, there&#39;s no free capacity</span>
 </code></pre></div>
 
 <h3 id="empty-job-output-no-events">Empty job output (no events)</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Check callback receiver</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-task<span class="w"> </span>supervisorctl<span class="w"> </span>status<span class="w"> </span>callback_receiver
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-task<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>/var/log/supervisor/callback_receiver.log
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-task<span class="w"> </span>supervisorctl<span class="w"> </span>status<span class="w"> </span>callback_receiver
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-task<span class="w"> </span>tail<span class="w"> </span>-f<span class="w"> </span>/var/log/supervisor/callback_receiver.log
 </code></pre></div>
 
 <h3 id="websocket-not-working-ui-not-updating">WebSocket not working (UI not updating)</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Check wsrelay and daphne processes</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-task<span class="w"> </span>supervisorctl<span class="w"> </span>status<span class="w"> </span>wsrelay
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-web<span class="w"> </span>supervisorctl<span class="w"> </span>status<span class="w"> </span>daphne
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-task<span class="w"> </span>supervisorctl<span class="w"> </span>status<span class="w"> </span>wsrelay
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-web<span class="w"> </span>supervisorctl<span class="w"> </span>status<span class="w"> </span>daphne
 
-<span class="c1"># Verify both containers have the same FORGE_BROADCAST_WEBSOCKET_SECRET</span>
+<span class="c1"># Verify both containers have the same FORAIL_BROADCAST_WEBSOCKET_SECRET</span>
 </code></pre></div>
 
 <h3 id="job-finishes-with-error-instead-of-failed">Job finishes with "error" instead of "failed"</h3>
@@ -309,16 +309,16 @@ docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">ex
 - Can Ansible Runner access the project (SCM sync)?
 - Does the EE image exist?
 - Does the Receptor socket exist (<code>/var/run/awx-receptor/receptor.sock</code>)?
-- Logs: <code>docker compose logs forge-task | grep ERROR</code></p>
+- Logs: <code>docker compose logs forail-task | grep ERROR</code></p>
   </main>
 </div>
 <footer class="footer">
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../docs/index.html">User Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

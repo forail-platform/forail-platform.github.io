@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Observability — Forge Platform Docs</title>
-  <meta name="description" content="OpenTelemetry observability in Forge Platform — distributed traces, metrics, and structured logs from API to Celery task workers to Receptor execution, all correlated by trace ID.">
-  <meta name="keywords" content="Forge Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <title>Observability — Forail Platform Docs</title>
+  <meta name="description" content="OpenTelemetry observability in Forail Platform — distributed traces, metrics, and structured logs from API to Celery task workers to Receptor execution, all correlated by trace ID.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
   <meta name="author" content="Krstan Vjestica">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/docs/observability.html">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/observability.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Observability — Forge Platform Docs">
-  <meta property="og:description" content="OpenTelemetry observability in Forge Platform — distributed traces, metrics, and structured logs from API to Celery task workers to Receptor execution, all correlated by trace ID.">
-  <meta property="og:url" content="https://forgeplatform.github.io/docs/observability.html">
-  <meta property="og:site_name" content="Forge Platform">
+  <meta property="og:title" content="Observability — Forail Platform Docs">
+  <meta property="og:description" content="OpenTelemetry observability in Forail Platform — distributed traces, metrics, and structured logs from API to Celery task workers to Receptor execution, all correlated by trace ID.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/observability.html">
+  <meta property="og:site_name" content="Forail Platform">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Observability — Forge Platform Docs">
-  <meta name="twitter:description" content="OpenTelemetry observability in Forge Platform — distributed traces, metrics, and structured logs from API to Celery task workers to Receptor execution, all correlated by trace ID.">
-  <meta name="twitter:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta name="twitter:title" content="Observability — Forail Platform Docs">
+  <meta name="twitter:description" content="OpenTelemetry observability in Forail Platform — distributed traces, metrics, and structured logs from API to Celery task workers to Receptor execution, all correlated by trace ID.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"TechArticle","headline":"Observability","description":"OpenTelemetry observability in Forge Platform — distributed traces, metrics, and structured logs from API to Celery task workers to Receptor execution, all correlated by trace ID.","url":"https://forgeplatform.github.io/docs/observability.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forge Platform","url":"https://forgeplatform.github.io/"},"image":"https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"Observability","description":"OpenTelemetry observability in Forail Platform — distributed traces, metrics, and structured logs from API to Celery task workers to Receptor execution, all correlated by trace ID.","url":"https://forail-platform.github.io/docs/observability.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
       <li><a href="../dev/index.html">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -85,7 +85,7 @@
   <main class="docs-content">
 <h1 id="21-observability-opentelemetry">21 — Observability (OpenTelemetry)</h1>
 <p><strong>Tier 3.6 — DONE</strong></p>
-<p>Forge emits <strong>traces</strong> and <strong>metrics</strong> via the OpenTelemetry SDK so operators
+<p>Forail emits <strong>traces</strong> and <strong>metrics</strong> via the OpenTelemetry SDK so operators
 can plug it into any OTLP-compatible backend (Grafana Tempo + Prometheus,
 Jaeger, Datadog, Honeycomb, New Relic, ...). There is <strong>zero vendor coupling</strong>:
 the platform talks only to an OTel Collector, and the Collector fans out.</p>
@@ -93,13 +93,13 @@ the platform talks only to an OTel Collector, and the Collector fans out.</p>
 SDK is not even imported, so the overhead is zero.</p>
 <hr />
 <h2 id="architecture">Architecture</h2>
-<div class="codehilite"><pre><span></span><code>              forge-web (Django)            forge-task (Celery)
+<div class="codehilite"><pre><span></span><code>              forail-web (Django)            forail-task (Celery)
                    │                               │
                    └──────── OTLP gRPC ────────────┘
                               (4317)
                                 │
                                 ▼
-                      forge-otel-collector
+                      forail-otel-collector
                   (otel/opentelemetry-collector-contrib)
                                 │
                    ┌────────────┼────────────┐
@@ -110,15 +110,15 @@ SDK is not even imported, so the overhead is zero.</p>
 </code></pre></div>
 
 <ul>
-<li>Collector config: <code>forge-deploy/otel/config.yaml</code></li>
-<li>Docker Compose service: <code>forge-otel-collector</code> in
-  <code>forge-deploy/docker-compose.yml</code></li>
-<li>Kubernetes stubs: <code>forge-deploy/k8s/otel-collector.yaml</code>,
-  <code>forge-deploy/k8s/grafana-dashboards-cm.yaml</code> (not yet tested)</li>
-<li>Grafana dashboard: <code>forge-deploy/grafana/dashboards/forge-overview.json</code></li>
+<li>Collector config: <code>forail-deploy/otel/config.yaml</code></li>
+<li>Docker Compose service: <code>forail-otel-collector</code> in
+  <code>forail-deploy/docker-compose.yml</code></li>
+<li>Kubernetes stubs: <code>forail-deploy/k8s/otel-collector.yaml</code>,
+  <code>forail-deploy/k8s/grafana-dashboards-cm.yaml</code> (not yet tested)</li>
+<li>Grafana dashboard: <code>forail-deploy/grafana/dashboards/forail-overview.json</code></li>
 </ul>
 <h2 id="bootstrap-flow">Bootstrap flow</h2>
-<p>Entry point: <code>forge.main.observability.init_observability()</code>.</p>
+<p>Entry point: <code>forail.main.observability.init_observability()</code>.</p>
 <ol>
 <li>Short-circuits immediately if <code>OTEL_ENABLED</code> is false (no SDK import).</li>
 <li>Lazily imports the OTel SDK + exporter + instrumentation packages.</li>
@@ -134,10 +134,10 @@ SDK is not even imported, so the overhead is zero.</p>
 <li>All failures are caught and logged — a misconfigured Collector must not
    prevent Django from booting.</li>
 </ol>
-<p>Called from <code>forge/asgi.py</code>, <code>forge/wsgi.py</code>, and the Celery worker boot hook
-(<code>forge/settings/defaults/celery_conf.py</code>).</p>
+<p>Called from <code>forail/asgi.py</code>, <code>forail/wsgi.py</code>, and the Celery worker boot hook
+(<code>forail/settings/defaults/celery_conf.py</code>).</p>
 <h2 id="environment-variables-settings-registry">Environment variables / settings registry</h2>
-<p>All registered in <code>forge/main/conf.py</code> under category <code>System</code>. Env wins on
+<p>All registered in <code>forail/main/conf.py</code> under category <code>System</code>. Env wins on
 first boot; subsequent changes can be made in <strong>Settings → System</strong>.</p>
 <table>
 <thead>
@@ -155,12 +155,12 @@ first boot; subsequent changes can be made in <strong>Settings → System</stron
 </tr>
 <tr>
 <td><code>OTEL_EXPORTER_ENDPOINT</code></td>
-<td><code>http://forge-otel-collector:4317</code></td>
+<td><code>http://forail-otel-collector:4317</code></td>
 <td>OTLP gRPC endpoint</td>
 </tr>
 <tr>
 <td><code>OTEL_SERVICE_NAME</code></td>
-<td><code>forge</code></td>
+<td><code>forail</code></td>
 <td><code>service.name</code> resource attribute</td>
 </tr>
 <tr>
@@ -182,19 +182,19 @@ first boot; subsequent changes can be made in <strong>Settings → System</stron
 </table>
 <h2 id="span-instrumentation-seams">Span instrumentation seams</h2>
 <p>Manual root/child spans wrap high-value code paths (see
-<code>forge/main/observability/tracing.py</code>):</p>
+<code>forail/main/observability/tracing.py</code>):</p>
 <ul>
-<li>Launch path in <code>forge/api/views/job_templates.py</code>,
-  <code>forge/api/views/workflows.py</code>, <code>forge/api/views/ad_hoc_commands.py</code>:
-  root span <code>forge.launch</code> with attributes <code>template_id</code>, <code>template_type</code>,
+<li>Launch path in <code>forail/api/views/job_templates.py</code>,
+  <code>forail/api/views/workflows.py</code>, <code>forail/api/views/ad_hoc_commands.py</code>:
+  root span <code>forail.launch</code> with attributes <code>template_id</code>, <code>template_type</code>,
   <code>user_id</code>, <code>organization_id</code>, <code>result</code>, <code>gate_blocked</code>.</li>
-<li>Child span <code>forge.policy.evaluate</code> in <code>forge/main/policy/evaluator.py</code>.</li>
-<li>Child span <code>forge.scanner.run</code> in <code>forge/main/scanning/runner.py</code>.</li>
+<li>Child span <code>forail.policy.evaluate</code> in <code>forail/main/policy/evaluator.py</code>.</li>
+<li>Child span <code>forail.scanner.run</code> in <code>forail/main/scanning/runner.py</code>.</li>
 </ul>
 <p>Everything else (HTTP views, DB queries, outgoing requests, Celery tasks)
 is covered by the auto-instrumentations.</p>
 <h2 id="metric-handles">Metric handles</h2>
-<p>Exposed by <code>forge/main/observability/metrics.py</code>:</p>
+<p>Exposed by <code>forail/main/observability/metrics.py</code>:</p>
 <table>
 <thead>
 <tr>
@@ -206,37 +206,37 @@ is covered by the auto-instrumentations.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>forge_jobs_launched_total</code></td>
+<td><code>forail_jobs_launched_total</code></td>
 <td>counter</td>
 <td><code>status, template_type</code></td>
 <td>launch hook</td>
 </tr>
 <tr>
-<td><code>forge_jobs_blocked_total</code></td>
+<td><code>forail_jobs_blocked_total</code></td>
 <td>counter</td>
 <td><code>gate</code> (policy|scanner)</td>
 <td>launch hook</td>
 </tr>
 <tr>
-<td><code>forge_job_duration_seconds</code></td>
+<td><code>forail_job_duration_seconds</code></td>
 <td>histogram</td>
 <td>—</td>
 <td><code>UnifiedJob</code> finish hook</td>
 </tr>
 <tr>
-<td><code>forge_policy_evaluations_total</code></td>
+<td><code>forail_policy_evaluations_total</code></td>
 <td>counter</td>
 <td><code>decision</code></td>
 <td>policy evaluator</td>
 </tr>
 <tr>
-<td><code>forge_scan_runs_total</code></td>
+<td><code>forail_scan_runs_total</code></td>
 <td>counter</td>
 <td><code>status</code></td>
 <td>scanner runner</td>
 </tr>
 <tr>
-<td><code>forge_active_jobs</code></td>
+<td><code>forail_active_jobs</code></td>
 <td>gauge</td>
 <td>—</td>
 <td>Celery beat every 30 s</td>
@@ -250,8 +250,8 @@ is covered by the auto-instrumentations.</p>
 Collector endpoint (500 ms timeout, cached for 30 s).</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;service_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;forge&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;exporter_endpoint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://forge-otel-collector:4317&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;service_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;forail&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;exporter_endpoint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://forail-otel-collector:4317&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;sampler&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;parentbased_traceidratio&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;sampler_arg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.1&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;collector_healthy&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
@@ -264,10 +264,10 @@ Collector endpoint (500 ms timeout, cached for 30 s).</p>
 <li><code>python -m unittest tests_standalone.test_observability -v</code> — pure helper
   tests (parser / sampler validation / health aggregation).</li>
 <li>E2E smoke via the deployed stack:</li>
-<li><code>docker compose ps</code> — <code>forge-otel-collector</code> is running.</li>
+<li><code>docker compose ps</code> — <code>forail-otel-collector</code> is running.</li>
 <li><code>curl -sk -u admin:admin https://localhost/api/v2/observability/</code> —
      returns <code>enabled: true</code>, <code>collector_healthy: true</code>.</li>
-<li><code>docker compose logs forge-otel-collector --tail 50</code> — debug exporter
+<li><code>docker compose logs forail-otel-collector --tail 50</code> — debug exporter
      prints incoming spans after a job launch.</li>
 <li>Settings → System shows the <code>OTEL_*</code> keys.</li>
 <li>Sidebar → <strong>Observability</strong> shows a green Collector badge.</li>
@@ -277,8 +277,8 @@ Collector endpoint (500 ms timeout, cached for 30 s).</p>
 <li>Point the Collector at a real backend (Tempo / Prometheus / Loki) instead
   of the default <code>debug</code> exporter.</li>
 <li>Wire Prometheus alerts back into EDA rules for a closed feedback loop.</li>
-<li>Validate <code>forge-deploy/k8s/</code> manifest stubs against a real cluster (see
-  <code>forge-deploy/docs/future_development_plan.md</code> → <em>Infrastructure &amp; Test
+<li>Validate <code>forail-deploy/k8s/</code> manifest stubs against a real cluster (see
+  <code>forail-deploy/docs/future_development_plan.md</code> → <em>Infrastructure &amp; Test
   Environments</em>).</li>
 </ul>
   </main>
@@ -287,9 +287,9 @@ Collector endpoint (500 ms timeout, cached for 30 s).</p>
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../dev/index.html">Dev Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

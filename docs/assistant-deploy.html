@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Assistant Deployment (Preview) — Forge Platform Docs</title>
-  <meta name="description" content="Deploy Forge AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — all-in-one container with Ollama and ChromaDB. Preview release for early adopters, not recommended for production.">
-  <meta name="keywords" content="Forge Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <title>AI Assistant Deployment (Preview) — Forail Platform Docs</title>
+  <meta name="description" content="Deploy Forail AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — all-in-one container with Ollama and ChromaDB. Preview release for early adopters, not recommended for production.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
   <meta name="author" content="Krstan Vjestica">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/docs/assistant-deploy.html">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/assistant-deploy.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="AI Assistant Deployment (Preview) — Forge Platform Docs">
-  <meta property="og:description" content="Deploy Forge AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — all-in-one container with Ollama and ChromaDB. Preview release for early adopters, not recommended for production.">
-  <meta property="og:url" content="https://forgeplatform.github.io/docs/assistant-deploy.html">
-  <meta property="og:site_name" content="Forge Platform">
+  <meta property="og:title" content="AI Assistant Deployment (Preview) — Forail Platform Docs">
+  <meta property="og:description" content="Deploy Forail AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — all-in-one container with Ollama and ChromaDB. Preview release for early adopters, not recommended for production.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/assistant-deploy.html">
+  <meta property="og:site_name" content="Forail Platform">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AI Assistant Deployment (Preview) — Forge Platform Docs">
-  <meta name="twitter:description" content="Deploy Forge AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — all-in-one container with Ollama and ChromaDB. Preview release for early adopters, not recommended for production.">
-  <meta name="twitter:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta name="twitter:title" content="AI Assistant Deployment (Preview) — Forail Platform Docs">
+  <meta name="twitter:description" content="Deploy Forail AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — all-in-one container with Ollama and ChromaDB. Preview release for early adopters, not recommended for production.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Assistant Deployment (Preview)","description":"Deploy Forge AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — all-in-one container with Ollama and ChromaDB. Preview release for early adopters, not recommended for production.","url":"https://forgeplatform.github.io/docs/assistant-deploy.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forge Platform","url":"https://forgeplatform.github.io/"},"image":"https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Assistant Deployment (Preview)","description":"Deploy Forail AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — all-in-one container with Ollama and ChromaDB. Preview release for early adopters, not recommended for production.","url":"https://forail-platform.github.io/docs/assistant-deploy.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
       <li><a href="../dev/index.html">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -86,11 +86,11 @@
 <h1 id="deployment">Deployment</h1>
 <h2 id="standalone-deployment">Standalone Deployment</h2>
 <p>Run the assistant independently:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forge-assistant
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forail-assistant
 docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </code></pre></div>
 
-<p>This starts a <strong>single all-in-one container</strong> (<code>forge-assistant</code>) that bundles:
+<p>This starts a <strong>single all-in-one container</strong> (<code>forail-assistant</code>) that bundles:
 - <strong>Ollama</strong> — LLM server (internal, port 11434)
 - <strong>ChromaDB</strong> — vector store (embedded, port 8000)
 - <strong>FastAPI</strong> — API server (exposed on port 8100)</p>
@@ -100,7 +100,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 
 <span class="c1"># 2. Wait for health check to pass (start_period is 120s)</span>
-docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>forge-assistant
+docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>forail-assistant
 
 <span class="c1"># 3. Index documentation</span>
 curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8100/api/v1/index
@@ -110,19 +110,19 @@ curl<span class="w"> </span>http://localhost:8100/api/v1/health
 </code></pre></div>
 
 <hr />
-<h2 id="integration-with-forge-platform">Integration with Forge Platform</h2>
+<h2 id="integration-with-forail-platform">Integration with Forail Platform</h2>
 <h3 id="step-1-add-to-docker-compose">Step 1: Add to Docker Compose</h3>
-<p>In your <code>forge-deploy</code> directory:</p>
+<p>In your <code>forail-deploy</code> directory:</p>
 <div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.yml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-f<span class="w"> </span>/path/to/forge-assistant/docker-compose.integration.yml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-f<span class="w"> </span>/path/to/forail-assistant/docker-compose.integration.yml<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>up<span class="w"> </span>-d
 </code></pre></div>
 
 <h3 id="step-2-configure-nginx">Step 2: Configure Nginx</h3>
-<p>Add to your Forge nginx configuration:</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># In forge-deploy/nginx/nginx.conf, inside the server block:</span>
+<p>Add to your Forail nginx configuration:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># In forail-deploy/nginx/nginx.conf, inside the server block:</span>
 <span class="k">location</span><span class="w"> </span><span class="s">/assistant/</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://forge-assistant:8100/</span><span class="p">;</span>
+<span class="w">    </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://forail-assistant:8100/</span><span class="p">;</span>
 <span class="w">    </span><span class="kn">proxy_http_version</span><span class="w"> </span><span class="mi">1</span><span class="s">.1</span><span class="p">;</span>
 <span class="w">    </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Connection</span><span class="w"> </span><span class="s">&#39;&#39;</span><span class="p">;</span>
 <span class="w">    </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
@@ -136,12 +136,12 @@ curl<span class="w"> </span>http://localhost:8100/api/v1/health
 </code></pre></div>
 
 <h3 id="step-3-frontend-detection">Step 3: Frontend Detection</h3>
-<p>The Forge frontend automatically detects the assistant by calling <code>/assistant/api/v1/health</code>. If the endpoint responds, the chat button appears in the UI.</p>
+<p>The Forail frontend automatically detects the assistant by calling <code>/assistant/api/v1/health</code>. If the endpoint responds, the chat button appears in the UI.</p>
 <hr />
 <h2 id="gpu-support">GPU Support</h2>
 <p>For GPU-accelerated inference, uncomment the GPU section in <code>docker-compose.yml</code>:</p>
 <div class="codehilite"><pre><span></span><code><span class="nt">services</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">forge-assistant</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">forail-assistant</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">deploy</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">resources</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">reservations</span><span class="p">:</span>
@@ -158,32 +158,32 @@ curl<span class="w"> </span>http://localhost:8100/api/v1/health
 <hr />
 <h2 id="cpu-only-deployment">CPU-Only Deployment</h2>
 <p>For servers without GPU, use a smaller model:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">FORGE_ASSISTANT_OLLAMA_MODEL</span><span class="o">=</span>phi3:mini<span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+<div class="codehilite"><pre><span></span><code><span class="nv">FORAIL_ASSISTANT_OLLAMA_MODEL</span><span class="o">=</span>phi3:mini<span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </code></pre></div>
 
 <p>Response time will be 10-20 seconds instead of 2-5 seconds.</p>
 <hr />
 <h2 id="removing-the-assistant">Removing the Assistant</h2>
-<p>To remove the assistant from a running Forge deployment:</p>
+<p>To remove the assistant from a running Forail deployment:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Stop assistant service</span>
 docker<span class="w"> </span>compose<span class="w"> </span>-f<span class="w"> </span>docker-compose.yml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-f<span class="w"> </span>/path/to/forge-assistant/docker-compose.integration.yml<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>down<span class="w"> </span>forge-assistant
+<span class="w">  </span>-f<span class="w"> </span>/path/to/forail-assistant/docker-compose.integration.yml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>down<span class="w"> </span>forail-assistant
 
 <span class="c1"># Or if running standalone</span>
-<span class="nb">cd</span><span class="w"> </span>forge-assistant<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w"> </span>-v
+<span class="nb">cd</span><span class="w"> </span>forail-assistant<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w"> </span>-v
 </code></pre></div>
 
-<p>The Forge platform continues to work normally. The chat button disappears automatically when the health check fails.</p>
+<p>The Forail platform continues to work normally. The chat button disappears automatically when the health check fails.</p>
 <hr />
 <h2 id="backup-and-restore">Backup and Restore</h2>
 <p>All persistent data (ChromaDB + Ollama models) is stored in the <code>assistant_data</code> volume mounted at <code>/data</code>:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Backup</span>
-docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>forge-assistant_assistant_data:/data<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/backups:/backup<span class="w"> </span><span class="se">\</span>
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>forail-assistant_assistant_data:/data<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/backups:/backup<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>alpine<span class="w"> </span>tar<span class="w"> </span>czf<span class="w"> </span>/backup/assistant-data.tar.gz<span class="w"> </span>/data
 
 <span class="c1"># Restore</span>
-docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>forge-assistant_assistant_data:/data<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/backups:/backup<span class="w"> </span><span class="se">\</span>
+docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-v<span class="w"> </span>forail-assistant_assistant_data:/data<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>/backups:/backup<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>alpine<span class="w"> </span>tar<span class="w"> </span>xzf<span class="w"> </span>/backup/assistant-data.tar.gz<span class="w"> </span>-C<span class="w"> </span>/
 </code></pre></div>
 
@@ -198,7 +198,7 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 <li><strong>Test</strong> — pytest with JUnit XML reporting</li>
 <li><strong>Build</strong> — Docker image build</li>
 <li><strong>Scan</strong> — Trivy container vulnerability scan</li>
-<li><strong>Push</strong> — Push to <code>ghcr.io/forgeplatform/forge-assistant</code> (main branch and version tags only)</li>
+<li><strong>Push</strong> — Push to <code>ghcr.io/forail-platform/forail-assistant</code> (main branch and version tags only)</li>
 </ol>
 <p>Tests must pass before any image is built or pushed. Releases use the built-in <code>GITHUB_TOKEN</code> with <code>packages: write</code> — no external secrets required.</p>
   </main>
@@ -207,9 +207,9 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../dev/index.html">Dev Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

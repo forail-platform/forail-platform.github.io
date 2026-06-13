@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Database Schema — Forge Developer Docs</title>
-  <meta name="description" content="Database Schema — developer documentation for the Forge infrastructure automation platform.">
+  <title>Database Schema — Forail Developer Docs</title>
+  <meta name="description" content="Database Schema — developer documentation for the Forail infrastructure automation platform.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/dev/database.html">
+  <link rel="canonical" href="https://forail-platform.github.io/dev/database.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,13 +17,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="../docs/index.html">User Docs</a></li>
       <li><a href="index.html" style="color: var(--primary);">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -50,7 +50,7 @@
   </aside>
   <main class="docs-content">
 <h1 id="06-database-schema">06 — Database Schema</h1>
-<p>Forge uses PostgreSQL 15. This document covers key tables, relationships,
+<p>Forail uses PostgreSQL 15. This document covers key tables, relationships,
 maintenance, and useful queries for diagnostics.</p>
 <hr />
 <h2 id="er-diagram-main-relationships">ER Diagram — Main Relationships</h2>
@@ -429,43 +429,43 @@ UnifiedJob (base table)
 <h2 id="database-maintenance">Database Maintenance</h2>
 <h3 id="backup">Backup</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Automated backup (uses the built-in script)</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-task<span class="w"> </span>bash<span class="w"> </span>/etc/forge/backup.sh
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-task<span class="w"> </span>bash<span class="w"> </span>/etc/forail/backup.sh
 
 <span class="c1"># Manual backup</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>pg_dump<span class="w"> </span>-U<span class="w"> </span>forge<span class="w"> </span>forge<span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span>backup_<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d<span class="k">)</span>.sql.gz
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>pg_dump<span class="w"> </span>-U<span class="w"> </span>forail<span class="w"> </span>forail<span class="w"> </span><span class="p">|</span><span class="w"> </span>gzip<span class="w"> </span>&gt;<span class="w"> </span>backup_<span class="k">$(</span>date<span class="w"> </span>+%Y%m%d<span class="k">)</span>.sql.gz
 </code></pre></div>
 
 <h3 id="restore">Restore</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Stop the application</span>
-docker<span class="w"> </span>compose<span class="w"> </span>stop<span class="w"> </span>forge-web<span class="w"> </span>forge-task
+docker<span class="w"> </span>compose<span class="w"> </span>stop<span class="w"> </span>forail-web<span class="w"> </span>forail-task
 
 <span class="c1"># Restore</span>
-gunzip<span class="w"> </span>-c<span class="w"> </span>backup_20260310.sql.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>forge<span class="w"> </span>forge
+gunzip<span class="w"> </span>-c<span class="w"> </span>backup_20260310.sql.gz<span class="w"> </span><span class="p">|</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>forail<span class="w"> </span>forail
 
 <span class="c1"># Restart</span>
-docker<span class="w"> </span>compose<span class="w"> </span>start<span class="w"> </span>forge-web<span class="w"> </span>forge-task
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-web<span class="w"> </span>awx-manage<span class="w"> </span>migrate<span class="w">  </span><span class="c1"># if version differs</span>
+docker<span class="w"> </span>compose<span class="w"> </span>start<span class="w"> </span>forail-web<span class="w"> </span>forail-task
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-web<span class="w"> </span>awx-manage<span class="w"> </span>migrate<span class="w">  </span><span class="c1"># if version differs</span>
 </code></pre></div>
 
 <h3 id="cleanup-mandatory-in-production">Cleanup (MANDATORY in production)</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Delete jobs older than 90 days (and their events/partitions)</span>
-forge-manage<span class="w"> </span>cleanup_jobs<span class="w"> </span>--days<span class="o">=</span><span class="m">90</span>
+forail-manage<span class="w"> </span>cleanup_jobs<span class="w"> </span>--days<span class="o">=</span><span class="m">90</span>
 
 <span class="c1"># Delete activity stream older than one year</span>
-forge-manage<span class="w"> </span>cleanup_activitystream<span class="w"> </span>--days<span class="o">=</span><span class="m">365</span>
+forail-manage<span class="w"> </span>cleanup_activitystream<span class="w"> </span>--days<span class="o">=</span><span class="m">365</span>
 
 <span class="c1"># Delete expired sessions and tokens</span>
-forge-manage<span class="w"> </span>cleanup_sessions
-forge-manage<span class="w"> </span>cleanup_tokens
+forail-manage<span class="w"> </span>cleanup_sessions
+forail-manage<span class="w"> </span>cleanup_tokens
 </code></pre></div>
 
-<p><strong>Recommendation:</strong> Set up a System Job in the Forge UI that runs <code>cleanup_jobs</code> daily.</p>
+<p><strong>Recommendation:</strong> Set up a System Job in the Forail UI that runs <code>cleanup_jobs</code> daily.</p>
 <h3 id="vacuum">Vacuum</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Reclaim dead tuples (run after large deletions)</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>vacuumdb<span class="w"> </span>-U<span class="w"> </span>forge<span class="w"> </span>-z<span class="w"> </span>forge
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>vacuumdb<span class="w"> </span>-U<span class="w"> </span>forail<span class="w"> </span>-z<span class="w"> </span>forail
 </code></pre></div>
 
-<h3 id="postgresql-tuning-for-forge">PostgreSQL Tuning for Forge</h3>
+<h3 id="postgresql-tuning-for-forail">PostgreSQL Tuning for Forail</h3>
 <table>
 <thead>
 <tr>
@@ -543,20 +543,20 @@ docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">ex
 
 <h3 id="accessing-the-database">Accessing the database</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Interactive shell</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>forge<span class="w"> </span>forge
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>forail<span class="w"> </span>forail
 
 <span class="c1"># Or through Django</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-web<span class="w"> </span>awx-manage<span class="w"> </span>dbshell
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-web<span class="w"> </span>awx-manage<span class="w"> </span>dbshell
 </code></pre></div>
 
 <hr />
 <h2 id="migrations">Migrations</h2>
-<p>Forge has <strong>252 migrations</strong> in <code>forge/main/migrations/</code>.</p>
+<p>Forail has <strong>252 migrations</strong> in <code>forail/main/migrations/</code>.</p>
 <ul>
-<li>All reference <code>forge.main.fields</code> (not <code>awx.main.fields</code>)</li>
+<li>All reference <code>forail.main.fields</code> (not <code>awx.main.fields</code>)</li>
 <li>The init script automatically runs <code>migrate</code> during deployment</li>
 <li>Never edit existing migrations — only add new ones</li>
-<li>Check status: <code>forge-manage showmigrations | grep "\[ \]"</code></li>
+<li>Check status: <code>forail-manage showmigrations | grep "\[ \]"</code></li>
 </ul>
   </main>
 </div>
@@ -564,9 +564,9 @@ docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">ex
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../docs/index.html">User Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

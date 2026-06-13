@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Drift Detection — Forge Platform Docs</title>
-  <meta name="description" content="Drift detection in Forge Platform — periodic comparison of declared inventory vs actual cloud state, with alert rules and remediation workflows. Built-in alternative to standalone drift tools.">
-  <meta name="keywords" content="Forge Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <title>Drift Detection — Forail Platform Docs</title>
+  <meta name="description" content="Drift detection in Forail Platform — periodic comparison of declared inventory vs actual cloud state, with alert rules and remediation workflows. Built-in alternative to standalone drift tools.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
   <meta name="author" content="Krstan Vjestica">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/docs/drift-detection.html">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/drift-detection.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Drift Detection — Forge Platform Docs">
-  <meta property="og:description" content="Drift detection in Forge Platform — periodic comparison of declared inventory vs actual cloud state, with alert rules and remediation workflows. Built-in alternative to standalone drift tools.">
-  <meta property="og:url" content="https://forgeplatform.github.io/docs/drift-detection.html">
-  <meta property="og:site_name" content="Forge Platform">
+  <meta property="og:title" content="Drift Detection — Forail Platform Docs">
+  <meta property="og:description" content="Drift detection in Forail Platform — periodic comparison of declared inventory vs actual cloud state, with alert rules and remediation workflows. Built-in alternative to standalone drift tools.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/drift-detection.html">
+  <meta property="og:site_name" content="Forail Platform">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Drift Detection — Forge Platform Docs">
-  <meta name="twitter:description" content="Drift detection in Forge Platform — periodic comparison of declared inventory vs actual cloud state, with alert rules and remediation workflows. Built-in alternative to standalone drift tools.">
-  <meta name="twitter:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta name="twitter:title" content="Drift Detection — Forail Platform Docs">
+  <meta name="twitter:description" content="Drift detection in Forail Platform — periodic comparison of declared inventory vs actual cloud state, with alert rules and remediation workflows. Built-in alternative to standalone drift tools.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"TechArticle","headline":"Drift Detection","description":"Drift detection in Forge Platform — periodic comparison of declared inventory vs actual cloud state, with alert rules and remediation workflows. Built-in alternative to standalone drift tools.","url":"https://forgeplatform.github.io/docs/drift-detection.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forge Platform","url":"https://forgeplatform.github.io/"},"image":"https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"Drift Detection","description":"Drift detection in Forail Platform — periodic comparison of declared inventory vs actual cloud state, with alert rules and remediation workflows. Built-in alternative to standalone drift tools.","url":"https://forail-platform.github.io/docs/drift-detection.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
       <li><a href="../dev/index.html">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -443,7 +443,7 @@ GET<span class="w">    </span>/api/v2/drift_alerts/<span class="o">{</span>id<sp
 
 <hr />
 <h2 id="alert-rule-create-example">Alert Rule — Create Example</h2>
-<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://forge.example.com/api/v2/drift_alert_rules/<span class="w"> </span><span class="se">\</span>
+<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://forail.example.com/api/v2/drift_alert_rules/<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer &lt;token&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
@@ -462,7 +462,7 @@ GET<span class="w">    </span>/api/v2/drift_alerts/<span class="o">{</span>id<sp
 <h2 id="csv-compliance-export">CSV Compliance Export</h2>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Export all drift for an inventory in the last 30 days</span>
 curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer &lt;token&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="s2">&quot;https://forge.example.com/api/v2/drift_detections/export/?inventory=3&amp;date_from=2026-03-01&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="s2">&quot;https://forail.example.com/api/v2/drift_detections/export/?inventory=3&amp;date_from=2026-03-01&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-o<span class="w"> </span>drift_report.csv
 </code></pre></div>
 
@@ -474,7 +474,7 @@ Summary, Diff Type, Acknowledged.</p>
 <ul>
 <li>Default retention: 90 days</li>
 <li>Always keeps at least 2 snapshots per host</li>
-<li>Run manually: <code>forge-manage shell -c "from forge.main.tasks.drift import cleanup_old_snapshots; cleanup_old_snapshots()"</code></li>
+<li>Run manually: <code>forail-manage shell -c "from forail.main.tasks.drift import cleanup_old_snapshots; cleanup_old_snapshots()"</code></li>
 </ul>
 <hr />
 <h2 id="frontend">Frontend</h2>
@@ -541,9 +541,9 @@ Summary, Diff Type, Acknowledged.</p>
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../dev/index.html">Dev Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

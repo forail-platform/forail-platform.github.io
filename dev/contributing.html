@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contributing Guide — Forge Developer Docs</title>
-  <meta name="description" content="Contributing Guide — developer documentation for the Forge infrastructure automation platform.">
+  <title>Contributing Guide — Forail Developer Docs</title>
+  <meta name="description" content="Contributing Guide — developer documentation for the Forail infrastructure automation platform.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/dev/contributing.html">
+  <link rel="canonical" href="https://forail-platform.github.io/dev/contributing.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,13 +17,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="../docs/index.html">User Docs</a></li>
       <li><a href="index.html" style="color: var(--primary);">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -78,8 +78,8 @@ git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </
 
 <span class="c1"># 2. Make changes, test, commit</span>
 vagrant<span class="w"> </span>rsync
-vagrant<span class="w"> </span>ssh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;cd /awx_devel &amp;&amp; forge-test&quot;</span>
-git<span class="w"> </span>add<span class="w"> </span>forge/main/models/my_model.py
+vagrant<span class="w"> </span>ssh<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;cd /awx_devel &amp;&amp; forail-test&quot;</span>
+git<span class="w"> </span>add<span class="w"> </span>forail/main/models/my_model.py
 git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat(models): add Policy model for governance&quot;</span>
 
 <span class="c1"># 3. Push and create PR</span>
@@ -169,8 +169,8 @@ git<span class="w"> </span>rebase<span class="w"> </span>devel
 <li>Path alias <code>@/</code> instead of relative <code>../../..</code></li>
 </ul>
 <h3 id="linting-run-before-every-commit">Linting (run before every commit)</h3>
-<div class="codehilite"><pre><span></span><code>flake8<span class="w"> </span>forge/<span class="w"> </span>--count<span class="w"> </span>--statistics
-<span class="nb">cd</span><span class="w"> </span>forge/ui_next<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npx<span class="w"> </span>tsc<span class="w"> </span>--noEmit
+<div class="codehilite"><pre><span></span><code>flake8<span class="w"> </span>forail/<span class="w"> </span>--count<span class="w"> </span>--statistics
+<span class="nb">cd</span><span class="w"> </span>forail/ui_next<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>npx<span class="w"> </span>tsc<span class="w"> </span>--noEmit
 </code></pre></div>
 
 <hr />
@@ -207,12 +207,12 @@ git<span class="w"> </span>rebase<span class="w"> </span>devel
 <h2 id="quick-reference-common-development-tasks">Quick Reference — Common Development Tasks</h2>
 <h3 id="add-a-new-api-endpoint">Add a new API endpoint</h3>
 <ol>
-<li>Model in <code>forge/main/models/</code> → register in <code>__init__.py</code></li>
-<li>Migration: <code>forge-manage makemigrations main</code></li>
-<li>Serializer in <code>forge/api/serializers/</code></li>
-<li>View in <code>forge/api/views/</code></li>
-<li>URL module in <code>forge/api/urls/</code> → register in <code>urls.py</code></li>
-<li>Access class in <code>forge/main/access.py</code></li>
+<li>Model in <code>forail/main/models/</code> → register in <code>__init__.py</code></li>
+<li>Migration: <code>forail-manage makemigrations main</code></li>
+<li>Serializer in <code>forail/api/serializers/</code></li>
+<li>View in <code>forail/api/views/</code></li>
+<li>URL module in <code>forail/api/urls/</code> → register in <code>urls.py</code></li>
+<li>Access class in <code>forail/main/access.py</code></li>
 <li>Tests</li>
 </ol>
 <h3 id="add-a-new-frontend-page">Add a new frontend page</h3>
@@ -226,9 +226,9 @@ git<span class="w"> </span>rebase<span class="w"> </span>devel
 </ol>
 <h3 id="add-a-management-command">Add a management command</h3>
 <ol>
-<li>File in <code>forge/main/management/commands/</code></li>
+<li>File in <code>forail/main/management/commands/</code></li>
 <li>Implement <code>Command</code> class with <code>handle()</code> method</li>
-<li>Test: <code>forge-manage my_command --help</code></li>
+<li>Test: <code>forail-manage my_command --help</code></li>
 </ol>
   </main>
 </div>
@@ -236,9 +236,9 @@ git<span class="w"> </span>rebase<span class="w"> </span>devel
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../docs/index.html">User Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

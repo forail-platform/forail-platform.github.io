@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Configuration Reference — Forge Developer Docs</title>
-  <meta name="description" content="Configuration Reference — developer documentation for the Forge infrastructure automation platform.">
+  <title>Configuration Reference — Forail Developer Docs</title>
+  <meta name="description" content="Configuration Reference — developer documentation for the Forail infrastructure automation platform.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/dev/dev-configuration.html">
+  <link rel="canonical" href="https://forail-platform.github.io/dev/dev-configuration.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,13 +17,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="../docs/index.html">User Docs</a></li>
       <li><a href="index.html" style="color: var(--primary);">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -70,24 +70,24 @@
 <td><code>openssl rand -base64 24</code></td>
 </tr>
 <tr>
-<td><code>FORGE_SECRET_KEY</code></td>
+<td><code>FORAIL_SECRET_KEY</code></td>
 <td>Django crypto key</td>
 <td><code>openssl rand -base64 32</code></td>
 </tr>
 <tr>
-<td><code>FORGE_BROADCAST_WEBSOCKET_SECRET</code></td>
+<td><code>FORAIL_BROADCAST_WEBSOCKET_SECRET</code></td>
 <td>WS auth secret</td>
 <td><code>openssl rand -base64 32</code></td>
 </tr>
 <tr>
-<td><code>FORGE_ADMIN_PASSWORD</code></td>
+<td><code>FORAIL_ADMIN_PASSWORD</code></td>
 <td>Admin password</td>
 <td>Manually — strong password</td>
 </tr>
 <tr>
-<td><code>FORGE_CSRF_TRUSTED_ORIGINS</code></td>
+<td><code>FORAIL_CSRF_TRUSTED_ORIGINS</code></td>
 <td>CSRF origins</td>
-<td><code>https://forge.example.com</code></td>
+<td><code>https://forail.example.com</code></td>
 </tr>
 </tbody>
 </table>
@@ -102,42 +102,42 @@
 </thead>
 <tbody>
 <tr>
-<td><code>FORGE_IMAGE</code></td>
-<td><code>forge-platform/forge</code></td>
+<td><code>FORAIL_IMAGE</code></td>
+<td><code>forail-platform/forail</code></td>
 <td>Docker image</td>
 </tr>
 <tr>
-<td><code>FORGE_TAG</code></td>
+<td><code>FORAIL_TAG</code></td>
 <td><code>latest</code></td>
 <td>Image tag</td>
 </tr>
 <tr>
 <td><code>POSTGRES_USER</code></td>
-<td><code>forge</code></td>
+<td><code>forail</code></td>
 <td>DB user</td>
 </tr>
 <tr>
 <td><code>POSTGRES_DB</code></td>
-<td><code>forge</code></td>
+<td><code>forail</code></td>
 <td>DB name</td>
 </tr>
 <tr>
-<td><code>FORGE_ADMIN_USER</code></td>
+<td><code>FORAIL_ADMIN_USER</code></td>
 <td><code>admin</code></td>
 <td>Admin username</td>
 </tr>
 <tr>
-<td><code>FORGE_ALLOWED_HOSTS</code></td>
+<td><code>FORAIL_ALLOWED_HOSTS</code></td>
 <td><code>*</code></td>
 <td>Allowed HTTP hosts</td>
 </tr>
 <tr>
-<td><code>FORGE_NODE_NAME</code></td>
-<td><code>forge-node</code></td>
+<td><code>FORAIL_NODE_NAME</code></td>
+<td><code>forail-node</code></td>
 <td>Cluster node name</td>
 </tr>
 <tr>
-<td><code>FORGE_NODE_TYPE</code></td>
+<td><code>FORAIL_NODE_TYPE</code></td>
 <td><code>hybrid</code></td>
 <td><code>hybrid</code> / <code>control</code> / <code>execution</code></td>
 </tr>
@@ -166,11 +166,11 @@
 <h3 id="watch-out">Watch out</h3>
 <ul>
 <li>
-<p><strong><code>FORGE_SECRET_KEY</code> — never change it</strong> after deployment — it invalidates all sessions,
+<p><strong><code>FORAIL_SECRET_KEY</code> — never change it</strong> after deployment — it invalidates all sessions,
   tokens, and encrypted credentials.</p>
 </li>
 <li>
-<p><strong><code>FORGE_CSRF_TRUSTED_ORIGINS</code></strong> must be a <strong>full URL with protocol</strong>: <code>https://forge.example.com</code>.
+<p><strong><code>FORAIL_CSRF_TRUSTED_ORIGINS</code></strong> must be a <strong>full URL with protocol</strong>: <code>https://forail.example.com</code>.
   Hostname only without <code>https://</code> won't work.</p>
 </li>
 <li>
@@ -357,28 +357,28 @@
 <div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class="w"> </span>-X<span class="w"> </span>PATCH<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;SESSION_COOKIE_AGE&quot;: 28800}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://forge.example.com/api/v2/settings/authentication/
+<span class="w">  </span>https://forail.example.com/api/v2/settings/authentication/
 </code></pre></div>
 
 <h3 id="set-global-job-timeout-to-1-hour">Set global job timeout to 1 hour</h3>
 <div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class="w"> </span>-X<span class="w"> </span>PATCH<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;DEFAULT_JOB_TIMEOUT&quot;: 3600}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://forge.example.com/api/v2/settings/jobs/
+<span class="w">  </span>https://forail.example.com/api/v2/settings/jobs/
 </code></pre></div>
 
 <h3 id="add-proxy-for-all-jobs">Add proxy for all jobs</h3>
 <div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class="w"> </span>-X<span class="w"> </span>PATCH<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;AWX_TASK_ENV&quot;: {&quot;HTTP_PROXY&quot;: &quot;http://proxy:3128&quot;, &quot;HTTPS_PROXY&quot;: &quot;http://proxy:3128&quot;}}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://forge.example.com/api/v2/settings/jobs/
+<span class="w">  </span>https://forail.example.com/api/v2/settings/jobs/
 </code></pre></div>
 
 <h3 id="disable-basic-auth-more-secure">Disable Basic Auth (more secure)</h3>
 <div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class="w"> </span>-X<span class="w"> </span>PATCH<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;AUTH_BASIC_ENABLED&quot;: false}&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://forge.example.com/api/v2/settings/authentication/
+<span class="w">  </span>https://forail.example.com/api/v2/settings/authentication/
 </code></pre></div>
 
 <h3 id="send-logs-to-splunk">Send logs to Splunk</h3>
@@ -390,7 +390,7 @@
 <span class="s1">    &quot;LOG_AGGREGATOR_TYPE&quot;: &quot;splunk&quot;,</span>
 <span class="s1">    &quot;LOG_AGGREGATOR_ENABLED&quot;: true</span>
 <span class="s1">  }&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://forge.example.com/api/v2/settings/logging/
+<span class="w">  </span>https://forail.example.com/api/v2/settings/logging/
 </code></pre></div>
 
 <h3 id="configure-ldap">Configure LDAP</h3>
@@ -398,14 +398,14 @@
 <span class="w">  </span>-H<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
 <span class="s1">    &quot;AUTH_LDAP_SERVER_URI&quot;: &quot;ldaps://ldap.example.com:636&quot;,</span>
-<span class="s1">    &quot;AUTH_LDAP_BIND_DN&quot;: &quot;cn=forge,ou=services,dc=example,dc=com&quot;,</span>
+<span class="s1">    &quot;AUTH_LDAP_BIND_DN&quot;: &quot;cn=forail,ou=services,dc=example,dc=com&quot;,</span>
 <span class="s1">    &quot;AUTH_LDAP_BIND_PASSWORD&quot;: &quot;LDAPPassword&quot;,</span>
 <span class="s1">    &quot;AUTH_LDAP_USER_SEARCH&quot;: [&quot;ou=users,dc=example,dc=com&quot;, &quot;SCOPE_SUBTREE&quot;, &quot;(uid=%(user)s)&quot;],</span>
 <span class="s1">    &quot;AUTH_LDAP_ORGANIZATION_MAP&quot;: {</span>
 <span class="s1">      &quot;Default&quot;: {&quot;users&quot;: true, &quot;remove_users&quot;: false}</span>
 <span class="s1">    }</span>
 <span class="s1">  }&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://forge.example.com/api/v2/settings/ldap/
+<span class="w">  </span>https://forail.example.com/api/v2/settings/ldap/
 </code></pre></div>
 
 <hr />
@@ -466,9 +466,9 @@ Effective     = whichever is smaller
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../docs/index.html">User Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

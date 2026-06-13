@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Assistant Configuration (Preview) — Forge Platform Docs</title>
-  <meta name="description" content="Forge AI Assistant configuration (UNDER ACTIVE DEVELOPMENT — not production-ready). Model selection (Ollama-compatible), system prompts, RAG knowledge sources. Settings may change in future releases.">
-  <meta name="keywords" content="Forge Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <title>AI Assistant Configuration (Preview) — Forail Platform Docs</title>
+  <meta name="description" content="Forail AI Assistant configuration (UNDER ACTIVE DEVELOPMENT — not production-ready). Model selection (Ollama-compatible), system prompts, RAG knowledge sources. Settings may change in future releases.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
   <meta name="author" content="Krstan Vjestica">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/docs/assistant-config.html">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/assistant-config.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="AI Assistant Configuration (Preview) — Forge Platform Docs">
-  <meta property="og:description" content="Forge AI Assistant configuration (UNDER ACTIVE DEVELOPMENT — not production-ready). Model selection (Ollama-compatible), system prompts, RAG knowledge sources. Settings may change in future releases.">
-  <meta property="og:url" content="https://forgeplatform.github.io/docs/assistant-config.html">
-  <meta property="og:site_name" content="Forge Platform">
+  <meta property="og:title" content="AI Assistant Configuration (Preview) — Forail Platform Docs">
+  <meta property="og:description" content="Forail AI Assistant configuration (UNDER ACTIVE DEVELOPMENT — not production-ready). Model selection (Ollama-compatible), system prompts, RAG knowledge sources. Settings may change in future releases.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/assistant-config.html">
+  <meta property="og:site_name" content="Forail Platform">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AI Assistant Configuration (Preview) — Forge Platform Docs">
-  <meta name="twitter:description" content="Forge AI Assistant configuration (UNDER ACTIVE DEVELOPMENT — not production-ready). Model selection (Ollama-compatible), system prompts, RAG knowledge sources. Settings may change in future releases.">
-  <meta name="twitter:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta name="twitter:title" content="AI Assistant Configuration (Preview) — Forail Platform Docs">
+  <meta name="twitter:description" content="Forail AI Assistant configuration (UNDER ACTIVE DEVELOPMENT — not production-ready). Model selection (Ollama-compatible), system prompts, RAG knowledge sources. Settings may change in future releases.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Assistant Configuration (Preview)","description":"Forge AI Assistant configuration (UNDER ACTIVE DEVELOPMENT — not production-ready). Model selection (Ollama-compatible), system prompts, RAG knowledge sources. Settings may change in future releases.","url":"https://forgeplatform.github.io/docs/assistant-config.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forge Platform","url":"https://forgeplatform.github.io/"},"image":"https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Assistant Configuration (Preview)","description":"Forail AI Assistant configuration (UNDER ACTIVE DEVELOPMENT — not production-ready). Model selection (Ollama-compatible), system prompts, RAG knowledge sources. Settings may change in future releases.","url":"https://forail-platform.github.io/docs/assistant-config.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
       <li><a href="../dev/index.html">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -84,7 +84,7 @@
   </aside>
   <main class="docs-content">
 <h1 id="configuration">Configuration</h1>
-<p>All configuration is via environment variables with the <code>FORGE_ASSISTANT_</code> prefix.</p>
+<p>All configuration is via environment variables with the <code>FORAIL_ASSISTANT_</code> prefix.</p>
 <hr />
 <h2 id="environment-variables">Environment Variables</h2>
 <h3 id="ollama-settings">Ollama Settings</h3>
@@ -98,22 +98,22 @@
 </thead>
 <tbody>
 <tr>
-<td><code>FORGE_ASSISTANT_OLLAMA_BASE_URL</code></td>
+<td><code>FORAIL_ASSISTANT_OLLAMA_BASE_URL</code></td>
 <td><code>http://localhost:11434</code></td>
 <td>Ollama API base URL (localhost — runs inside the same container)</td>
 </tr>
 <tr>
-<td><code>FORGE_ASSISTANT_OLLAMA_MODEL</code></td>
+<td><code>FORAIL_ASSISTANT_OLLAMA_MODEL</code></td>
 <td><code>gemma3:1b</code></td>
 <td>LLM model for chat generation</td>
 </tr>
 <tr>
-<td><code>FORGE_ASSISTANT_OLLAMA_EMBED_MODEL</code></td>
+<td><code>FORAIL_ASSISTANT_OLLAMA_EMBED_MODEL</code></td>
 <td><code>nomic-embed-text</code></td>
 <td>Model for generating embeddings</td>
 </tr>
 <tr>
-<td><code>FORGE_ASSISTANT_OLLAMA_TIMEOUT</code></td>
+<td><code>FORAIL_ASSISTANT_OLLAMA_TIMEOUT</code></td>
 <td><code>120</code></td>
 <td>Timeout in seconds for Ollama requests</td>
 </tr>
@@ -130,18 +130,18 @@
 </thead>
 <tbody>
 <tr>
-<td><code>FORGE_ASSISTANT_CHROMA_HOST</code></td>
+<td><code>FORAIL_ASSISTANT_CHROMA_HOST</code></td>
 <td><code>localhost</code></td>
 <td>ChromaDB hostname (localhost — embedded in the same container)</td>
 </tr>
 <tr>
-<td><code>FORGE_ASSISTANT_CHROMA_PORT</code></td>
+<td><code>FORAIL_ASSISTANT_CHROMA_PORT</code></td>
 <td><code>8000</code></td>
 <td>ChromaDB port</td>
 </tr>
 <tr>
-<td><code>FORGE_ASSISTANT_CHROMA_COLLECTION</code></td>
-<td><code>forge_docs</code></td>
+<td><code>FORAIL_ASSISTANT_CHROMA_COLLECTION</code></td>
+<td><code>forail_docs</code></td>
 <td>Collection name for indexed documents</td>
 </tr>
 </tbody>
@@ -157,17 +157,17 @@
 </thead>
 <tbody>
 <tr>
-<td><code>FORGE_ASSISTANT_RAG_TOP_K</code></td>
+<td><code>FORAIL_ASSISTANT_RAG_TOP_K</code></td>
 <td><code>5</code></td>
 <td>Number of document chunks to retrieve per query</td>
 </tr>
 <tr>
-<td><code>FORGE_ASSISTANT_RAG_CHUNK_SIZE</code></td>
+<td><code>FORAIL_ASSISTANT_RAG_CHUNK_SIZE</code></td>
 <td><code>500</code></td>
 <td>Character count per document chunk</td>
 </tr>
 <tr>
-<td><code>FORGE_ASSISTANT_RAG_CHUNK_OVERLAP</code></td>
+<td><code>FORAIL_ASSISTANT_RAG_CHUNK_OVERLAP</code></td>
 <td><code>50</code></td>
 <td>Overlap between adjacent chunks</td>
 </tr>
@@ -184,22 +184,22 @@
 </thead>
 <tbody>
 <tr>
-<td><code>FORGE_ASSISTANT_APP_NAME</code></td>
-<td><code>Forge Assistant</code></td>
+<td><code>FORAIL_ASSISTANT_APP_NAME</code></td>
+<td><code>Forail Assistant</code></td>
 <td>Application display name</td>
 </tr>
 <tr>
-<td><code>FORGE_ASSISTANT_APP_VERSION</code></td>
+<td><code>FORAIL_ASSISTANT_APP_VERSION</code></td>
 <td><code>2026.05.0</code></td>
 <td>Version string</td>
 </tr>
 <tr>
-<td><code>FORGE_ASSISTANT_LOG_LEVEL</code></td>
+<td><code>FORAIL_ASSISTANT_LOG_LEVEL</code></td>
 <td><code>INFO</code></td>
 <td>Logging level (DEBUG, INFO, WARNING, ERROR)</td>
 </tr>
 <tr>
-<td><code>FORGE_ASSISTANT_CORS_ORIGINS</code></td>
+<td><code>FORAIL_ASSISTANT_CORS_ORIGINS</code></td>
 <td><code>*</code></td>
 <td>Comma-separated list of allowed CORS origins</td>
 </tr>
@@ -257,10 +257,10 @@
 </table>
 <p>To change the model:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Pull new model (exec into the all-in-one container)</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forge-assistant<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>llama3.1:8b
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-assistant<span class="w"> </span>ollama<span class="w"> </span>pull<span class="w"> </span>llama3.1:8b
 
 <span class="c1"># Restart with new model</span>
-<span class="nv">FORGE_ASSISTANT_OLLAMA_MODEL</span><span class="o">=</span>llama3.1:8b<span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
+<span class="nv">FORAIL_ASSISTANT_OLLAMA_MODEL</span><span class="o">=</span>llama3.1:8b<span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </code></pre></div>
 
 <hr />
@@ -288,9 +288,9 @@ docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">ex
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../dev/index.html">Dev Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

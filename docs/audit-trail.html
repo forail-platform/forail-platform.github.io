@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Audit Trail — Forge Platform Docs</title>
-  <meta name="description" content="Audit trail in Forge Platform — every state change is recorded with actor, resource, before/after diff. Compliance-ready audit logging for Ansible automation and infrastructure changes.">
-  <meta name="keywords" content="Forge Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <title>Audit Trail — Forail Platform Docs</title>
+  <meta name="description" content="Audit trail in Forail Platform — every state change is recorded with actor, resource, before/after diff. Compliance-ready audit logging for Ansible automation and infrastructure changes.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
   <meta name="author" content="Krstan Vjestica">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/docs/audit-trail.html">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/audit-trail.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Audit Trail — Forge Platform Docs">
-  <meta property="og:description" content="Audit trail in Forge Platform — every state change is recorded with actor, resource, before/after diff. Compliance-ready audit logging for Ansible automation and infrastructure changes.">
-  <meta property="og:url" content="https://forgeplatform.github.io/docs/audit-trail.html">
-  <meta property="og:site_name" content="Forge Platform">
+  <meta property="og:title" content="Audit Trail — Forail Platform Docs">
+  <meta property="og:description" content="Audit trail in Forail Platform — every state change is recorded with actor, resource, before/after diff. Compliance-ready audit logging for Ansible automation and infrastructure changes.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/audit-trail.html">
+  <meta property="og:site_name" content="Forail Platform">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Audit Trail — Forge Platform Docs">
-  <meta name="twitter:description" content="Audit trail in Forge Platform — every state change is recorded with actor, resource, before/after diff. Compliance-ready audit logging for Ansible automation and infrastructure changes.">
-  <meta name="twitter:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta name="twitter:title" content="Audit Trail — Forail Platform Docs">
+  <meta name="twitter:description" content="Audit trail in Forail Platform — every state change is recorded with actor, resource, before/after diff. Compliance-ready audit logging for Ansible automation and infrastructure changes.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"TechArticle","headline":"Audit Trail","description":"Audit trail in Forge Platform — every state change is recorded with actor, resource, before/after diff. Compliance-ready audit logging for Ansible automation and infrastructure changes.","url":"https://forgeplatform.github.io/docs/audit-trail.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forge Platform","url":"https://forgeplatform.github.io/"},"image":"https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"Audit Trail","description":"Audit trail in Forail Platform — every state change is recorded with actor, resource, before/after diff. Compliance-ready audit logging for Ansible automation and infrastructure changes.","url":"https://forail-platform.github.io/docs/audit-trail.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
       <li><a href="../dev/index.html">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -84,7 +84,7 @@
   </aside>
   <main class="docs-content">
 <h1 id="14-improved-audit-trail">14 — Improved Audit Trail</h1>
-<p>Forge provides two complementary audit mechanisms:</p>
+<p>Forail provides two complementary audit mechanisms:</p>
 <ol>
 <li><strong>Activity Stream</strong> — existing change log (create/update/delete/associate), now enhanced with IP, User-Agent, and session tracking</li>
 <li><strong>Audit Events</strong> — new immutable, append-only security audit log for compliance-grade auditing</li>
@@ -315,7 +315,7 @@ description, resource_type, resource_id, resource_name, action_node.</p>
 
 <p>Returns flat JSON optimized for SIEM ingestion (Splunk, ELK, Datadog):
 - <code>detail</code> dict fields are flattened with <code>detail_</code> prefix
-- <code>source: "forge"</code> and <code>event_type: "&lt;category&gt;.&lt;action&gt;"</code> are added
+- <code>source: "forail"</code> and <code>event_type: "&lt;category&gt;.&lt;action&gt;"</code> are added
 - No nested objects — every field is at the top level</p>
 <h3 id="detail">Detail</h3>
 <div class="codehilite"><pre><span></span><code>GET /api/v2/audit_events/{id}/
@@ -349,12 +349,12 @@ automatically logged as an audit event:</p>
 <span class="p">}</span>
 </code></pre></div>
 
-<p>This logging happens in <code>forge/main/signals.py</code> in the <code>activity_stream_create</code>
+<p>This logging happens in <code>forail/main/signals.py</code> in the <code>activity_stream_create</code>
 handler when a <code>Job</code> instance is created.</p>
 <hr />
 <h2 id="utility-functions">Utility Functions</h2>
-<p>Located in <code>forge/main/utils/audit.py</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">forge.main.utils.audit</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_credential_access</span><span class="p">,</span> <span class="n">log_auth_event</span><span class="p">,</span> <span class="n">log_permission_change</span>
+<p>Located in <code>forail/main/utils/audit.py</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">forail.main.utils.audit</span><span class="w"> </span><span class="kn">import</span> <span class="n">log_credential_access</span><span class="p">,</span> <span class="n">log_auth_event</span><span class="p">,</span> <span class="n">log_permission_change</span>
 
 <span class="c1"># Log credential usage</span>
 <span class="n">log_credential_access</span><span class="p">(</span><span class="n">credential</span><span class="p">,</span> <span class="n">job</span><span class="o">=</span><span class="n">job</span><span class="p">,</span> <span class="n">actor</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
@@ -373,7 +373,7 @@ handler when a <code>Job</code> instance is created.</p>
 cause the calling operation to fail.</p>
 <hr />
 <h2 id="middleware">Middleware</h2>
-<p><code>RequestContextMiddleware</code> in <code>forge/main/middleware.py</code>:</p>
+<p><code>RequestContextMiddleware</code> in <code>forail/main/middleware.py</code>:</p>
 <ul>
 <li>Extracts IP (from <code>X-Forwarded-For</code> or <code>REMOTE_ADDR</code>), User-Agent, and session ID</li>
 <li>Stores in thread-local storage for signal handlers to read</li>
@@ -382,7 +382,7 @@ cause the calling operation to fail.</p>
 </ul>
 <hr />
 <h2 id="frontend">Frontend</h2>
-<p>The Audit Log page is available at <code>/audit</code> in the Forge UI:</p>
+<p>The Audit Log page is available at <code>/audit</code> in the Forail UI:</p>
 <ul>
 <li><strong>Filters</strong>: category, severity, username, resource type</li>
 <li><strong>Expandable rows</strong>: click to see IP, user agent, session ID, node, detail JSON</li>
@@ -398,9 +398,9 @@ user agent fields where available.</p>
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../dev/index.html">Dev Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

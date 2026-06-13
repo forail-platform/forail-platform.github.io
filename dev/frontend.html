@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Frontend (React) — Forge Developer Docs</title>
-  <meta name="description" content="Frontend (React) — developer documentation for the Forge infrastructure automation platform.">
+  <title>Frontend (React) — Forail Developer Docs</title>
+  <meta name="description" content="Frontend (React) — developer documentation for the Forail infrastructure automation platform.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/dev/frontend.html">
+  <link rel="canonical" href="https://forail-platform.github.io/dev/frontend.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,13 +17,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="../docs/index.html">User Docs</a></li>
       <li><a href="index.html" style="color: var(--primary);">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -50,8 +50,8 @@
   </aside>
   <main class="docs-content">
 <h1 id="03-frontend-react">03 — Frontend (React)</h1>
-<p>The Forge frontend is a React 18 SPA (Single Page Application) with TypeScript,
-Vite, and Tailwind CSS. It lives in the <code>forge-frontend</code> repository.</p>
+<p>The Forail frontend is a React 18 SPA (Single Page Application) with TypeScript,
+Vite, and Tailwind CSS. It lives in the <code>forail-frontend</code> repository.</p>
 <hr />
 <h2 id="tech-stack">Tech Stack</h2>
 <table>
@@ -114,7 +114,7 @@ Vite, and Tailwind CSS. It lives in the <code>forge-frontend</code> repository.<
 </table>
 <hr />
 <h2 id="project-structure">Project Structure</h2>
-<div class="codehilite"><pre><span></span><code><span class="nx">forge</span><span class="o">-</span><span class="nx">frontend</span><span class="o">/</span>
+<div class="codehilite"><pre><span></span><code><span class="nx">forail</span><span class="o">-</span><span class="nx">frontend</span><span class="o">/</span>
 <span class="err">├──</span><span class="w"> </span><span class="kn">package</span><span class="p">.</span><span class="nx">json</span><span class="w">            </span><span class="err">#</span><span class="w"> </span><span class="nx">Dependencies</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="nx">scripts</span>
 <span class="err">├──</span><span class="w"> </span><span class="nx">vite</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">ts</span><span class="w">          </span><span class="err">#</span><span class="w"> </span><span class="nx">Dev</span><span class="w"> </span><span class="nx">server</span><span class="p">,</span><span class="w"> </span><span class="nx">build</span><span class="p">,</span><span class="w"> </span><span class="nx">proxy</span>
 <span class="err">├──</span><span class="w"> </span><span class="nx">tsconfig</span><span class="p">.</span><span class="nx">json</span><span class="w">           </span><span class="err">#</span><span class="w"> </span><span class="nx">TypeScript</span><span class="w"> </span><span class="nx">configuration</span><span class="w"> </span><span class="p">(</span><span class="nx">strict</span><span class="w"> </span><span class="nx">mode</span><span class="p">)</span>
@@ -161,7 +161,7 @@ Vite, and Tailwind CSS. It lives in the <code>forge-frontend</code> repository.<
 <hr />
 <h2 id="development-workflow">Development Workflow</h2>
 <h3 id="starting-the-dev-server">Starting the dev server</h3>
-<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forge-frontend
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forail-frontend
 npm<span class="w"> </span>ci<span class="w">            </span><span class="c1"># install dependencies</span>
 npm<span class="w"> </span>run<span class="w"> </span>dev<span class="w">       </span><span class="c1"># dev server at http://localhost:5173</span>
 </code></pre></div>
@@ -170,16 +170,16 @@ npm<span class="w"> </span>run<span class="w"> </span>dev<span class="w">       
 - <code>/api/*</code> → <code>http://localhost:8013</code>
 - <code>/sso/*</code> → <code>http://localhost:8013</code>
 - <code>/websocket/*</code> → <code>ws://localhost:8013</code>
-- <code>/assistant/*</code> → <code>http://localhost:8100</code> (Forge Assistant AI service)</p>
+- <code>/assistant/*</code> → <code>http://localhost:8100</code> (Forail Assistant AI service)</p>
 <h3 id="production-build">Production build</h3>
 <div class="codehilite"><pre><span></span><code>npm<span class="w"> </span>run<span class="w"> </span>build
-<span class="c1"># Output: build/forge/</span>
-<span class="c1"># - index_forge.html (renamed from index.html)</span>
+<span class="c1"># Output: build/forail/</span>
+<span class="c1"># - index_forail.html (renamed from index.html)</span>
 <span class="c1"># - assets/ (JS, CSS chunks)</span>
 </code></pre></div>
 
-<p>Django serves <code>index_forge.html</code> through <code>TemplateView</code>, and static assets
-from <code>/static/forge/assets/</code>.</p>
+<p>Django serves <code>index_forail.html</code> through <code>TemplateView</code>, and static assets
+from <code>/static/forail/assets/</code>.</p>
 <h3 id="lint-and-type-checking">Lint and type-checking</h3>
 <div class="codehilite"><pre><span></span><code>npx<span class="w"> </span>tsc<span class="w"> </span>--noEmit<span class="w">   </span><span class="c1"># TypeScript check (no JS output)</span>
 npm<span class="w"> </span><span class="nb">test</span><span class="w">            </span><span class="c1"># Vitest tests</span>
@@ -280,7 +280,7 @@ handles conflicts (e.g., <code>cn('p-4', 'p-2')</code> gives <code>'p-2'</code>,
 <tr>
 <td><code>AssistantPanel</code></td>
 <td>Floating AI chat panel with SSE streaming, page context awareness</td>
-<td>Always visible (bottom-right button) when forge-assistant service is healthy</td>
+<td>Always visible (bottom-right button) when forail-assistant service is healthy</td>
 </tr>
 <tr>
 <td><code>RecommendationsPanel</code></td>
@@ -300,13 +300,13 @@ handles conflicts (e.g., <code>cn('p-4', 'p-2')</code> gives <code>'p-2'</code>,
 </tbody>
 </table>
 <h3 id="ai-assistant-componentsassistant">AI Assistant (<code>components/assistant/</code>)</h3>
-<p>The <code>AssistantPanel</code> is a floating chat component that connects to the Forge Assistant
+<p>The <code>AssistantPanel</code> is a floating chat component that connects to the Forail Assistant
 microservice (port 8100) via Server-Sent Events (SSE). It sends the current page context
 (route path) alongside user messages so the AI can provide contextual answers.</p>
 <ul>
 <li><strong>API hook:</strong> <code>src/api/hooks/useAssistant.ts</code></li>
 <li><strong>Detection:</strong> The frontend polls <code>/assistant/api/v1/health</code> on mount. If the endpoint
-  responds, the chat button appears. If forge-assistant is not deployed, no UI is shown.</li>
+  responds, the chat button appears. If forail-assistant is not deployed, no UI is shown.</li>
 <li><strong>Proxy:</strong> In development, Vite proxies <code>/assistant/*</code> to <code>http://localhost:8100</code> with
   path rewrite (<code>/assistant/api/...</code> → <code>/api/...</code>).</li>
 </ul>
@@ -362,7 +362,7 @@ are needed — the engine is stateless and reads the current configuration to ge
 <h2 id="theming-lightdark">Theming (Light/Dark)</h2>
 <p>CSS variables in <code>src/index.css</code> define colors for both themes. Dark mode is activated
 by adding the <code>dark</code> class to the <code>&lt;html&gt;</code> element.</p>
-<p>The theme is stored in localStorage under the key <code>forge-theme</code>.</p>
+<p>The theme is stored in localStorage under the key <code>forail-theme</code>.</p>
 <p><strong>Watch out:</strong> When adding a new component, use semantic colors
 (<code>bg-background</code>, <code>text-foreground</code>, <code>border-border</code>) instead of hardcoded ones
 (<code>bg-white</code>, <code>text-black</code>). This way it will automatically work in both themes.</p>
@@ -441,7 +441,7 @@ by adding the <code>dark</code> class to the <code>&lt;html&gt;</code> element.<
 
 <span class="n">Sidebar</span><span class="w"> </span><span class="n">NEW</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">**</span><span class="n">Tenancy</span><span class="o">**</span><span class="w"> </span><span class="n">above</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">Compliance</span><span class="w"> </span><span class="n">group</span><span class="p">,</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="err">`</span><span class="n">Building2</span><span class="err">`</span><span class="w"> </span><span class="p">(</span><span class="n">Tenants</span><span class="p">)</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="err">`</span><span class="n">Activity</span><span class="err">`</span><span class="w"> </span><span class="p">(</span><span class="n">Quota</span><span class="w"> </span><span class="n">Events</span><span class="p">)</span><span class="w"> </span><span class="n">icons</span><span class="o">.</span>
 
-<span class="o">**</span><span class="n">Boot</span><span class="o">-</span><span class="n">time</span><span class="w"> </span><span class="n">branding</span><span class="o">**</span><span class="w"> </span><span class="p">(</span><span class="err">`</span><span class="n">src</span><span class="o">/</span><span class="n">branding</span><span class="o">/</span><span class="n">applyBranding</span><span class="o">.</span><span class="n">ts</span><span class="err">`</span><span class="p">):</span><span class="w"> </span><span class="n">called</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="err">`</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">tsx</span><span class="err">`</span><span class="w"> </span><span class="o">**</span><span class="n">before</span><span class="o">**</span><span class="w"> </span><span class="n">React</span><span class="w"> </span><span class="n">mounts</span><span class="o">.</span><span class="w"> </span><span class="n">Reads</span><span class="w"> </span><span class="n">localStorage</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">cached</span><span class="w"> </span><span class="err">`</span><span class="n">forge</span><span class="o">.</span><span class="n">branding</span><span class="err">`</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="p">(</span><span class="n">TTL</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="nb">min</span><span class="p">);</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">miss</span><span class="p">,</span><span class="w"> </span><span class="n">fetches</span><span class="w"> </span><span class="err">`</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">v2</span><span class="o">/</span><span class="n">branding</span><span class="o">/</span><span class="err">?</span><span class="n">host</span><span class="o">=$</span><span class="p">{</span><span class="n">window</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">hostname</span><span class="p">}</span><span class="err">`</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">auth</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">credentials</span><span class="o">.</span><span class="w"> </span><span class="n">On</span><span class="w"> </span><span class="n">success</span><span class="p">,</span><span class="w"> </span><span class="n">sets</span><span class="w"> </span><span class="n">CSS</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="err">`</span><span class="o">--</span><span class="n">forge</span><span class="o">-</span><span class="n">primary</span><span class="err">`</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="err">`</span><span class="o">--</span><span class="n">forge</span><span class="o">-</span><span class="n">secondary</span><span class="err">`</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="err">`</span><span class="p">:</span><span class="n">root</span><span class="err">`</span><span class="p">,</span><span class="w"> </span><span class="n">updates</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">document</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">swaps</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">favicon</span><span class="o">.</span><span class="w"> </span><span class="n">Cached</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">minutes</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">keep</span><span class="w"> </span><span class="n">cold</span><span class="o">-</span><span class="nb">load</span><span class="w"> </span><span class="n">under</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">fetch</span><span class="w"> </span><span class="n">time</span><span class="o">.</span><span class="w"> </span><span class="n">Tailwind</span><span class="w"> </span><span class="n">exposes</span><span class="w"> </span><span class="n">these</span><span class="w"> </span><span class="n">CSS</span><span class="w"> </span><span class="n">vars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="err">`</span><span class="n">colors</span><span class="o">.</span><span class="n">brand</span><span class="o">.</span><span class="n">primary</span><span class="err">`</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="err">`</span><span class="n">colors</span><span class="o">.</span><span class="n">brand</span><span class="o">.</span><span class="n">secondary</span><span class="err">`</span><span class="o">.</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">branding</span><span class="w"> </span><span class="n">endpoint</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">**</span><span class="n">public</span><span class="o">**</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">skin</span><span class="w"> </span><span class="n">applies</span><span class="w"> </span><span class="n">before</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="n">screen</span><span class="o">.</span>
+<span class="o">**</span><span class="n">Boot</span><span class="o">-</span><span class="n">time</span><span class="w"> </span><span class="n">branding</span><span class="o">**</span><span class="w"> </span><span class="p">(</span><span class="err">`</span><span class="n">src</span><span class="o">/</span><span class="n">branding</span><span class="o">/</span><span class="n">applyBranding</span><span class="o">.</span><span class="n">ts</span><span class="err">`</span><span class="p">):</span><span class="w"> </span><span class="n">called</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="err">`</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">.</span><span class="n">tsx</span><span class="err">`</span><span class="w"> </span><span class="o">**</span><span class="n">before</span><span class="o">**</span><span class="w"> </span><span class="n">React</span><span class="w"> </span><span class="n">mounts</span><span class="o">.</span><span class="w"> </span><span class="n">Reads</span><span class="w"> </span><span class="n">localStorage</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">cached</span><span class="w"> </span><span class="err">`</span><span class="n">forail</span><span class="o">.</span><span class="n">branding</span><span class="err">`</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="p">(</span><span class="n">TTL</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="nb">min</span><span class="p">);</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">miss</span><span class="p">,</span><span class="w"> </span><span class="n">fetches</span><span class="w"> </span><span class="err">`</span><span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">v2</span><span class="o">/</span><span class="n">branding</span><span class="o">/</span><span class="err">?</span><span class="n">host</span><span class="o">=$</span><span class="p">{</span><span class="n">window</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">hostname</span><span class="p">}</span><span class="err">`</span><span class="w"> </span><span class="n">with</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">auth</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">credentials</span><span class="o">.</span><span class="w"> </span><span class="n">On</span><span class="w"> </span><span class="n">success</span><span class="p">,</span><span class="w"> </span><span class="n">sets</span><span class="w"> </span><span class="n">CSS</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="err">`</span><span class="o">--</span><span class="n">forail</span><span class="o">-</span><span class="n">primary</span><span class="err">`</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="err">`</span><span class="o">--</span><span class="n">forail</span><span class="o">-</span><span class="n">secondary</span><span class="err">`</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="err">`</span><span class="p">:</span><span class="n">root</span><span class="err">`</span><span class="p">,</span><span class="w"> </span><span class="n">updates</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">document</span><span class="w"> </span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="ow">and</span><span class="w"> </span><span class="n">swaps</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">favicon</span><span class="o">.</span><span class="w"> </span><span class="n">Cached</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="n">minutes</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">keep</span><span class="w"> </span><span class="n">cold</span><span class="o">-</span><span class="nb">load</span><span class="w"> </span><span class="n">under</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">fetch</span><span class="w"> </span><span class="n">time</span><span class="o">.</span><span class="w"> </span><span class="n">Tailwind</span><span class="w"> </span><span class="n">exposes</span><span class="w"> </span><span class="n">these</span><span class="w"> </span><span class="n">CSS</span><span class="w"> </span><span class="n">vars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="err">`</span><span class="n">colors</span><span class="o">.</span><span class="n">brand</span><span class="o">.</span><span class="n">primary</span><span class="err">`</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="err">`</span><span class="n">colors</span><span class="o">.</span><span class="n">brand</span><span class="o">.</span><span class="n">secondary</span><span class="err">`</span><span class="o">.</span><span class="w"> </span><span class="n">The</span><span class="w"> </span><span class="n">branding</span><span class="w"> </span><span class="n">endpoint</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="o">**</span><span class="n">public</span><span class="o">**</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">backend</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">skin</span><span class="w"> </span><span class="n">applies</span><span class="w"> </span><span class="n">before</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">login</span><span class="w"> </span><span class="n">screen</span><span class="o">.</span>
 
 <span class="c1"># Self-Service Portal</span>
 <span class="o">/</span><span class="n">service_portal</span><span class="w">                 </span><span class="n">Catalog</span><span class="w"> </span><span class="n">browse</span><span class="w"> </span><span class="p">(</span><span class="n">cards</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="n">category</span><span class="p">,</span><span class="w"> </span><span class="n">request</span><span class="w"> </span><span class="n">dialog</span><span class="p">)</span>
@@ -538,9 +538,9 @@ multilingual — add <code>de.json</code>, <code>fr.json</code>, etc. and regist
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../docs/index.html">User Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

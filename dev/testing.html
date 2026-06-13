@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Testing Guide — Forge Developer Docs</title>
-  <meta name="description" content="Testing Guide — developer documentation for the Forge infrastructure automation platform.">
+  <title>Testing Guide — Forail Developer Docs</title>
+  <meta name="description" content="Testing Guide — developer documentation for the Forail infrastructure automation platform.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/dev/testing.html">
+  <link rel="canonical" href="https://forail-platform.github.io/dev/testing.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,13 +17,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="../docs/index.html">User Docs</a></li>
       <li><a href="index.html" style="color: var(--primary);">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -67,13 +67,13 @@
 <td>Python unit</td>
 <td>pytest</td>
 <td>1083</td>
-<td><code>forge/main/tests/unit/</code></td>
+<td><code>forail/main/tests/unit/</code></td>
 </tr>
 <tr>
 <td>Python functional (API)</td>
 <td>pytest</td>
 <td>989</td>
-<td><code>forge/main/tests/functional/</code></td>
+<td><code>forail/main/tests/functional/</code></td>
 </tr>
 <tr>
 <td>Standalone (EDA, drift, service catalog, webauthn, policy, scanner, audit)</td>
@@ -85,19 +85,19 @@
 <td>Frontend</td>
 <td>vitest</td>
 <td>72+</td>
-<td><code>forge/ui_next/src/**/*.test.{ts,tsx}</code></td>
+<td><code>forail/ui_next/src/**/*.test.{ts,tsx}</code></td>
 </tr>
 <tr>
 <td>Python lint</td>
 <td>flake8</td>
 <td>—</td>
-<td><code>forge/</code></td>
+<td><code>forail/</code></td>
 </tr>
 <tr>
 <td>Frontend lint</td>
 <td>TypeScript</td>
 <td>—</td>
-<td><code>forge/ui_next/src/</code></td>
+<td><code>forail/ui_next/src/</code></td>
 </tr>
 </tbody>
 </table>
@@ -144,12 +144,12 @@ python<span class="w"> </span>-m<span class="w"> </span>unittest<span class="w">
 <span class="c1"># All unit tests</span>
 docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-v<span class="w"> </span>/awx_devel:/awx_devel<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-e<span class="w"> </span><span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span>forge.settings.defaults<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--network<span class="w"> </span>docker-compose-prod_forge<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span>forail.settings.defaults<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--network<span class="w"> </span>docker-compose-prod_forail<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--user<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>forge-platform/forge:latest<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>forail-platform/forail:latest<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>bash<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;pip install pytest pytest-django pytest-mock drf-yasg -q &amp;&amp; \</span>
-<span class="s2">    cd /awx_devel &amp;&amp; python -m pytest forge/main/tests/unit/ -q&quot;</span>
+<span class="s2">    cd /awx_devel &amp;&amp; python -m pytest forail/main/tests/unit/ -q&quot;</span>
 </code></pre></div>
 
 <h3 id="useful-pytest-flags">Useful pytest flags</h3>
@@ -193,18 +193,18 @@ docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </
 </table>
 <h3 id="examples">Examples</h3>
 <div class="codehilite"><pre><span></span><code><span class="c1"># Only tests related to jobs</span>
-python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>forge/main/tests/unit/<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;test_job&quot;</span><span class="w"> </span>-v
+python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>forail/main/tests/unit/<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;test_job&quot;</span><span class="w"> </span>-v
 
 <span class="c1"># Only one file</span>
-python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>forge/main/tests/unit/test_models.py<span class="w"> </span>-v
+python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>forail/main/tests/unit/test_models.py<span class="w"> </span>-v
 
 <span class="c1"># Stop on first failure with full traceback</span>
-python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>forge/main/tests/unit/<span class="w"> </span>-x<span class="w"> </span>--tb<span class="o">=</span>long
+python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>forail/main/tests/unit/<span class="w"> </span>-x<span class="w"> </span>--tb<span class="o">=</span>long
 </code></pre></div>
 
 <hr />
 <h2 id="running-frontend-tests">Running Frontend Tests</h2>
-<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forge/ui_next
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forail/ui_next
 npm<span class="w"> </span>ci<span class="w">              </span><span class="c1"># Install dependencies (first time)</span>
 npm<span class="w"> </span><span class="nb">test</span><span class="w">            </span><span class="c1"># Run all tests</span>
 npm<span class="w"> </span>run<span class="w"> </span>test:watch<span class="w">  </span><span class="c1"># Watch mode — re-run on changes</span>
@@ -218,7 +218,7 @@ npx<span class="w"> </span>vitest<span class="w"> </span>run<span class="w"> </s
 <hr />
 <h2 id="where-tests-live">Where Tests Live</h2>
 <h3 id="backend">Backend</h3>
-<div class="codehilite"><pre><span></span><code>forge/main/tests/
+<div class="codehilite"><pre><span></span><code>forail/main/tests/
 ├── unit/                       # Pure unit tests (fast, no database)
 │   ├── test_models.py
 │   ├── test_tasks.py
@@ -271,14 +271,14 @@ npx<span class="w"> </span>vitest<span class="w"> </span>run<span class="w"> </s
 <h2 id="coverage">Coverage</h2>
 <h3 id="python">Python</h3>
 <div class="codehilite"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>pytest-cov
-python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>forge/main/tests/unit/<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--cov<span class="o">=</span>forge<span class="w"> </span><span class="se">\</span>
+python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>forail/main/tests/unit/<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cov<span class="o">=</span>forail<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--cov-report<span class="o">=</span>term-missing<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--cov-report<span class="o">=</span>html:htmlcov/
 </code></pre></div>
 
 <h3 id="frontend_1">Frontend</h3>
-<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forge/ui_next
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forail/ui_next
 npx<span class="w"> </span>vitest<span class="w"> </span>run<span class="w"> </span>--coverage
 <span class="c1"># Output: coverage/index.html</span>
 </code></pre></div>
@@ -287,7 +287,7 @@ npx<span class="w"> </span>vitest<span class="w"> </span>run<span class="w"> </s
 <h2 id="watch-out">Watch Out</h2>
 <ol>
 <li>
-<p><strong>Tests use <code>forge.settings.defaults</code></strong>, not production settings.
+<p><strong>Tests use <code>forail.settings.defaults</code></strong>, not production settings.
    If a test passes locally but fails in CI, check if it depends on a
    production-only setting.</p>
 </li>
@@ -313,9 +313,9 @@ npx<span class="w"> </span>vitest<span class="w"> </span>run<span class="w"> </s
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../docs/index.html">User Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

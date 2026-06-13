@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Assistant Architecture (Preview) — Forge Platform Docs</title>
-  <meta name="description" content="Forge AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — FastAPI service with embedded Ollama LLM runtime and ChromaDB vector store. Fully self-hosted preview, runs on CPU or GPU.">
-  <meta name="keywords" content="Forge Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <title>AI Assistant Architecture (Preview) — Forail Platform Docs</title>
+  <meta name="description" content="Forail AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — FastAPI service with embedded Ollama LLM runtime and ChromaDB vector store. Fully self-hosted preview, runs on CPU or GPU.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
   <meta name="author" content="Krstan Vjestica">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/docs/assistant-architecture.html">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/assistant-architecture.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="AI Assistant Architecture (Preview) — Forge Platform Docs">
-  <meta property="og:description" content="Forge AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — FastAPI service with embedded Ollama LLM runtime and ChromaDB vector store. Fully self-hosted preview, runs on CPU or GPU.">
-  <meta property="og:url" content="https://forgeplatform.github.io/docs/assistant-architecture.html">
-  <meta property="og:site_name" content="Forge Platform">
+  <meta property="og:title" content="AI Assistant Architecture (Preview) — Forail Platform Docs">
+  <meta property="og:description" content="Forail AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — FastAPI service with embedded Ollama LLM runtime and ChromaDB vector store. Fully self-hosted preview, runs on CPU or GPU.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/assistant-architecture.html">
+  <meta property="og:site_name" content="Forail Platform">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AI Assistant Architecture (Preview) — Forge Platform Docs">
-  <meta name="twitter:description" content="Forge AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — FastAPI service with embedded Ollama LLM runtime and ChromaDB vector store. Fully self-hosted preview, runs on CPU or GPU.">
-  <meta name="twitter:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta name="twitter:title" content="AI Assistant Architecture (Preview) — Forail Platform Docs">
+  <meta name="twitter:description" content="Forail AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — FastAPI service with embedded Ollama LLM runtime and ChromaDB vector store. Fully self-hosted preview, runs on CPU or GPU.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Assistant Architecture (Preview)","description":"Forge AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — FastAPI service with embedded Ollama LLM runtime and ChromaDB vector store. Fully self-hosted preview, runs on CPU or GPU.","url":"https://forgeplatform.github.io/docs/assistant-architecture.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forge Platform","url":"https://forgeplatform.github.io/"},"image":"https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"AI Assistant Architecture (Preview)","description":"Forail AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — FastAPI service with embedded Ollama LLM runtime and ChromaDB vector store. Fully self-hosted preview, runs on CPU or GPU.","url":"https://forail-platform.github.io/docs/assistant-architecture.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
       <li><a href="../dev/index.html">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -85,15 +85,15 @@
   <main class="docs-content">
 <h1 id="architecture">Architecture</h1>
 <h2 id="overview">Overview</h2>
-<p>Forge Assistant is a standalone microservice that provides AI-powered help for the Forge platform. It uses Retrieval-Augmented Generation (RAG) to answer questions based on indexed documentation.</p>
+<p>Forail Assistant is a standalone microservice that provides AI-powered help for the Forail platform. It uses Retrieval-Augmented Generation (RAG) to answer questions based on indexed documentation.</p>
 <div class="codehilite"><pre><span></span><code>                    ┌─────────────────────────────────┐
-                    │         Forge Frontend           │
+                    │         Forail Frontend           │
                     │  (React chat panel component)    │
                     └───────────────┬──────────────────┘
                                     │ SSE (Server-Sent Events)
                                     ▼
                     ┌─────────────────────────────────┐
-                    │   Forge Assistant (all-in-one)   │
+                    │   Forail Assistant (all-in-one)   │
                     │                                  │
                     │  FastAPI  /api/v1/chat  → SSE    │
                     │           /api/v1/health→ JSON   │
@@ -150,16 +150,16 @@
 <span class="mf">2.</span><span class="w"> </span><span class="n">Indexer</span><span class="w"> </span><span class="kr">read</span><span class="n">s</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="mf">.</span><span class="n">md</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">docs_to_index</span><span class="o">/</span>
 <span class="mf">3.</span><span class="w"> </span><span class="n">Each</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">split</span><span class="w"> </span><span class="nb">int</span><span class="n">o</span><span class="w"> </span><span class="n">overlapping</span><span class="w"> </span><span class="n">chunks</span><span class="w"> </span><span class="p">(</span><span class="mf">500</span><span class="w"> </span><span class="n">chars</span><span class="p">,</span><span class="w"> </span><span class="mf">50</span><span class="w"> </span><span class="n">overlap</span><span class="p">)</span>
 <span class="mf">4.</span><span class="w"> </span><span class="n">Each</span><span class="w"> </span><span class="n">chunk</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">embedded</span><span class="w"> </span><span class="n">via</span><span class="w"> </span><span class="n">Ollama</span><span class="w"> </span><span class="n">nomic</span><span class="o">-</span><span class="n">embed</span><span class="o">-</span><span class="n">text</span>
-<span class="mf">5.</span><span class="w"> </span><span class="n">Embeddings</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="n">stored</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">ChromaDB</span><span class="w"> </span><span class="n">collection</span><span class="w"> </span><span class="s">&quot;forge_docs&quot;</span>
+<span class="mf">5.</span><span class="w"> </span><span class="n">Embeddings</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">text</span><span class="w"> </span><span class="n">stored</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">ChromaDB</span><span class="w"> </span><span class="n">collection</span><span class="w"> </span><span class="s">&quot;forail_docs&quot;</span>
 </code></pre></div>
 
 <h2 id="design-decisions">Design Decisions</h2>
 <h3 id="why-standalone-service-not-django-app">Why Standalone Service (Not Django App)?</h3>
 <ul>
 <li><strong>No Django dependency</strong> — FastAPI is lighter, async-native, no ORM needed</li>
-<li><strong>Optional</strong> — can be added/removed without touching core Forge</li>
+<li><strong>Optional</strong> — can be added/removed without touching core Forail</li>
 <li><strong>Independent scaling</strong> — can run on a separate GPU server</li>
-<li><strong>Independent release cycle</strong> — update models without redeploying Forge</li>
+<li><strong>Independent release cycle</strong> — update models without redeploying Forail</li>
 </ul>
 <h3 id="why-ollama-not-openaiclaude-api">Why Ollama (Not OpenAI/Claude API)?</h3>
 <ul>
@@ -188,9 +188,9 @@
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../dev/index.html">Dev Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

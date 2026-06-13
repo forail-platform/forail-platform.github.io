@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multi-Tenancy — Forge Platform Docs</title>
-  <meta name="description" content="Multi-tenancy in Forge Platform — hard tenant isolation, per-tenant resource quotas, separated audit trails. Run multiple organizations on a single Forge instance securely.">
-  <meta name="keywords" content="Forge Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <title>Multi-Tenancy — Forail Platform Docs</title>
+  <meta name="description" content="Multi-tenancy in Forail Platform — hard tenant isolation, per-tenant resource quotas, separated audit trails. Run multiple organizations on a single Forail instance securely.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
   <meta name="author" content="Krstan Vjestica">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/docs/multi-tenancy.html">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/multi-tenancy.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Multi-Tenancy — Forge Platform Docs">
-  <meta property="og:description" content="Multi-tenancy in Forge Platform — hard tenant isolation, per-tenant resource quotas, separated audit trails. Run multiple organizations on a single Forge instance securely.">
-  <meta property="og:url" content="https://forgeplatform.github.io/docs/multi-tenancy.html">
-  <meta property="og:site_name" content="Forge Platform">
+  <meta property="og:title" content="Multi-Tenancy — Forail Platform Docs">
+  <meta property="og:description" content="Multi-tenancy in Forail Platform — hard tenant isolation, per-tenant resource quotas, separated audit trails. Run multiple organizations on a single Forail instance securely.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/multi-tenancy.html">
+  <meta property="og:site_name" content="Forail Platform">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Multi-Tenancy — Forge Platform Docs">
-  <meta name="twitter:description" content="Multi-tenancy in Forge Platform — hard tenant isolation, per-tenant resource quotas, separated audit trails. Run multiple organizations on a single Forge instance securely.">
-  <meta name="twitter:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta name="twitter:title" content="Multi-Tenancy — Forail Platform Docs">
+  <meta name="twitter:description" content="Multi-tenancy in Forail Platform — hard tenant isolation, per-tenant resource quotas, separated audit trails. Run multiple organizations on a single Forail instance securely.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"TechArticle","headline":"Multi-Tenancy","description":"Multi-tenancy in Forge Platform — hard tenant isolation, per-tenant resource quotas, separated audit trails. Run multiple organizations on a single Forge instance securely.","url":"https://forgeplatform.github.io/docs/multi-tenancy.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forge Platform","url":"https://forgeplatform.github.io/"},"image":"https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"Multi-Tenancy","description":"Multi-tenancy in Forail Platform — hard tenant isolation, per-tenant resource quotas, separated audit trails. Run multiple organizations on a single Forail instance securely.","url":"https://forail-platform.github.io/docs/multi-tenancy.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
       <li><a href="../dev/index.html">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -85,13 +85,13 @@
   <main class="docs-content">
 <h1 id="22-multi-tenancy-v1">22 — Multi-Tenancy (v1)</h1>
 <p><strong>Tier 3.2 — DONE</strong></p>
-<p>Forge Platform supports <strong>soft multi-tenancy</strong>: a single Forge install can host
+<p>Forail Platform supports <strong>soft multi-tenancy</strong>: a single Forail install can host
 many customer tenants, each with its own quotas, branding, and an admin team,
 without spinning up separate databases or separate Celery workers. Tenancy is
 layered on top of the existing Organization + RBAC primitives — no Postgres
 row-level security, no per-tenant schemas.</p>
 <p>Everything is additive and gated by a single kill switch (<code>TENANCY_ENABLED</code>).
-With the switch off, all tenant hooks short-circuit and Forge behaves exactly
+With the switch off, all tenant hooks short-circuit and Forail behaves exactly
 as before.</p>
 <hr />
 <h2 id="scope-v1">Scope (v1)</h2>
@@ -124,7 +124,7 @@ as before.</p>
 <span class="w">                </span><span class="err">│</span>
 <span class="w">                </span><span class="err">▼</span>
 <span class="w">  </span><span class="err">┌─────────────────────────────────────────┐</span>
-<span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">forge</span><span class="o">.</span><span class="n">launch</span><span class="w">  </span><span class="p">(</span><span class="n">OTel</span><span class="w"> </span><span class="n">span</span><span class="p">,</span><span class="w"> </span><span class="n">Tier</span><span class="w"> </span><span class="mf">3.6</span><span class="p">)</span><span class="w">      </span><span class="err">│</span>
+<span class="w">  </span><span class="err">│</span><span class="w"> </span><span class="n">forail</span><span class="o">.</span><span class="n">launch</span><span class="w">  </span><span class="p">(</span><span class="n">OTel</span><span class="w"> </span><span class="n">span</span><span class="p">,</span><span class="w"> </span><span class="n">Tier</span><span class="w"> </span><span class="mf">3.6</span><span class="p">)</span><span class="w">      </span><span class="err">│</span>
 <span class="w">  </span><span class="err">│</span><span class="w">                                          </span><span class="err">│</span>
 <span class="w">  </span><span class="err">│</span><span class="w">   </span><span class="n">check_tenant_quota</span><span class="p">(</span><span class="n">job</span><span class="p">,</span><span class="w"> </span><span class="n">request</span><span class="p">)</span><span class="w">  </span><span class="err">◄──</span><span class="w"> </span><span class="n">NEW</span><span class="w">  </span><span class="p">(</span><span class="n">Tier</span><span class="w"> </span><span class="mf">3.2</span><span class="p">)</span>
 <span class="w">  </span><span class="err">│</span><span class="w">        </span><span class="err">│</span><span class="w"> </span><span class="n">allowed</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">inc</span><span class="w"> </span><span class="n">counters</span><span class="w">         </span><span class="err">│</span>
@@ -142,7 +142,7 @@ as before.</p>
 tenants never consume policy/scanning work. A post-finish signal decrements
 <code>concurrent_jobs_count</code> so the counter stays honest.</p>
 <hr />
-<h2 id="models-forgemainmodelstenancypy">Models — <code>forge/main/models/tenancy.py</code></h2>
+<h2 id="models-forailmainmodelstenancypy">Models — <code>forail/main/models/tenancy.py</code></h2>
 <h3 id="organization-extended-in-place">Organization (extended in place)</h3>
 <p>11 additive fields on the existing <code>Organization</code> model. All default to
 <code>False</code> / <code>null</code> / empty string so existing orgs are untouched.</p>
@@ -344,7 +344,7 @@ tenants never consume policy/scanning work. A post-finish signal decrements
 </tbody>
 </table>
 <hr />
-<h2 id="pure-helpers-forgemaintenancyhelperspy">Pure helpers — <code>forge/main/tenancy/helpers.py</code></h2>
+<h2 id="pure-helpers-forailmaintenancyhelperspy">Pure helpers — <code>forail/main/tenancy/helpers.py</code></h2>
 <p>Exported for standalone test; zero Django imports.</p>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">check_quota_value</span><span class="p">(</span><span class="n">current</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span> <span class="o">...</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">is_window_expired</span><span class="p">(</span><span class="n">window_start</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">now</span><span class="p">:</span> <span class="n">datetime</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span> <span class="o">...</span>
@@ -357,7 +357,7 @@ tenants never consume policy/scanning work. A post-finish signal decrements
 <p>All four quota kinds use <code>check_quota_value</code> so the semantics are identical
 (<code>None</code> → unlimited; <code>current &gt;= limit</code> → blocked).</p>
 <hr />
-<h2 id="tenancy-package-layout-forgemaintenancy">Tenancy package layout — <code>forge/main/tenancy/</code></h2>
+<h2 id="tenancy-package-layout-forailmaintenancy">Tenancy package layout — <code>forail/main/tenancy/</code></h2>
 <table>
 <thead>
 <tr>
@@ -398,8 +398,8 @@ tenants never consume policy/scanning work. A post-finish signal decrements
 </table>
 <hr />
 <h2 id="launch-hook-order">Launch hook order</h2>
-<p>In <code>forge/api/views/job_templates.py</code>, <code>workflows.py</code>, and <code>ad_hoc_commands.py</code>,
-the launch sequence inside the <code>forge.launch</code> OTel span is:</p>
+<p>In <code>forail/api/views/job_templates.py</code>, <code>workflows.py</code>, and <code>ad_hoc_commands.py</code>,
+the launch sequence inside the <code>forail.launch</code> OTel span is:</p>
 <div class="codehilite"><pre><span></span><code><span class="n">check_tenant_quota</span><span class="w">   </span><span class="p">(</span><span class="n">NEW</span><span class="w"> </span><span class="err">—</span><span class="w"> </span><span class="n">Tier</span><span class="w"> </span><span class="mf">3.2</span><span class="p">)</span><span class="w">   </span><span class="err">—</span><span class="w"> </span><span class="mi">429</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">block</span>
 <span class="n">evaluate_launch</span><span class="w">      </span><span class="p">(</span><span class="n">Tier</span><span class="w"> </span><span class="mf">2.2</span><span class="p">)</span><span class="w">         </span><span class="err">—</span><span class="w"> </span><span class="mi">403</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">block</span>
 <span class="n">run_scanners_for_launch</span><span class="w"> </span><span class="p">(</span><span class="n">Tier</span><span class="w"> </span><span class="mf">3.4</span><span class="p">)</span><span class="w">      </span><span class="err">—</span><span class="w"> </span><span class="mi">403</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">block</span>
@@ -409,13 +409,13 @@ the launch sequence inside the <code>forge.launch</code> OTel span is:</p>
 <p>The quota gate sets <code>quota_blocked=&lt;kind&gt;</code> on the current span for easy
 trace filtering.</p>
 <h3 id="job-finished-signal">Job-finished signal</h3>
-<p><code>forge.main.signals.handlers</code> dispatches <code>on_job_finished(job)</code> on each
+<p><code>forail.main.signals.handlers</code> dispatches <code>on_job_finished(job)</code> on each
 <code>unified_job_finished</code> signal, which atomically decrements
 <code>concurrent_jobs_count</code> for the tenant. The Celery reconciliation task also
 corrects drift (<code>concurrent_jobs_count = actual running UnifiedJob count</code>)
 on every tick.</p>
 <hr />
-<h2 id="settings-forgemainconfpy">Settings — <code>forge/main/conf.py</code></h2>
+<h2 id="settings-forailmainconfpy">Settings — <code>forail/main/conf.py</code></h2>
 <table>
 <thead>
 <tr>
@@ -519,7 +519,7 @@ is <strong>public</strong> (no auth classes).</p>
 <span class="w">  </span><span class="nt">&quot;branding&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;logo_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://...&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;primary_color&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;#5B47E0&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;custom_domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;acme.forge.example&quot;</span>
+<span class="w">    </span><span class="nt">&quot;custom_domain&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;acme.forail.example&quot;</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -575,15 +575,15 @@ existing tenant.</p>
 <hr />
 <h2 id="files">Files</h2>
 <ul>
-<li><code>forge/main/models/tenancy.py</code> — models</li>
-<li><code>forge/main/models/organization.py</code> — extended in place</li>
-<li><code>forge/main/migrations/0204_multi_tenancy.py</code> — schema migration</li>
-<li><code>forge/main/tenancy/</code> — helpers + quota + provisioning + branding + usage + isolation</li>
-<li><code>forge/main/tasks/tenancy.py</code> — Celery beat task</li>
-<li><code>forge/main/conf.py</code> — settings registration</li>
-<li><code>forge/api/serializers/tenancy.py</code></li>
-<li><code>forge/api/views/tenancy.py</code></li>
-<li><code>forge/api/urls/tenancy.py</code></li>
+<li><code>forail/main/models/tenancy.py</code> — models</li>
+<li><code>forail/main/models/organization.py</code> — extended in place</li>
+<li><code>forail/main/migrations/0204_multi_tenancy.py</code> — schema migration</li>
+<li><code>forail/main/tenancy/</code> — helpers + quota + provisioning + branding + usage + isolation</li>
+<li><code>forail/main/tasks/tenancy.py</code> — Celery beat task</li>
+<li><code>forail/main/conf.py</code> — settings registration</li>
+<li><code>forail/api/serializers/tenancy.py</code></li>
+<li><code>forail/api/views/tenancy.py</code></li>
+<li><code>forail/api/urls/tenancy.py</code></li>
 <li><code>tests_standalone/test_tenancy.py</code></li>
 </ul>
   </main>
@@ -592,9 +592,9 @@ existing tenant.</p>
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../dev/index.html">Dev Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

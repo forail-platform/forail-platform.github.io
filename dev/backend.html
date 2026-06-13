@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Backend (Django) — Forge Developer Docs</title>
-  <meta name="description" content="Backend (Django) — developer documentation for the Forge infrastructure automation platform.">
+  <title>Backend (Django) — Forail Developer Docs</title>
+  <meta name="description" content="Backend (Django) — developer documentation for the Forail infrastructure automation platform.">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/dev/backend.html">
+  <link rel="canonical" href="https://forail-platform.github.io/dev/backend.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,13 +17,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="../docs/index.html">User Docs</a></li>
       <li><a href="index.html" style="color: var(--primary);">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -63,35 +63,35 @@
 </thead>
 <tbody>
 <tr>
-<td><code>forge.main</code></td>
-<td><code>forge/main/</code></td>
+<td><code>forail.main</code></td>
+<td><code>forail/main/</code></td>
 <td>Core: models, tasks, signals, migrations, commands</td>
 </tr>
 <tr>
-<td><code>forge.api</code></td>
-<td><code>forge/api/</code></td>
+<td><code>forail.api</code></td>
+<td><code>forail/api/</code></td>
 <td>REST API: views, serializers, URL routing</td>
 </tr>
 <tr>
-<td><code>forge.conf</code></td>
-<td><code>forge/conf/</code></td>
+<td><code>forail.conf</code></td>
+<td><code>forail/conf/</code></td>
 <td>Database-backed settings system</td>
 </tr>
 <tr>
-<td><code>forge.sso</code></td>
-<td><code>forge/sso/</code></td>
+<td><code>forail.sso</code></td>
+<td><code>forail/sso/</code></td>
 <td>SSO authentication (LDAP, SAML, social)</td>
 </tr>
 <tr>
-<td><code>forge.ui_next</code></td>
-<td><code>forge/ui_next/</code></td>
+<td><code>forail.ui_next</code></td>
+<td><code>forail/ui_next/</code></td>
 <td>React frontend (served through Django)</td>
 </tr>
 </tbody>
 </table>
 <hr />
 <h2 id="models-where-things-live">Models — Where things live</h2>
-<p>All models are in <code>forge/main/models/</code>. Each file covers one domain area:</p>
+<p>All models are in <code>forail/main/models/</code>. Each file covers one domain area:</p>
 <table>
 <thead>
 <tr>
@@ -204,17 +204,17 @@
 <tr>
 <td><code>scanner.py</code></td>
 <td>Scanner, ScanResult, ScanFinding</td>
-<td>IaC scanning &amp; supply chain security — ansible-lint / checkov / pip-audit run before every launch (see <code>docs/20-iac-scanning.md</code>). Companion package: <code>forge/main/scanning/</code> (runner + tool adapters).</td>
+<td>IaC scanning &amp; supply chain security — ansible-lint / checkov / pip-audit run before every launch (see <code>docs/20-iac-scanning.md</code>). Companion package: <code>forail/main/scanning/</code> (runner + tool adapters).</td>
 </tr>
 <tr>
 <td><code>observability/</code></td>
 <td>(package, no ORM models)</td>
-<td>OpenTelemetry bootstrap + helpers + tracing seams + metric handles + collector health probe. Initialized from <code>forge/asgi.py</code> / <code>forge/wsgi.py</code> / Celery boot. See <code>docs/21-observability.md</code>.</td>
+<td>OpenTelemetry bootstrap + helpers + tracing seams + metric handles + collector health probe. Initialized from <code>forail/asgi.py</code> / <code>forail/wsgi.py</code> / Celery boot. See <code>docs/21-observability.md</code>.</td>
 </tr>
 <tr>
 <td><code>tenancy.py</code></td>
 <td>TenantUsage, TenantQuotaEvent, TenantIsolationEvent</td>
-<td>Multi-tenancy v1 — per-tenant quotas, branding, and cross-tenant audit layered on top of Organization. Companion package: <code>forge/main/tenancy/</code> (pure helpers, quota gate, provisioning, branding lookup, usage reconciliation, isolation middleware). Quota gate runs <strong>before</strong> Policy-as-Code and IaC Scanning at job launch. See <code>docs/22-multi-tenancy.md</code>.</td>
+<td>Multi-tenancy v1 — per-tenant quotas, branding, and cross-tenant audit layered on top of Organization. Companion package: <code>forail/main/tenancy/</code> (pure helpers, quota gate, provisioning, branding lookup, usage reconciliation, isolation middleware). Quota gate runs <strong>before</strong> Policy-as-Code and IaC Scanning at job launch. See <code>docs/22-multi-tenancy.md</code>.</td>
 </tr>
 <tr>
 <td><code>rbac.py</code></td>
@@ -256,7 +256,7 @@
 </ul>
 <hr />
 <h2 id="rest-api-structure">REST API — Structure</h2>
-<p>The API is in <code>forge/api/</code> and follows DRF (Django REST Framework) conventions.</p>
+<p>The API is in <code>forail/api/</code> and follows DRF (Django REST Framework) conventions.</p>
 <h3 id="file-locations">File locations</h3>
 <table>
 <thead>
@@ -268,31 +268,31 @@
 <tbody>
 <tr>
 <td>API endpoints (URL routing)</td>
-<td><code>forge/api/urls/</code> — one file per resource</td>
+<td><code>forail/api/urls/</code> — one file per resource</td>
 </tr>
 <tr>
 <td>View logic (what the endpoint does)</td>
-<td><code>forge/api/views/</code> — one file per resource</td>
+<td><code>forail/api/views/</code> — one file per resource</td>
 </tr>
 <tr>
 <td>Serialization (JSON ↔ Model)</td>
-<td><code>forge/api/serializers/</code> — data transformation</td>
+<td><code>forail/api/serializers/</code> — data transformation</td>
 </tr>
 <tr>
 <td>Permissions</td>
-<td><code>forge/api/permissions.py</code> — access checks</td>
+<td><code>forail/api/permissions.py</code> — access checks</td>
 </tr>
 <tr>
 <td>Authentication</td>
-<td><code>forge/api/authentication.py</code> — session, token, basic</td>
+<td><code>forail/api/authentication.py</code> — session, token, basic</td>
 </tr>
 <tr>
 <td>Pagination</td>
-<td><code>forge/api/pagination.py</code> — default 25 per page</td>
+<td><code>forail/api/pagination.py</code> — default 25 per page</td>
 </tr>
 <tr>
 <td>Filtering</td>
-<td><code>forge/api/filters.py</code> — search, ordering, field filters</td>
+<td><code>forail/api/filters.py</code> — search, ordering, field filters</td>
 </tr>
 </tbody>
 </table>
@@ -327,7 +327,7 @@
 </ul>
 <hr />
 <h2 id="signals-automatic-side-effect-actions">Signals — Automatic side-effect actions</h2>
-<p>Signals are in <code>forge/main/signals.py</code> and automatically react to database changes:</p>
+<p>Signals are in <code>forail/main/signals.py</code> and automatically react to database changes:</p>
 <table>
 <thead>
 <tr>
@@ -363,27 +363,27 @@ the entire transaction is rolled back. If you see unexpected IntegrityError,
 check if a signal is attempting something invalid.</p>
 <hr />
 <h2 id="management-commands">Management Commands</h2>
-<p>Commands are in <code>forge/main/management/commands/</code>. They are run with <code>forge-manage</code>
+<p>Commands are in <code>forail/main/management/commands/</code>. They are run with <code>forail-manage</code>
 (or <code>awx-manage</code> — both work, backward compatibility).</p>
 <h3 id="most-important-commands">Most important commands</h3>
 <p><strong>Instance management:</strong>
-- <code>forge-manage provision_instance --hostname=node1</code> — register a new cluster node
-- <code>forge-manage deprovision_instance --hostname=node1</code> — remove a node
-- <code>forge-manage list_instances</code> — show all nodes with capacity</p>
+- <code>forail-manage provision_instance --hostname=node1</code> — register a new cluster node
+- <code>forail-manage deprovision_instance --hostname=node1</code> — remove a node
+- <code>forail-manage list_instances</code> — show all nodes with capacity</p>
 <p><strong>Users:</strong>
-- <code>forge-manage createsuperuser</code> — create admin user
-- <code>forge-manage update_password --username=admin --password=new</code> — reset password</p>
+- <code>forail-manage createsuperuser</code> — create admin user
+- <code>forail-manage update_password --username=admin --password=new</code> — reset password</p>
 <p><strong>Database:</strong>
-- <code>forge-manage migrate</code> — apply migrations
-- <code>forge-manage check_db</code> — verify database connectivity
-- <code>forge-manage dbshell</code> — open PostgreSQL shell</p>
+- <code>forail-manage migrate</code> — apply migrations
+- <code>forail-manage check_db</code> — verify database connectivity
+- <code>forail-manage dbshell</code> — open PostgreSQL shell</p>
 <p><strong>Cleanup (run periodically):</strong>
-- <code>forge-manage cleanup_jobs --days=90</code> — delete old jobs and events
-- <code>forge-manage cleanup_sessions</code> — delete expired sessions
-- <code>forge-manage cleanup_tokens</code> — delete expired OAuth tokens</p>
+- <code>forail-manage cleanup_jobs --days=90</code> — delete old jobs and events
+- <code>forail-manage cleanup_sessions</code> — delete expired sessions
+- <code>forail-manage cleanup_tokens</code> — delete expired OAuth tokens</p>
 <p><strong>Diagnostics:</strong>
-- <code>forge-manage check_instance_ready</code> — is the node ready for work
-- <code>forge-manage stats</code> — system statistics</p>
+- <code>forail-manage check_instance_ready</code> — is the node ready for work
+- <code>forail-manage stats</code> — system statistics</p>
 <h3 id="watch-out_2">Watch out</h3>
 <ul>
 <li>
@@ -408,27 +408,27 @@ check if a signal is attempting something invalid.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>forge/settings/defaults/base.py</code></td>
+<td><code>forail/settings/defaults/base.py</code></td>
 <td>Core: DATABASES, INSTALLED_APPS, REST_FRAMEWORK</td>
 </tr>
 <tr>
-<td><code>forge/settings/defaults/auth.py</code></td>
+<td><code>forail/settings/defaults/auth.py</code></td>
 <td>Authentication backends</td>
 </tr>
 <tr>
-<td><code>forge/settings/defaults/jobs.py</code></td>
+<td><code>forail/settings/defaults/jobs.py</code></td>
 <td>Job execution defaults</td>
 </tr>
 <tr>
-<td><code>forge/settings/defaults/celery_conf.py</code></td>
+<td><code>forail/settings/defaults/celery_conf.py</code></td>
 <td>Celery/Redis configuration</td>
 </tr>
 <tr>
-<td><code>forge/settings/defaults/logging_conf.py</code></td>
+<td><code>forail/settings/defaults/logging_conf.py</code></td>
 <td>Logging</td>
 </tr>
 <tr>
-<td><code>forge/settings/production.py</code></td>
+<td><code>forail/settings/production.py</code></td>
 <td>Production overrides (DEBUG=False)</td>
 </tr>
 <tr>
@@ -437,29 +437,29 @@ check if a signal is attempting something invalid.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="level-2-database-backed-forge-conf-system">Level 2: Database-backed (Forge conf system)</h3>
+<h3 id="level-2-database-backed-forail-conf-system">Level 2: Database-backed (Forail conf system)</h3>
 <p>Stored in PostgreSQL, changed via API (<code>/api/v2/settings/</code>) <strong>without restart</strong>.</p>
-<p>Registered in <code>forge/conf/</code> and covering: job timeouts, LDAP configuration,
+<p>Registered in <code>forail/conf/</code> and covering: job timeouts, LDAP configuration,
 logging, notifications, and much more.</p>
 <p><strong>Watch out:</strong> Database settings <strong>override</strong> file settings. If something isn't
 working as expected, check if it's been overridden in the database:</p>
-<div class="codehilite"><pre><span></span><code>forge-manage<span class="w"> </span>print_setting<span class="w"> </span>SETTING_NAME
+<div class="codehilite"><pre><span></span><code>forail-manage<span class="w"> </span>print_setting<span class="w"> </span>SETTING_NAME
 </code></pre></div>
 
 <hr />
 <h2 id="migrations">Migrations</h2>
-<p>Forge has <strong>252 Django migrations</strong> in <code>forge/main/migrations/</code>.</p>
+<p>Forail has <strong>252 Django migrations</strong> in <code>forail/main/migrations/</code>.</p>
 <h3 id="watch-out_3">Watch out</h3>
 <ul>
 <li>
-<p>All migrations reference <code>forge.main.fields</code> — not <code>awx.main.fields</code>. If you
+<p>All migrations reference <code>forail.main.fields</code> — not <code>awx.main.fields</code>. If you
   create a new migration, <code>makemigrations</code> will automatically use the correct prefix.</p>
 </li>
 <li>
 <p><strong>Never edit existing migrations</strong> — only add new ones.</p>
 </li>
 <li>
-<p>If a migration fails, check <code>forge-manage showmigrations | grep "\[ \]"</code>
+<p>If a migration fails, check <code>forail-manage showmigrations | grep "\[ \]"</code>
   to see which ones are unapplied.</p>
 </li>
 <li>
@@ -472,9 +472,9 @@ working as expected, check if it's been overridden in the database:</p>
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../docs/index.html">User Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

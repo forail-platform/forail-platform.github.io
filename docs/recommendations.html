@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Recommendations Engine — Forge Platform Docs</title>
-  <meta name="description" content="Recommendations engine in Forge Platform — surfaces optimization suggestions for job templates, schedules, and resource utilization. Data-driven hints for automation hygiene.">
-  <meta name="keywords" content="Forge Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <title>Recommendations Engine — Forail Platform Docs</title>
+  <meta name="description" content="Recommendations engine in Forail Platform — surfaces optimization suggestions for job templates, schedules, and resource utilization. Data-driven hints for automation hygiene.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
   <meta name="author" content="Krstan Vjestica">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/docs/recommendations.html">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/recommendations.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Recommendations Engine — Forge Platform Docs">
-  <meta property="og:description" content="Recommendations engine in Forge Platform — surfaces optimization suggestions for job templates, schedules, and resource utilization. Data-driven hints for automation hygiene.">
-  <meta property="og:url" content="https://forgeplatform.github.io/docs/recommendations.html">
-  <meta property="og:site_name" content="Forge Platform">
+  <meta property="og:title" content="Recommendations Engine — Forail Platform Docs">
+  <meta property="og:description" content="Recommendations engine in Forail Platform — surfaces optimization suggestions for job templates, schedules, and resource utilization. Data-driven hints for automation hygiene.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/recommendations.html">
+  <meta property="og:site_name" content="Forail Platform">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Recommendations Engine — Forge Platform Docs">
-  <meta name="twitter:description" content="Recommendations engine in Forge Platform — surfaces optimization suggestions for job templates, schedules, and resource utilization. Data-driven hints for automation hygiene.">
-  <meta name="twitter:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta name="twitter:title" content="Recommendations Engine — Forail Platform Docs">
+  <meta name="twitter:description" content="Recommendations engine in Forail Platform — surfaces optimization suggestions for job templates, schedules, and resource utilization. Data-driven hints for automation hygiene.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"TechArticle","headline":"Recommendations Engine","description":"Recommendations engine in Forge Platform — surfaces optimization suggestions for job templates, schedules, and resource utilization. Data-driven hints for automation hygiene.","url":"https://forgeplatform.github.io/docs/recommendations.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forge Platform","url":"https://forgeplatform.github.io/"},"image":"https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"Recommendations Engine","description":"Recommendations engine in Forail Platform — surfaces optimization suggestions for job templates, schedules, and resource utilization. Data-driven hints for automation hygiene.","url":"https://forail-platform.github.io/docs/recommendations.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
       <li><a href="../dev/index.html">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -85,7 +85,7 @@
   <main class="docs-content">
 <h1 id="23-recommendations-engine">23 — Recommendations Engine</h1>
 <p><strong>Tier 3.7 — NEW</strong></p>
-<p>Forge Platform ships a <strong>rule-based recommendations engine</strong> that surfaces
+<p>Forail Platform ships a <strong>rule-based recommendations engine</strong> that surfaces
 actionable, scope-aware hints about platform health. Recommendations appear on
 the Dashboard and inside each wizard, and are designed to nudge operators
 toward best practices ("you have job templates but no IaC scanners",
@@ -119,13 +119,13 @@ existing tables, with a 60-second in-memory cache to keep the cost negligible.</
 </ul>
 <hr />
 <h2 id="module-layout">Module Layout</h2>
-<div class="codehilite"><pre><span></span><code><span class="n">forge</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">recommendations</span><span class="o">/</span>
+<div class="codehilite"><pre><span></span><code><span class="n">forail</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">recommendations</span><span class="o">/</span>
 <span class="err">├──</span><span class="w"> </span><span class="n">__init__</span><span class="o">.</span><span class="n">py</span><span class="w">        </span><span class="c1"># public exports: build_context, evaluate, Recommendation</span>
 <span class="err">├──</span><span class="w"> </span><span class="n">types</span><span class="o">.</span><span class="n">py</span><span class="w">           </span><span class="c1"># @dataclass RuleContext, Recommendation</span>
 <span class="err">├──</span><span class="w"> </span><span class="n">rules</span><span class="o">.</span><span class="n">py</span><span class="w">           </span><span class="c1"># 12 pure rule functions</span>
 <span class="err">└──</span><span class="w"> </span><span class="n">engine</span><span class="o">.</span><span class="n">py</span><span class="w">          </span><span class="c1"># build_context() + evaluate() + 60s cache</span>
 
-<span class="n">forge</span><span class="o">/</span><span class="n">api</span><span class="o">/</span>
+<span class="n">forail</span><span class="o">/</span><span class="n">api</span><span class="o">/</span>
 <span class="err">├──</span><span class="w"> </span><span class="n">views</span><span class="o">/</span><span class="n">recommendations</span><span class="o">.</span><span class="n">py</span><span class="w">        </span><span class="c1"># RecommendationsList APIView</span>
 <span class="err">├──</span><span class="w"> </span><span class="n">serializers</span><span class="o">/</span><span class="n">recommendations</span><span class="o">.</span><span class="n">py</span><span class="w">  </span><span class="c1"># RecommendationSerializer</span>
 <span class="err">└──</span><span class="w"> </span><span class="n">urls</span><span class="o">/</span><span class="n">recommendations</span><span class="o">.</span><span class="n">py</span><span class="w">         </span><span class="c1"># urlpatterns</span>
@@ -136,7 +136,7 @@ existing tables, with a 60-second in-memory cache to keep the cost negligible.</
 
 <p>The module is <strong>not</strong> a Django app — it has no <code>apps.py</code>, no <code>models.py</code>, no
 migrations, and is <strong>not</strong> registered in <code>INSTALLED_APPS</code>. Its URL include is
-wired directly from <code>forge/api/urls/urls.py</code>.</p>
+wired directly from <code>forail/api/urls/urls.py</code>.</p>
 <hr />
 <h2 id="data-types">Data Types</h2>
 <h3 id="rulecontext"><code>RuleContext</code></h3>
@@ -392,12 +392,12 @@ inside each severity bucket (the order in which the rule is registered).</p>
 <h3 id="examples">Examples</h3>
 <p><strong>All recommendations</strong></p>
 <div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://forge.example.com/api/v2/recommendations/
+<span class="w">  </span>https://forail.example.com/api/v2/recommendations/
 </code></pre></div>
 
 <p><strong>Only compliance</strong></p>
 <div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="s2">&quot;https://forge.example.com/api/v2/recommendations/?scope=compliance&quot;</span>
+<span class="w">  </span><span class="s2">&quot;https://forail.example.com/api/v2/recommendations/?scope=compliance&quot;</span>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
@@ -417,7 +417,7 @@ inside each severity bucket (the order in which the rule is registered).</p>
 
 <p><strong>Only tenancy</strong></p>
 <div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span><span class="s2">&quot;https://forge.example.com/api/v2/recommendations/?scope=tenancy&quot;</span>
+<span class="w">  </span><span class="s2">&quot;https://forail.example.com/api/v2/recommendations/?scope=tenancy&quot;</span>
 </code></pre></div>
 
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
@@ -512,7 +512,7 @@ matching the backend cache TTL.</p>
 <hr />
 <h2 id="adding-a-new-rule">Adding a New Rule</h2>
 <ol>
-<li>Edit <code>forge/main/recommendations/rules.py</code>. Add a function:</li>
+<li>Edit <code>forail/main/recommendations/rules.py</code>. Add a function:</li>
 </ol>
 <p><code>python
    def rule_my_new_check(ctx: RuleContext) -&gt; Recommendation | None:
@@ -578,7 +578,7 @@ runs in well under a second.</p>
 <li><a href="19-policy-as-code.md">19 — Policy-as-Code</a> — feeds <code>all_policies_warn</code></li>
 <li><a href="20-iac-scanning.md">20 — IaC Scanning</a> — feeds <code>no_scanners</code></li>
 <li><a href="22-multi-tenancy.md">22 — Multi-Tenancy</a> — feeds <code>multi_org_no_tenancy</code>, <code>tenant_near_quota</code></li>
-<li><a href="../../forge-deploy/docs/HANDBOOK.md#dashboard">User Handbook → Dashboard</a> — where the UI surfaces these</li>
+<li><a href="../../forail-deploy/docs/HANDBOOK.md#dashboard">User Handbook → Dashboard</a> — where the UI surfaces these</li>
 </ul>
   </main>
 </div>
@@ -586,9 +586,9 @@ runs in well under a second.</p>
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../dev/index.html">Dev Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>

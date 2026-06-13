@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Policy-as-Code (OPA) — Forge Platform Docs</title>
-  <meta name="description" content="Policy-as-code in Forge Platform with Open Policy Agent (OPA) — enforce job execution policies, mandatory tags, time windows, blast-radius limits, and compliance rules.">
-  <meta name="keywords" content="Forge Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <title>Policy-as-Code (OPA) — Forail Platform Docs</title>
+  <meta name="description" content="Policy-as-code in Forail Platform with Open Policy Agent (OPA) — enforce job execution policies, mandatory tags, time windows, blast-radius limits, and compliance rules.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
   <meta name="author" content="Krstan Vjestica">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://forgeplatform.github.io/docs/policy-as-code.html">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/policy-as-code.html">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Policy-as-Code (OPA) — Forge Platform Docs">
-  <meta property="og:description" content="Policy-as-code in Forge Platform with Open Policy Agent (OPA) — enforce job execution policies, mandatory tags, time windows, blast-radius limits, and compliance rules.">
-  <meta property="og:url" content="https://forgeplatform.github.io/docs/policy-as-code.html">
-  <meta property="og:site_name" content="Forge Platform">
+  <meta property="og:title" content="Policy-as-Code (OPA) — Forail Platform Docs">
+  <meta property="og:description" content="Policy-as-code in Forail Platform with Open Policy Agent (OPA) — enforce job execution policies, mandatory tags, time windows, blast-radius limits, and compliance rules.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/policy-as-code.html">
+  <meta property="og:site_name" content="Forail Platform">
   <meta property="og:locale" content="en_US">
-  <meta property="og:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Policy-as-Code (OPA) — Forge Platform Docs">
-  <meta name="twitter:description" content="Policy-as-code in Forge Platform with Open Policy Agent (OPA) — enforce job execution policies, mandatory tags, time windows, blast-radius limits, and compliance rules.">
-  <meta name="twitter:image" content="https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta name="twitter:title" content="Policy-as-Code (OPA) — Forail Platform Docs">
+  <meta name="twitter:description" content="Policy-as-code in Forail Platform with Open Policy Agent (OPA) — enforce job execution policies, mandatory tags, time windows, blast-radius limits, and compliance rules.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"TechArticle","headline":"Policy-as-Code (OPA)","description":"Policy-as-code in Forge Platform with Open Policy Agent (OPA) — enforce job execution policies, mandatory tags, time windows, blast-radius limits, and compliance rules.","url":"https://forgeplatform.github.io/docs/policy-as-code.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forge Platform","url":"https://forgeplatform.github.io/"},"image":"https://forgeplatform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"Policy-as-Code (OPA)","description":"Policy-as-code in Forail Platform with Open Policy Agent (OPA) — enforce job execution policies, mandatory tags, time windows, blast-radius limits, and compliance rules.","url":"https://forail-platform.github.io/docs/policy-as-code.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,13 +35,13 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
       <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
-      Forge
+      Forail
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
       <li><a href="../dev/index.html">Dev Docs</a></li>
     </ul>
-    <a href="https://github.com/forgeplatform" class="nav-cta">GitHub</a>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -84,7 +84,7 @@
   </aside>
   <main class="docs-content">
 <h1 id="19-policy-as-code-opa">19 — Policy-as-Code (OPA)</h1>
-<p>Runtime policy evaluation for launches. Forge stores Rego modules in
+<p>Runtime policy evaluation for launches. Forail stores Rego modules in
 the database, pushes them to an OPA sidecar, and asks OPA before every
 Job / WorkflowJob / AdHocCommand starts. OPA can return <strong>allow</strong>,
 <strong>warn</strong>, or <strong>deny</strong>.</p>
@@ -96,12 +96,12 @@ Job / WorkflowJob / AdHocCommand starts. OPA can return <strong>allow</strong>,
 <span class="w">                    </span><span class="err">└────────┬───────────┘</span>
 <span class="w">                             </span><span class="err">│</span><span class="w"> </span><span class="n">post_save</span><span class="w"> </span><span class="k">signal</span>
 <span class="w">                             </span><span class="err">▼</span>
-<span class="w">                    </span><span class="n">forge</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">sync</span><span class="o">.</span><span class="n">push_policy</span><span class="p">()</span>
+<span class="w">                    </span><span class="n">forail</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">sync</span><span class="o">.</span><span class="n">push_policy</span><span class="p">()</span>
 <span class="w">                             </span><span class="err">│</span>
-<span class="w">                             </span><span class="err">│</span><span class="w"> </span><span class="n">PUT</span><span class="w"> </span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">policies</span><span class="o">/</span><span class="n">forge_</span><span class="o">&lt;</span><span class="n">id</span><span class="o">&gt;</span>
+<span class="w">                             </span><span class="err">│</span><span class="w"> </span><span class="n">PUT</span><span class="w"> </span><span class="o">/</span><span class="n">v1</span><span class="o">/</span><span class="n">policies</span><span class="o">/</span><span class="n">forail_</span><span class="o">&lt;</span><span class="n">id</span><span class="o">&gt;</span>
 <span class="w">                             </span><span class="err">▼</span>
 <span class="w">                    </span><span class="err">┌────────────────────┐</span>
-<span class="w">                    </span><span class="err">│</span><span class="w">   </span><span class="n">forge</span><span class="o">-</span><span class="n">opa</span><span class="w">         </span><span class="err">│</span>
+<span class="w">                    </span><span class="err">│</span><span class="w">   </span><span class="n">forail</span><span class="o">-</span><span class="n">opa</span><span class="w">         </span><span class="err">│</span>
 <span class="w">                    </span><span class="err">│</span><span class="w">   </span><span class="p">(</span><span class="n">sidecar</span><span class="p">)</span><span class="w">         </span><span class="err">│</span>
 <span class="w">                    </span><span class="err">└────────────────────┘</span>
 <span class="w">                             </span><span class="err">▲</span>
@@ -140,7 +140,7 @@ This is the smallest seam in the launch path that gives policy access
 to the full request.</p>
 <hr />
 <h2 id="models">Models</h2>
-<p><code>forge/main/models/policy.py</code></p>
+<p><code>forail/main/models/policy.py</code></p>
 <h3 id="policycommonmodelnamenotunique"><code>Policy(CommonModelNameNotUnique)</code></h3>
 <table>
 <thead>
@@ -160,7 +160,7 @@ to the full request.</p>
 </tr>
 <tr>
 <td><code>package_path</code></td>
-<td>OPA Data path queried, e.g. <code>forge.launch</code></td>
+<td>OPA Data path queried, e.g. <code>forail.launch</code></td>
 </tr>
 <tr>
 <td><code>enforcement</code></td>
@@ -199,7 +199,7 @@ JSON used for the eval.</p>
 
 <p>Both are exported and unit-tested standalone.</p>
 <hr />
-<h2 id="opa-client-forgemainpolicyopa_clientpy">OPA client — <code>forge/main/policy/opa_client.py</code></h2>
+<h2 id="opa-client-forailmainpolicyopa_clientpy">OPA client — <code>forail/main/policy/opa_client.py</code></h2>
 <p>Tiny wrapper around <code>requests</code>. No extra dependency.</p>
 <div class="codehilite"><pre><span></span><code><span class="n">upload_policy</span><span class="p">(</span><span class="n">server_url</span><span class="p">,</span> <span class="n">policy_id</span><span class="p">,</span> <span class="n">rego_module</span><span class="p">,</span> <span class="n">timeout_ms</span><span class="p">)</span>
 <span class="n">delete_policy</span><span class="p">(</span><span class="n">server_url</span><span class="p">,</span> <span class="n">policy_id</span><span class="p">,</span> <span class="n">timeout_ms</span><span class="p">)</span>
@@ -217,18 +217,18 @@ JSON used for the eval.</p>
 </ul>
 <p>Anything that doesn't match is treated as a silent allow.</p>
 <hr />
-<h2 id="sync-forgemainpolicysyncpy">Sync — <code>forge/main/policy/sync.py</code></h2>
+<h2 id="sync-forailmainpolicysyncpy">Sync — <code>forail/main/policy/sync.py</code></h2>
 <p><code>post_save</code> and <code>post_delete</code> signal receivers push or remove the Rego
-text via OPA's <code>/v1/policies/forge_&lt;policy_id&gt;</code> endpoint. Failures
+text via OPA's <code>/v1/policies/forail_&lt;policy_id&gt;</code> endpoint. Failures
 update <code>Policy.last_sync_status='failed'</code> but never raise — operators
 see the failure in the list page.</p>
 <p>The receivers are connected at module import time. Wired in
-<code>forge/main/models/__init__.py</code>:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">forge.main.policy.sync</span>  <span class="c1"># noqa: F401  -- registers signals</span>
+<code>forail/main/models/__init__.py</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">forail.main.policy.sync</span>  <span class="c1"># noqa: F401  -- registers signals</span>
 </code></pre></div>
 
 <hr />
-<h2 id="evaluator-forgemainpolicyevaluatorpy">Evaluator — <code>forge/main/policy/evaluator.py</code></h2>
+<h2 id="evaluator-forailmainpolicyevaluatorpy">Evaluator — <code>forail/main/policy/evaluator.py</code></h2>
 <div class="codehilite"><pre><span></span><code><span class="n">build_launch_context</span><span class="p">(</span><span class="n">unified_job</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span>
 <span class="n">evaluate_launch</span><span class="p">(</span><span class="n">unified_job</span><span class="p">,</span> <span class="n">request</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PolicyDecisionResult</span>
 </code></pre></div>
@@ -260,7 +260,7 @@ see the failure in the list page.</p>
 the verdict. The org's enforcement value caps the per-policy mode:
 an org in <code>warn</code> never blocks even if a policy is <code>enforce</code>.</p>
 <hr />
-<h2 id="settings-forgemainconfpy">Settings — <code>forge/main/conf.py</code></h2>
+<h2 id="settings-forailmainconfpy">Settings — <code>forail/main/conf.py</code></h2>
 <p>Registered under the <strong>Security</strong> category:</p>
 <table>
 <thead>
@@ -278,7 +278,7 @@ an org in <code>warn</code> never blocks even if a policy is <code>enforce</code
 </tr>
 <tr>
 <td><code>OPA_SERVER_URL</code></td>
-<td><code>http://forge-opa:8181</code></td>
+<td><code>http://forail-opa:8181</code></td>
 <td>Base URL of the sidecar</td>
 </tr>
 <tr>
@@ -357,15 +357,15 @@ an org in <code>warn</code> never blocks even if a policy is <code>enforce</code
 <hr />
 <h2 id="end-to-end-manual-verification">End-to-end manual verification</h2>
 <ol>
-<li>Add the OPA sidecar to compose (<code>forge-deploy/docker-compose.yml</code>,
-   service <code>forge-opa</code>).</li>
+<li>Add the OPA sidecar to compose (<code>forail-deploy/docker-compose.yml</code>,
+   service <code>forail-opa</code>).</li>
 <li>Settings → Security → set <code>OPA_ENABLED=true</code>,
-   <code>OPA_SERVER_URL=http://forge-opa:8181</code>.</li>
+   <code>OPA_SERVER_URL=http://forail-opa:8181</code>.</li>
 <li>PATCH an organization's <code>policy_enforcement</code> to <code>enforce</code>.</li>
 <li>Create a Policy via the UI: <code>applies_to=[job_template]</code>,
-   <code>enforcement=enforce</code>, package <code>forge.launch</code>, body:
+   <code>enforcement=enforce</code>, package <code>forail.launch</code>, body:
    <code>rego
-   package forge.launch
+   package forail.launch
    default deny := false
    deny if {
      input.inventory.name == "prod-web"
@@ -385,9 +385,9 @@ an org in <code>warn</code> never blocks even if a policy is <code>enforce</code
   <div class="footer-links">
     <a href="../index.html">Home</a>
     <a href="../dev/index.html">Dev Docs</a>
-    <a href="https://github.com/forgeplatform">GitHub</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
   </div>
-  <p>Forge Platform — Apache License 2.0</p>
+  <p>Forail Platform — Apache License 2.0</p>
 </footer>
 <script src="../assets/js/main.js"></script>
 </body>
