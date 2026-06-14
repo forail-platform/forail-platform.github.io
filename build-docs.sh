@@ -36,6 +36,7 @@ DOCS["forail-deploy/docs/ADMIN_HANDBOOK.md"]="admin-handbook.html|Administrator 
 DOCS["forail-deploy/docs/RELEASE_NOTES_v2026.03.0.md"]="release-2026.03.0.html|Release Notes v2026.03.0|Forail Platform v2026.03.0 release notes — new features, bug fixes, breaking changes, dependency updates, and upgrade guide for the open-source Ansible automation platform."
 DOCS["forail-deploy/docs/RELEASE_NOTES_v2026.04.0.md"]="release-2026.04.0.html|Release Notes v2026.04.0|Forail Platform v2026.04.0 release notes — new features, bug fixes, breaking changes, and step-by-step upgrade guide for production deployments."
 DOCS["forail-deploy/docs/RELEASE_NOTES_v2026.05.0.md"]="release-2026.05.0.html|Release Notes v2026.05.0|Forail Platform v2026.05.0 release notes — operator v1.0.0 with 9 CRDs and multi-cluster routing, k3s deployment scale-up, backend migration fix, public ghcr.io image distribution."
+DOCS["forail-deploy/docs/RELEASE_NOTES_v2026.06.0.md"]="release-2026.06.0.html|Release Notes v2026.06.0|Forail Platform v2026.06.0 release notes — project renamed forge to forail (organization forail-platform), new ghcr.io image namespace, CRD API group forail.forail-platform.io, versioning unified on CalVer."
 
 generate_page() {
   local src="$1" out="$2" title="$3" description="$4"
@@ -136,6 +137,7 @@ sys.stdout.write(html)
     <a href="user-handbook.html">User Handbook</a>
     <a href="admin-handbook.html">Admin Handbook</a>
     <h4>Release Notes</h4>
+    <a href="release-2026.06.0.html">v2026.06.0</a>
     <a href="release-2026.05.0.html">v2026.05.0</a>
     <a href="release-2026.04.0.html">v2026.04.0</a>
     <a href="release-2026.03.0.html">v2026.03.0</a>
