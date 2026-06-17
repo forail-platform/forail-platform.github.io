@@ -114,7 +114,7 @@ SDK is not even imported, so the overhead is zero.</p>
 <li>Docker Compose service: <code>forail-otel-collector</code> in
   <code>forail-deploy/docker-compose.yml</code></li>
 <li>Kubernetes stubs: <code>forail-deploy/k8s/otel-collector.yaml</code>,
-  <code>forail-deploy/k8s/grafana-dashboards-cm.yaml</code> (not yet tested)</li>
+  <code>forail-deploy/k8s/grafana-dashboards-cm.yaml</code> (manifest + embedded dashboard JSON statically validated; not yet applied on a live cluster)</li>
 <li>Grafana dashboard: <code>forail-deploy/grafana/dashboards/forail-overview.json</code></li>
 </ul>
 <h2 id="bootstrap-flow">Bootstrap flow</h2>
