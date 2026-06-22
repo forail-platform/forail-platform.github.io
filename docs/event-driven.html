@@ -78,6 +78,7 @@
     <a href="user-handbook.html">User Handbook</a>
     <a href="admin-handbook.html">Admin Handbook</a>
     <h4>Release Notes</h4>
+    <a href="release-2026.06.0.html">v2026.06.0</a>
     <a href="release-2026.05.0.html">v2026.05.0</a>
     <a href="release-2026.04.0.html">v2026.04.0</a>
     <a href="release-2026.03.0.html">v2026.03.0</a>
@@ -635,11 +636,13 @@ All conditions must match (AND logic). Empty conditions = always match.</p>
 </code></pre></div>
 
 <h3 id="3-configure-github-webhook">3. Configure GitHub webhook</h3>
-<p>In your GitHub repository Settings &gt; Webhooks:
-- <strong>Payload URL</strong>: <code>https://forail.example.com/api/v2/eda_webhooks/github-deploy/</code>
-- <strong>Content type</strong>: <code>application/json</code>
-- <strong>Secret</strong>: The webhook key from step 2
-- <strong>Events</strong>: Push events</p>
+<p>In your GitHub repository Settings &gt; Webhooks:</p>
+<ul>
+<li><strong>Payload URL</strong>: <code>https://forail.example.com/api/v2/eda_webhooks/github-deploy/</code></li>
+<li><strong>Content type</strong>: <code>application/json</code></li>
+<li><strong>Secret</strong>: The webhook key from step 2</li>
+<li><strong>Events</strong>: Push events</li>
+</ul>
 <h3 id="4-test-with-dry-run">4. Test with dry-run</h3>
 <div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>https://forail.example.com/api/v2/event_rules/1/test/<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer &lt;token&gt;&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -658,12 +661,14 @@ All conditions must match (AND logic). Empty conditions = always match.</p>
 <li><strong>Event Logs</strong> (<code>/event_logs</code>) — View incoming webhooks and evaluation results</li>
 <li><strong>Outbound Webhooks</strong> (<code>/outbound_webhooks</code>) — Configure job status push notifications</li>
 </ul>
-<p>Each Event Rule detail page shows:
-- Webhook URL (copy-to-clipboard)
-- Webhook key (show/rotate)
-- Condition and action configuration
-- Recent event logs with status badges
-- Dry-run test capability</p>
+<p>Each Event Rule detail page shows:</p>
+<ul>
+<li>Webhook URL (copy-to-clipboard)</li>
+<li>Webhook key (show/rotate)</li>
+<li>Condition and action configuration</li>
+<li>Recent event logs with status badges</li>
+<li>Dry-run test capability</li>
+</ul>
   </main>
 </div>
 <footer class="footer">

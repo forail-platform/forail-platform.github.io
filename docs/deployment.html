@@ -78,6 +78,7 @@
     <a href="user-handbook.html">User Handbook</a>
     <a href="admin-handbook.html">Admin Handbook</a>
     <h4>Release Notes</h4>
+    <a href="release-2026.06.0.html">v2026.06.0</a>
     <a href="release-2026.05.0.html">v2026.05.0</a>
     <a href="release-2026.04.0.html">v2026.04.0</a>
     <a href="release-2026.03.0.html">v2026.03.0</a>
@@ -188,18 +189,22 @@ docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </
 docker<span class="w"> </span>push<span class="w"> </span>ghcr.io/forail-platform/forail-backend:latest
 </code></pre></div>
 
-<p>The Dockerfile is a multi-stage build:
-1. <strong>builder</strong> (Ubuntu 24.04): installs Python deps, builds sdist, runs collectstatic
-2. <strong>runtime</strong> (Ubuntu 24.04): minimal image with runtime deps, receptor, supervisor</p>
+<p>The Dockerfile is a multi-stage build:</p>
+<ol>
+<li><strong>builder</strong> (Ubuntu 24.04): installs Python deps, builds sdist, runs collectstatic</li>
+<li><strong>runtime</strong> (Ubuntu 24.04): minimal image with runtime deps, receptor, supervisor</li>
+</ol>
 <h3 id="frontend">Frontend</h3>
 <div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forail-frontend
 docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forail-platform/forail-frontend:latest<span class="w"> </span>.
 docker<span class="w"> </span>push<span class="w"> </span>ghcr.io/forail-platform/forail-frontend:latest
 </code></pre></div>
 
-<p>The Dockerfile is a multi-stage build:
-1. <strong>builder</strong> (Node 20 Alpine): <code>npm ci &amp;&amp; npm run build</code>
-2. <strong>runtime</strong> (nginx 1.27 Alpine): serves built assets with SPA fallback</p>
+<p>The Dockerfile is a multi-stage build:</p>
+<ol>
+<li><strong>builder</strong> (Node 20 Alpine): <code>npm ci &amp;&amp; npm run build</code></li>
+<li><strong>runtime</strong> (nginx 1.27 Alpine): serves built assets with SPA fallback</li>
+</ol>
 <hr />
 <h2 id="production-deployment">Production Deployment</h2>
 <h3 id="prerequisites">Prerequisites</h3>

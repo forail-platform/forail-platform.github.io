@@ -24,6 +24,8 @@ DOCS["forail-backend/docs/20-iac-scanning.md"]="iac-scanning.html|IaC Scanning|I
 DOCS["forail-backend/docs/21-observability.md"]="observability.html|Observability|OpenTelemetry observability in Forail Platform — distributed traces, metrics, and structured logs from API to Celery task workers to Receptor execution, all correlated by trace ID."
 DOCS["forail-backend/docs/22-multi-tenancy.md"]="multi-tenancy.html|Multi-Tenancy|Multi-tenancy in Forail Platform — hard tenant isolation, per-tenant resource quotas, separated audit trails. Run multiple organizations on a single Forail instance securely."
 DOCS["forail-backend/docs/23-recommendations.md"]="recommendations.html|Recommendations Engine|Recommendations engine in Forail Platform — surfaces optimization suggestions for job templates, schedules, and resource utilization. Data-driven hints for automation hygiene."
+# Migration
+DOCS["forail-backend/docs/24-awx-import.md"]="awx-import.html|AWX → Forail Migration|Migrate from AWX or Ansible Automation Platform to Forail with the one-shot import_from_awx command — organizations, inventories, credentials, projects, job and workflow templates, schedules, notifications and RBAC, imported idempotently over the AWX REST API."
 # AI Assistant
 DOCS["forail-assistant/docs/architecture.md"]="assistant-architecture.html|AI Assistant Architecture (Preview)|Forail AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — FastAPI service with embedded Ollama LLM runtime and ChromaDB vector store. Fully self-hosted preview, runs on CPU or GPU."
 DOCS["forail-assistant/docs/api-reference.md"]="assistant-api.html|AI Assistant API (Preview)|Forail AI Assistant API reference (UNDER ACTIVE DEVELOPMENT — not production-ready). HTTP endpoints for chat completion, RAG queries, model management. Preview only, APIs may change."
@@ -66,6 +68,9 @@ sys.stdout.write(html)
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${title_safe} — Forail Platform Docs</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta name="description" content="${description_safe}">
   <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
   <meta name="author" content="Krstan Vjestica">
@@ -96,7 +101,7 @@ sys.stdout.write(html)
 <nav class="nav">
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">
-      <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7c6cf0"/><path d="M8 10h16v2H8zm0 5h12v2H8zm0 5h14v2H8z" fill="#fff"/></svg>
+      <svg viewBox="0 0 64 64" fill="none"><line x1="18" y1="28.5" x2="45" y2="12.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><line x1="18" y1="28.5" x2="49" y2="36.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><line x1="18" y1="28.5" x2="26" y2="51.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><rect x="9" y="19.5" width="18" height="18" rx="5" fill="#1D9E75"/><circle cx="45" cy="12.5" r="6" fill="#1D9E75"/><circle cx="49" cy="36.5" r="6" fill="#1D9E75"/><circle cx="26" cy="51.5" r="6" fill="#1D9E75"/></svg>
       Forail
     </a>
     <ul class="nav-links">

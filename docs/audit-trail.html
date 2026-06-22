@@ -78,6 +78,7 @@
     <a href="user-handbook.html">User Handbook</a>
     <a href="admin-handbook.html">Admin Handbook</a>
     <h4>Release Notes</h4>
+    <a href="release-2026.06.0.html">v2026.06.0</a>
     <a href="release-2026.05.0.html">v2026.05.0</a>
     <a href="release-2026.04.0.html">v2026.04.0</a>
     <a href="release-2026.03.0.html">v2026.03.0</a>
@@ -107,7 +108,7 @@
 <tr>
 <td><code>actor_ip</code></td>
 <td>GenericIPAddressField</td>
-<td>IP address of the actor (supports X-Forwarded-For)</td>
+<td>IP address of the actor</td>
 </tr>
 <tr>
 <td><code>actor_user_agent</code></td>
@@ -117,13 +118,20 @@
 <tr>
 <td><code>actor_session_id</code></td>
 <td>CharField(64)</td>
-<td>Django session ID at the time of the event</td>
+<td><strong>SHA-256 hash</strong> of the actor's Django session key (never the raw key)</td>
 </tr>
 </tbody>
 </table>
 <p>These fields are automatically populated by <code>RequestContextMiddleware</code> which
 extracts the data from each incoming HTTP request and stores it in thread-local
 storage. The <code>ActivityStream.save()</code> method reads from this context on first save.</p>
+<p><strong>Security note:</strong>
+- <code>actor_ip</code> is taken from <code>X-Forwarded-For</code> <strong>only when the direct peer is a
+  configured trusted proxy</strong> (<code>PROXY_IP_ALLOWED_LIST</code>); otherwise <code>REMOTE_ADDR</code>
+  is used. This prevents a client from forging the recorded source IP.
+- <code>actor_session_id</code> stores a one-way <strong>SHA-256 hash</strong> of the session key, not
+  the key itself, so anyone able to read the audit trail cannot lift a usable
+  session key and hijack the actor's session.</p>
 <h3 id="api-response">API Response</h3>
 <p>Activity stream entries now include the new fields in the API response:</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
@@ -132,7 +140,7 @@ storage. The <code>ActivityStream.save()</code> method reads from this context o
 <span class="w">  </span><span class="nt">&quot;operation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;update&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;actor_ip&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;203.0.113.50&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;actor_user_agent&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Mozilla/5.0 ...&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;actor_session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;abc123def456&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;actor_session_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;changes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span>
 <span class="w">  </span><span class="nt">&quot;summary_fields&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;actor&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;admin&quot;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span>
 <span class="p">}</span>
@@ -151,10 +159,12 @@ Audit Events focus on security-sensitive operations:</p>
 <li><strong>System Events</strong> — configuration changes, maintenance operations</li>
 </ul>
 <h3 id="immutability">Immutability</h3>
-<p>Audit events are append-only:
-- <code>save()</code> raises <code>ValueError</code> if the entry already has a primary key (no updates)
-- <code>delete()</code> raises <code>ValueError</code> (no deletions)
-- Records can only be created, never modified or removed</p>
+<p>Audit events are append-only:</p>
+<ul>
+<li><code>save()</code> raises <code>ValueError</code> if the entry already has a primary key (no updates)</li>
+<li><code>delete()</code> raises <code>ValueError</code> (no deletions)</li>
+<li>Records can only be created, never modified or removed</li>
+</ul>
 <h3 id="model-fields">Model Fields</h3>
 <table>
 <thead>
@@ -316,10 +326,12 @@ description, resource_type, resource_id, resource_name, action_node.</p>
 <div class="codehilite"><pre><span></span><code>GET /api/v2/audit_events/?format=siem
 </code></pre></div>
 
-<p>Returns flat JSON optimized for SIEM ingestion (Splunk, ELK, Datadog):
-- <code>detail</code> dict fields are flattened with <code>detail_</code> prefix
-- <code>source: "forail"</code> and <code>event_type: "&lt;category&gt;.&lt;action&gt;"</code> are added
-- No nested objects — every field is at the top level</p>
+<p>Returns flat JSON optimized for SIEM ingestion (Splunk, ELK, Datadog):</p>
+<ul>
+<li><code>detail</code> dict fields are flattened with <code>detail_</code> prefix</li>
+<li><code>source: "forail"</code> and <code>event_type: "&lt;category&gt;.&lt;action&gt;"</code> are added</li>
+<li>No nested objects — every field is at the top level</li>
+</ul>
 <h3 id="detail">Detail</h3>
 <div class="codehilite"><pre><span></span><code>GET /api/v2/audit_events/{id}/
 </code></pre></div>
@@ -378,7 +390,7 @@ cause the calling operation to fail.</p>
 <h2 id="middleware">Middleware</h2>
 <p><code>RequestContextMiddleware</code> in <code>forail/main/middleware.py</code>:</p>
 <ul>
-<li>Extracts IP (from <code>X-Forwarded-For</code> or <code>REMOTE_ADDR</code>), User-Agent, and session ID</li>
+<li>Extracts IP (<code>X-Forwarded-For</code> only behind a trusted proxy in <code>PROXY_IP_ALLOWED_LIST</code>, else <code>REMOTE_ADDR</code>), User-Agent, and a SHA-256 hash of the session key</li>
 <li>Stores in thread-local storage for signal handlers to read</li>
 <li>Cleans up after each response</li>
 <li>Must be placed after <code>AuthenticationMiddleware</code> in <code>MIDDLEWARE</code> setting</li>

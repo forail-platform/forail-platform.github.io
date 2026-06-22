@@ -78,6 +78,7 @@
     <a href="user-handbook.html">User Handbook</a>
     <a href="admin-handbook.html">Admin Handbook</a>
     <h4>Release Notes</h4>
+    <a href="release-2026.06.0.html">v2026.06.0</a>
     <a href="release-2026.05.0.html">v2026.05.0</a>
     <a href="release-2026.04.0.html">v2026.04.0</a>
     <a href="release-2026.03.0.html">v2026.03.0</a>
@@ -172,24 +173,34 @@ newgrp<span class="w"> </span>docker
 <p>The standard installation uses the compose file shipped in this repo.</p>
 <p><strong>Step by step</strong></p>
 <ol>
-<li>Clone or copy <code>forail-deploy</code> to the target host:
-   <code>bash
+<li>Clone or copy <code>forail-deploy</code> to the target host:</li>
+</ol>
+<p><code>bash
    git clone https://github.com/forail-platform/forail-devops.git /opt/forail
-   cd /opt/forail</code></li>
-<li>Copy the example env file and edit it:
-   <code>bash
+   cd /opt/forail</code></p>
+<ol>
+<li>Copy the example env file and edit it:</li>
+</ol>
+<p><code>bash
    cp .env.example .env
-   $EDITOR .env</code></li>
+   $EDITOR .env</code></p>
+<ol>
 <li>Fill in the <strong>required</strong> variables (see <a href="#environment-variables">Environment Variables</a>).</li>
-<li>Pull the images:
-   <code>bash
-   docker compose pull</code></li>
-<li>Bring the stack up:
-   <code>bash
-   docker compose up -d</code></li>
-<li>Tail the init container until it finishes:
-   <code>bash
-   docker compose logs -f forail-init</code></li>
+<li>Pull the images:</li>
+</ol>
+<p><code>bash
+   docker compose pull</code></p>
+<ol>
+<li>Bring the stack up:</li>
+</ol>
+<p><code>bash
+   docker compose up -d</code></p>
+<ol>
+<li>Tail the init container until it finishes:</li>
+</ol>
+<p><code>bash
+   docker compose logs -f forail-init</code></p>
+<ol>
 <li>When you see <code>==&gt; Init complete.</code> you can hit <code>https://&lt;your-host&gt;</code> in a browser.</li>
 </ol>
 <p><strong>Example <code>.env</code> for first install</strong></p>
@@ -246,23 +257,31 @@ newgrp<span class="w"> </span>docker
 <p>Forail ships with a self-signed cert. Replace it with a real one before exposing the box.</p>
 <p><strong>Step by step — Let's Encrypt with certbot</strong></p>
 <ol>
-<li>Stop the nginx service so port 80 is free for the ACME challenge:
-   <code>bash
-   docker compose stop nginx</code></li>
-<li>Run certbot in standalone mode:
-   <code>bash
-   sudo certbot certonly --standalone -d forail.example.com</code></li>
-<li>Copy the new cert/key into the nginx mount point:
-   <code>bash
-   sudo cp /etc/letsencrypt/live/forail.example.com/fullchain.pem nginx/ssl/forail.crt
-   sudo cp /etc/letsencrypt/live/forail.example.com/privkey.pem   nginx/ssl/forail.key</code></li>
-<li>Restart nginx:
-   <code>bash
-   docker compose up -d nginx</code></li>
-<li>Verify:
-   <code>bash
-   curl -I https://forail.example.com</code></li>
+<li>Stop the nginx service so port 80 is free for the ACME challenge:</li>
 </ol>
+<p><code>bash
+   docker compose stop nginx</code></p>
+<ol>
+<li>Run certbot in standalone mode:</li>
+</ol>
+<p><code>bash
+   sudo certbot certonly --standalone -d forail.example.com</code></p>
+<ol>
+<li>Copy the new cert/key into the nginx mount point:</li>
+</ol>
+<p><code>bash
+   sudo cp /etc/letsencrypt/live/forail.example.com/fullchain.pem nginx/ssl/forail.crt
+   sudo cp /etc/letsencrypt/live/forail.example.com/privkey.pem   nginx/ssl/forail.key</code></p>
+<ol>
+<li>Restart nginx:</li>
+</ol>
+<p><code>bash
+   docker compose up -d nginx</code></p>
+<ol>
+<li>Verify:</li>
+</ol>
+<p><code>bash
+   curl -I https://forail.example.com</code></p>
 <p><strong>Example renewal cron</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="mf">0</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="n">certbot</span><span class="w"> </span><span class="n">renew</span><span class="w"> </span><span class="o">--</span><span class="n">pre</span><span class="o">-</span><span class="n">hook</span><span class="w"> </span><span class="s">&quot;docker compose -f /opt/forail/docker-compose.yml stop nginx&quot;</span><span class="w"> </span><span class="o">--</span><span class="nb">pos</span><span class="n">t</span><span class="o">-</span><span class="n">hook</span><span class="w"> </span><span class="s">&quot;cp /etc/letsencrypt/live/forail.example.com/fullchain.pem /opt/forail/nginx/ssl/forail.crt &amp;&amp; cp /etc/letsencrypt/live/forail.example.com/privkey.pem /opt/forail/nginx/ssl/forail.key &amp;&amp; docker compose -f /opt/forail/docker-compose.yml up -d nginx&quot;</span>
 </code></pre></div>
@@ -340,19 +359,25 @@ docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">ex
 <p>Daily backups are mandatory. Forail ships <code>scripts/backup.sh</code> which dumps Postgres and rotates old archives.</p>
 <p><strong>Step by step</strong></p>
 <ol>
-<li>Run a one-off backup to verify it works:
-   <code>bash
-   docker compose exec postgres /scripts/backup.sh</code></li>
-<li>Inspect the result:
-   <code>bash
-   ls -lh /var/lib/awx/backups/</code></li>
-<li>Schedule a nightly cron on the host:
-   <code>cron
-   0 2 * * * docker compose -f /opt/forail/docker-compose.yml exec -T postgres /scripts/backup.sh &gt;&gt; /var/log/forail-backup.log 2&gt;&amp;1</code></li>
-<li>Copy the backups off-host (S3, rsync, etc.):
-   <code>cron
-   30 2 * * * aws s3 sync /var/lib/awx/backups/ s3://acme-forail-backups/</code></li>
+<li>Run a one-off backup to verify it works:</li>
 </ol>
+<p><code>bash
+   docker compose exec postgres /scripts/backup.sh</code></p>
+<ol>
+<li>Inspect the result:</li>
+</ol>
+<p><code>bash
+   ls -lh /var/lib/awx/backups/</code></p>
+<ol>
+<li>Schedule a nightly cron on the host:</li>
+</ol>
+<p><code>cron
+   0 2 * * * docker compose -f /opt/forail/docker-compose.yml exec -T postgres /scripts/backup.sh &gt;&gt; /var/log/forail-backup.log 2&gt;&amp;1</code></p>
+<ol>
+<li>Copy the backups off-host (S3, rsync, etc.):</li>
+</ol>
+<p><code>cron
+   30 2 * * * aws s3 sync /var/lib/awx/backups/ s3://acme-forail-backups/</code></p>
 <p><strong>Example output</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="o">==&gt;</span><span class="w"> </span><span class="n">Starting</span><span class="w"> </span><span class="n">backup</span><span class="o">...</span>
 <span class="o">==&gt;</span><span class="w"> </span><span class="n">Backup</span><span class="w"> </span><span class="n">saved</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">awx</span><span class="o">/</span><span class="n">backups</span><span class="o">/</span><span class="n">forail_backup_20260411_020000</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">gz</span>
@@ -368,15 +393,21 @@ docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">ex
 <p><code>scripts/restore.sh</code> reads a <code>.sql.gz</code> and pipes it back into Postgres.</p>
 <p><strong>Step by step</strong></p>
 <ol>
-<li><strong>Stop</strong> the application services so nothing writes to the DB:
-   <code>bash
-   docker compose stop forail-web forail-task</code></li>
-<li>Run the restore (omit the filename to use the most recent backup):
-   <code>bash
-   docker compose exec -T postgres /scripts/restore.sh /var/lib/awx/backups/forail_backup_20260411_020000.sql.gz</code></li>
-<li>Restart the application:
-   <code>bash
-   docker compose up -d forail-web forail-task</code></li>
+<li><strong>Stop</strong> the application services so nothing writes to the DB:</li>
+</ol>
+<p><code>bash
+   docker compose stop forail-web forail-task</code></p>
+<ol>
+<li>Run the restore (omit the filename to use the most recent backup):</li>
+</ol>
+<p><code>bash
+   docker compose exec -T postgres /scripts/restore.sh /var/lib/awx/backups/forail_backup_20260411_020000.sql.gz</code></p>
+<ol>
+<li>Restart the application:</li>
+</ol>
+<p><code>bash
+   docker compose up -d forail-web forail-task</code></p>
+<ol>
 <li>Verify in the UI: log in and check <strong>Activity</strong> for the expected history.</li>
 </ol>
 <p><strong>Example — restore yesterday's backup</strong></p>
@@ -395,21 +426,31 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 <ol>
 <li>Read the <a href="RELEASE_NOTES_v2026.04.0.md">release notes</a> for breaking changes.</li>
 <li>Take a backup (see <a href="#backup">Backup</a>).</li>
-<li>Edit <code>.env</code> and bump <code>FORAIL_TAG</code>:
-   <code>ini
-   FORAIL_TAG=2026.05.0</code></li>
-<li>Pull the new images:
-   <code>bash
-   docker compose pull</code></li>
-<li>Bring the new stack up — <code>forail-init</code> runs migrations automatically:
-   <code>bash
-   docker compose up -d</code></li>
-<li>Tail init:
-   <code>bash
-   docker compose logs -f forail-init</code></li>
-<li>Smoke-test:
-   <code>bash
-   curl -fsS https://forail.example.com/api/v2/ping/</code></li>
+<li>Edit <code>.env</code> and bump <code>FORAIL_TAG</code>:</li>
+</ol>
+<p><code>ini
+   FORAIL_TAG=2026.05.0</code></p>
+<ol>
+<li>Pull the new images:</li>
+</ol>
+<p><code>bash
+   docker compose pull</code></p>
+<ol>
+<li>Bring the new stack up — <code>forail-init</code> runs migrations automatically:</li>
+</ol>
+<p><code>bash
+   docker compose up -d</code></p>
+<ol>
+<li>Tail init:</li>
+</ol>
+<p><code>bash
+   docker compose logs -f forail-init</code></p>
+<ol>
+<li>Smoke-test:</li>
+</ol>
+<p><code>bash
+   curl -fsS https://forail.example.com/api/v2/ping/</code></p>
+<ol>
 <li>Watch <strong>Jobs</strong> for 10 minutes — make sure new launches work.</li>
 </ol>
 <p><strong>Example — minor version bump</strong></p>
@@ -422,13 +463,17 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <p>If an upgrade fails, roll back the tag and restore the pre-upgrade backup.</p>
 <p><strong>Step by step</strong></p>
 <ol>
-<li>Set the previous tag in <code>.env</code>:
-   <code>ini
-   FORAIL_TAG=2026.04.0</code></li>
-<li>Pull and bring up:
-   <code>bash
+<li>Set the previous tag in <code>.env</code>:</li>
+</ol>
+<p><code>ini
+   FORAIL_TAG=2026.04.0</code></p>
+<ol>
+<li>Pull and bring up:</li>
+</ol>
+<p><code>bash
    docker compose pull
-   docker compose up -d</code></li>
+   docker compose up -d</code></p>
+<ol>
 <li><strong>If migrations were applied</strong> during the failed upgrade, you must also restore the pre-upgrade DB dump (see <a href="#restore">Restore</a>).</li>
 <li>Verify and notify users.</li>
 </ol>
@@ -443,12 +488,14 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <p><strong>Step by step</strong></p>
 <ol>
 <li>Provision a new host with Docker.</li>
-<li>On the new host, install Receptor and bring it up as an execution node, pointing at the control node:
-   <code>bash
+<li>On the new host, install Receptor and bring it up as an execution node, pointing at the control node:</li>
+</ol>
+<p><code>bash
    docker run -d --name forail-receptor \
      -e RECEPTOR_NODE_TYPE=execution \
      -e RECEPTOR_PEER=tcp://control.forail.example.com:2222 \
-     ghcr.io/forail-platform/forail-receptor:2026.04.0</code></li>
+     ghcr.io/forail-platform/forail-receptor:2026.04.0</code></p>
+<ol>
 <li>In the UI: <strong>Admin → Instances → Add</strong> and register the new node:</li>
 </ol>
 <table>
@@ -483,12 +530,14 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <p><strong>Step by step</strong></p>
 <ol>
 <li>Provision the hop host inside the boundary.</li>
-<li>Run a Receptor container with <code>RECEPTOR_NODE_TYPE=hop</code>:
-   <code>bash
+<li>Run a Receptor container with <code>RECEPTOR_NODE_TYPE=hop</code>:</li>
+</ol>
+<p><code>bash
    docker run -d --name forail-receptor \
      -e RECEPTOR_NODE_TYPE=hop \
      -e RECEPTOR_PEER=tcp://control.forail.example.com:2222 \
-     ghcr.io/forail-platform/forail-receptor:2026.04.0</code></li>
+     ghcr.io/forail-platform/forail-receptor:2026.04.0</code></p>
+<ol>
 <li>In the UI: <strong>Admin → Instances → Add</strong> with <strong>Node Type = hop</strong>.</li>
 <li>From any execution node behind the hop, set its peer to the hop instead of the control node.</li>
 <li>Confirm in <strong>Topology</strong> that the hop appears between the control and the workers.</li>
@@ -513,19 +562,25 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <p><strong>Step by step</strong></p>
 <ol>
 <li>Read <a href="../k8s/"><code>k8s/</code></a> — it includes Deployments, Services, ConfigMap, Secret, Ingress.</li>
-<li>Create a namespace:
-   <code>bash
-   kubectl create namespace forail</code></li>
-<li>Create the secrets (translate your <code>.env</code>):
-   <code>bash
-   kubectl -n forail create secret generic forail-env --from-env-file=.env</code></li>
-<li>Apply the manifests:
-   <code>bash
-   kubectl -n forail apply -f k8s/</code></li>
-<li>Watch the rollout:
-   <code>bash
-   kubectl -n forail get pods -w</code></li>
+<li>Create a namespace:</li>
 </ol>
+<p><code>bash
+   kubectl create namespace forail</code></p>
+<ol>
+<li>Create the secrets (translate your <code>.env</code>):</li>
+</ol>
+<p><code>bash
+   kubectl -n forail create secret generic forail-env --from-env-file=.env</code></p>
+<ol>
+<li>Apply the manifests:</li>
+</ol>
+<p><code>bash
+   kubectl -n forail apply -f k8s/</code></p>
+<ol>
+<li>Watch the rollout:</li>
+</ol>
+<p><code>bash
+   kubectl -n forail get pods -w</code></p>
 <blockquote>
 <p>Migration from compose to k8s is a one-shot: dump Postgres, import into the k8s-managed Postgres (or external RDS).</p>
 </blockquote>
@@ -536,16 +591,20 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <p><strong>Step by step</strong></p>
 <ol>
 <li>Edit <code>otel/collector-config.yaml</code>.</li>
-<li>Set the exporter endpoint:
-   <code>yaml
+<li>Set the exporter endpoint:</li>
+</ol>
+<p><code>yaml
    exporters:
      otlphttp:
        endpoint: https://otel.example.com
        headers:
-         authorization: "Bearer YOUR_TOKEN"</code></li>
-<li>Restart the collector:
-   <code>bash
-   docker compose restart forail-otel-collector</code></li>
+         authorization: "Bearer YOUR_TOKEN"</code></p>
+<ol>
+<li>Restart the collector:</li>
+</ol>
+<p><code>bash
+   docker compose restart forail-otel-collector</code></p>
+<ol>
 <li>In <strong>Settings → Observability</strong>, set:</li>
 <li><strong>OTLP Endpoint</strong> = <code>http://forail-otel-collector:4318</code></li>
 <li><strong>Sampling rate</strong> = <code>0.1</code> (10%)</li>
@@ -569,10 +628,10 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <li>Open <strong>Audit Log</strong> in the UI.</li>
 <li>Filter by date range (e.g. last quarter).</li>
 <li>Click <strong>Export → CSV</strong>.</li>
-<li>Hash and store the CSV alongside your evidence pack:
-   <code>bash
-   sha256sum audit-2026Q1.csv &gt; audit-2026Q1.csv.sha256</code></li>
+<li>Hash and store the CSV alongside your evidence pack:</li>
 </ol>
+<p><code>bash
+   sha256sum audit-2026Q1.csv &gt; audit-2026Q1.csv.sha256</code></p>
 <hr />
 <h1 id="security_1">SECURITY</h1>
 <h2 id="rotating-secrets">Rotating Secrets</h2>
@@ -580,13 +639,17 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <p><strong>Step by step — rotate <code>FORAIL_SECRET_KEY</code></strong></p>
 <ol>
 <li><strong>Take a backup first.</strong></li>
-<li>Generate a new key:
-   <code>bash
-   openssl rand -hex 25</code></li>
+<li>Generate a new key:</li>
+</ol>
+<p><code>bash
+   openssl rand -hex 25</code></p>
+<ol>
 <li>Edit <code>.env</code>, replace <code>FORAIL_SECRET_KEY=...</code>.</li>
-<li>Restart web + task:
-   <code>bash
-   docker compose up -d forail-web forail-task</code></li>
+<li>Restart web + task:</li>
+</ol>
+<p><code>bash
+   docker compose up -d forail-web forail-task</code></p>
+<ol>
 <li><strong>All sessions are invalidated</strong> — users must re-login. Encrypted credentials in the DB are unaffected (they use a separate Fernet key).</li>
 </ol>
 <blockquote>
@@ -630,10 +693,10 @@ sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</
 <li>Subscribe to the Forail release announcement channel.</li>
 <li>Run <code>docker compose pull</code> weekly to pick up base-image patches when you bump tag.</li>
 <li>Patch the host OS monthly (<code>unattended-upgrades</code> on Debian/Ubuntu).</li>
-<li>Run scheduled image scans:
-   <code>bash
-   trivy image ghcr.io/forail-platform/forail-backend:2026.04.0</code></li>
+<li>Run scheduled image scans:</li>
 </ol>
+<p><code>bash
+   trivy image ghcr.io/forail-platform/forail-backend:2026.04.0</code></p>
 <hr />
 <h1 id="troubleshooting_1">TROUBLESHOOTING</h1>
 <h2 id="stack-wont-come-up">Stack Won't Come Up</h2>
@@ -654,9 +717,11 @@ sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</
 <ol>
 <li>Is postgres running? <code>docker compose ps postgres</code></li>
 <li>Logs: <code>docker compose logs --tail=100 postgres</code></li>
-<li>Can the web container reach it?
-   <code>bash
-   docker compose exec forail-web pg_isready -h postgres -U forail</code></li>
+<li>Can the web container reach it?</li>
+</ol>
+<p><code>bash
+   docker compose exec forail-web pg_isready -h postgres -U forail</code></p>
+<ol>
 <li>If postgres is healthy but web cannot connect → check <code>POSTGRES_PASSWORD</code> matches in <code>.env</code> and the DB volume.</li>
 <li>If postgres won't start → look for <code>PANIC</code> lines (disk full, corrupt WAL).</li>
 </ol>
@@ -669,21 +734,25 @@ sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</
 <li>Check task workers: <code>docker compose ps forail-task</code> — running?</li>
 <li>Check Redis: <code>docker compose exec redis redis-cli ping</code> should return <code>PONG</code>.</li>
 <li>Check Receptor: <code>docker compose exec forail-task receptorctl status</code>.</li>
-<li>As a last resort, restart the task service:
-   <code>bash
-   docker compose restart forail-task</code></li>
+<li>As a last resort, restart the task service:</li>
 </ol>
+<p><code>bash
+   docker compose restart forail-task</code></p>
 <hr />
 <h2 id="receptor-mesh-issues">Receptor / Mesh Issues</h2>
 <p><strong>Step by step</strong></p>
 <ol>
 <li>Open <strong>Topology</strong> — any red links?</li>
-<li>From the control node:
-   <code>bash
-   docker compose exec forail-task receptorctl status</code></li>
-<li>From a worker:
-   <code>bash
-   docker exec forail-receptor receptorctl status</code></li>
+<li>From the control node:</li>
+</ol>
+<p><code>bash
+   docker compose exec forail-task receptorctl status</code></p>
+<ol>
+<li>From a worker:</li>
+</ol>
+<p><code>bash
+   docker exec forail-receptor receptorctl status</code></p>
+<ol>
 <li>Verify TCP reachability between nodes on <strong>2222</strong>.</li>
 <li>Restart the affected receptor container.</li>
 </ol>
@@ -703,30 +772,36 @@ sudo<span class="w"> </span>ufw<span class="w"> </span><span class="nb">enable</
 <p><strong>Step by step</strong></p>
 <ol>
 <li><code>df -h</code> — which mount?</li>
-<li>If <code>/var/lib/docker</code> → prune unused images:
-   <code>bash
-   docker image prune -af --filter "until=168h"</code></li>
-<li>If the backup directory → lower <code>BACKUP_RETENTION_DAYS</code> and rerun backup.</li>
-<li>If Postgres data dir → check for runaway audit log growth, vacuum:
-   <code>bash
-   docker compose exec postgres psql -U forail -d forail -c "VACUUM FULL VERBOSE;"</code></li>
+<li>If <code>/var/lib/docker</code> → prune unused images:</li>
 </ol>
+<p><code>bash
+   docker image prune -af --filter "until=168h"</code></p>
+<ol>
+<li>If the backup directory → lower <code>BACKUP_RETENTION_DAYS</code> and rerun backup.</li>
+<li>If Postgres data dir → check for runaway audit log growth, vacuum:</li>
+</ol>
+<p><code>bash
+   docker compose exec postgres psql -U forail -d forail -c "VACUUM FULL VERBOSE;"</code></p>
 <hr />
 <h2 id="reset-admin-password">Reset Admin Password</h2>
 <p><strong>Step by step</strong></p>
 <ol>
-<li>Exec into the web container:
-   <code>bash
-   docker compose exec forail-web bash</code></li>
-<li>Run the management command:
-   <code>bash
-   awx-manage changepassword admin</code></li>
+<li>Exec into the web container:</li>
+</ol>
+<p><code>bash
+   docker compose exec forail-web bash</code></p>
+<ol>
+<li>Run the management command:</li>
+</ol>
+<p><code>bash
+   awx-manage changepassword admin</code></p>
+<ol>
 <li>Enter the new password twice.</li>
 <li>Log in via the UI.</li>
 </ol>
 <blockquote>
-<p>If <code>admin</code> was disabled and you have no other admin user:
-<code>bash
+<p>If <code>admin</code> was disabled and you have no other admin user:</p>
+<p><code>bash
 docker compose exec forail-web awx-manage createsuperuser</code></p>
 </blockquote>
 <hr />

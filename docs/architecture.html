@@ -78,6 +78,7 @@
     <a href="user-handbook.html">User Handbook</a>
     <a href="admin-handbook.html">Admin Handbook</a>
     <h4>Release Notes</h4>
+    <a href="release-2026.06.0.html">v2026.06.0</a>
     <a href="release-2026.05.0.html">v2026.05.0</a>
     <a href="release-2026.04.0.html">v2026.04.0</a>
     <a href="release-2026.03.0.html">v2026.03.0</a>
@@ -181,9 +182,11 @@
 </table>
 <p><strong>Watch out:</strong> Internal Nginx is inside the container and handles routing. External Nginx
 is a separate container that terminates TLS. Don't confuse them — configuration lives in
-two different files:
-- External: <code>tools/docker-compose-prod/nginx/nginx.conf</code>
-- Internal: <code>tools/docker-compose-prod/settings/nginx-internal.conf</code></p>
+two different files:</p>
+<ul>
+<li>External: <code>tools/docker-compose-prod/nginx/nginx.conf</code></li>
+<li>Internal: <code>tools/docker-compose-prod/settings/nginx-internal.conf</code></li>
+</ul>
 <h3 id="task-container-forail-task">Task Container (<code>forail-task</code>)</h3>
 <p>Handles background job execution. Runs four processes:</p>
 <table>
@@ -219,9 +222,11 @@ Check with <code>supervisorctl status</code> inside the container.</p>
 configuration. Job events are in a <strong>partitioned table</strong> — one partition per job,
 which is critical for performance since a single job can have tens of thousands of events.</p>
 <h3 id="redis">Redis</h3>
-<p>Used for two purposes:
-- <strong>DB 0:</strong> Celery message broker + Django Channels (WebSocket)
-- <strong>DB 1:</strong> Cache (API response caching, rate limiting)</p>
+<p>Used for two purposes:</p>
+<ul>
+<li><strong>DB 0:</strong> Celery message broker + Django Channels (WebSocket)</li>
+<li><strong>DB 1:</strong> Cache (API response caching, rate limiting)</li>
+</ul>
 <p><strong>Watch out:</strong> If Redis goes down, jobs won't start and WebSocket won't work.
 However, data in PostgreSQL remains safe.</p>
 <h3 id="receptor">Receptor</h3>
@@ -229,7 +234,7 @@ However, data in PostgreSQL remains safe.</p>
 (default), Receptor runs locally. In a multi-node setup, it routes jobs to
 remote execution nodes over TCP port 2222.</p>
 <hr />
-<h2 id="request-flow-what-happens-when">Request Flow — What happens when...</h2>
+<h2 id="request-flow-what-happens-when">Request Flow — What happens when</h2>
 <h3 id="a-user-launches-a-job-template">...a user launches a job template</h3>
 <ol>
 <li>User clicks "Launch" in the UI or sends POST to <code>/api/v2/job_templates/{id}/launch/</code></li>

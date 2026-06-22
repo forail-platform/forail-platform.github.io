@@ -78,6 +78,7 @@
     <a href="user-handbook.html">User Handbook</a>
     <a href="admin-handbook.html">Admin Handbook</a>
     <h4>Release Notes</h4>
+    <a href="release-2026.06.0.html">v2026.06.0</a>
     <a href="release-2026.05.0.html">v2026.05.0</a>
     <a href="release-2026.04.0.html">v2026.04.0</a>
     <a href="release-2026.03.0.html">v2026.03.0</a>
@@ -535,9 +536,11 @@ matching the backend cache TTL.</p>
    <code>types.py</code> and populate it in <code>engine.build_context()</code>.</li>
 <li>Add a unit test in <code>tests_standalone/test_recommendations.py</code>. At minimum
    cover <strong>trigger</strong> and <strong>non-trigger</strong> cases.</li>
-<li>Run the tests:
-   <code>bash
-   pytest tests_standalone/test_recommendations.py -v</code></li>
+<li>Run the tests:</li>
+</ol>
+<p><code>bash
+   pytest tests_standalone/test_recommendations.py -v</code></p>
+<ol>
 <li>(Optional) add an <code>i18n</code> key on the frontend if the title/why should be
    translated rather than served verbatim.</li>
 </ol>

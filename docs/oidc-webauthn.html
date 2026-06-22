@@ -78,6 +78,7 @@
     <a href="user-handbook.html">User Handbook</a>
     <a href="admin-handbook.html">Admin Handbook</a>
     <h4>Release Notes</h4>
+    <a href="release-2026.06.0.html">v2026.06.0</a>
     <a href="release-2026.05.0.html">v2026.05.0</a>
     <a href="release-2026.04.0.html">v2026.04.0</a>
     <a href="release-2026.03.0.html">v2026.03.0</a>
@@ -242,9 +243,11 @@ but rejects equal-or-decreasing counts otherwise.</p>
 </tr>
 </tbody>
 </table>
-<p>Origin and Relying-Party ID are derived from the request:
-- <code>_origin(request)</code> = <code>request.build_absolute_uri('/').rstrip('/')</code>
-- <code>_rp_id(request)</code> = <code>request.get_host().split(':')[0]</code></p>
+<p>Origin and Relying-Party ID are derived from the request:</p>
+<ul>
+<li><code>_origin(request)</code> = <code>request.build_absolute_uri('/').rstrip('/')</code></li>
+<li><code>_rp_id(request)</code> = <code>request.get_host().split(':')[0]</code></li>
+</ul>
 <p>This means the same image works on <code>https://localhost</code>,
 <code>https://forail.example.com</code>, etc., without configuration.</p>
 <hr />

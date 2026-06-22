@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Release Notes v2026.06.0 — Forail Platform Docs</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="Forail Platform v2026.06.0 release notes — project renamed forge to forail (organization forail-platform), new ghcr.io image namespace, CRD API group forail.forail-platform.io, versioning unified on CalVer.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <meta name="author" content="Krstan Vjestica">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/release-2026.06.0.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Release Notes v2026.06.0 — Forail Platform Docs">
+  <meta property="og:description" content="Forail Platform v2026.06.0 release notes — project renamed forge to forail (organization forail-platform), new ghcr.io image namespace, CRD API group forail.forail-platform.io, versioning unified on CalVer.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/release-2026.06.0.html">
+  <meta property="og:site_name" content="Forail Platform">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Release Notes v2026.06.0 — Forail Platform Docs">
+  <meta name="twitter:description" content="Forail Platform v2026.06.0 release notes — project renamed forge to forail (organization forail-platform), new ghcr.io image namespace, CRD API group forail.forail-platform.io, versioning unified on CalVer.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"Release Notes v2026.06.0","description":"Forail Platform v2026.06.0 release notes — project renamed forge to forail (organization forail-platform), new ghcr.io image namespace, CRD API group forail.forail-platform.io, versioning unified on CalVer.","url":"https://forail-platform.github.io/docs/release-2026.06.0.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <svg viewBox="0 0 64 64" fill="none"><line x1="18" y1="28.5" x2="45" y2="12.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><line x1="18" y1="28.5" x2="49" y2="36.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><line x1="18" y1="28.5" x2="26" y2="51.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><rect x="9" y="19.5" width="18" height="18" rx="5" fill="#1D9E75"/><circle cx="45" cy="12.5" r="6" fill="#1D9E75"/><circle cx="49" cy="36.5" r="6" fill="#1D9E75"/><circle cx="26" cy="51.5" r="6" fill="#1D9E75"/></svg>
+      Forail
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
+      <li><a href="../dev/index.html">Dev Docs</a></li>
+    </ul>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
+    <button class="nav-toggle" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="docs-layout" style="padding: 2rem;">
+  <aside class="docs-sidebar">
+    <h4>Getting Started</h4>
+    <a href="architecture.html">Architecture</a>
+    <a href="deployment.html">Deployment (Docker)</a>
+    <a href="kubernetes.html">Kubernetes</a>
+    <a href="operator-v1.html">Operator v1.0.0</a>
+    <h4>Features</h4>
+    <a href="event-driven.html">Event-Driven Automation</a>
+    <a href="drift-detection.html">Drift Detection</a>
+    <a href="policy-as-code.html">Policy-as-Code</a>
+    <a href="self-service.html">Self-Service Portal</a>
+    <a href="multi-tenancy.html">Multi-Tenancy</a>
+    <a href="oidc-webauthn.html">OIDC + WebAuthn</a>
+    <a href="iac-scanning.html">IaC Scanning</a>
+    <a href="observability.html">Observability</a>
+    <a href="dynamic-surveys.html">Dynamic Surveys</a>
+    <a href="audit-trail.html">Audit Trail</a>
+    <a href="recommendations.html">Recommendations</a>
+    <h4>AI Assistant</h4>
+    <a href="assistant-architecture.html">Architecture</a>
+    <a href="assistant-api.html">API Reference</a>
+    <a href="assistant-config.html">Configuration</a>
+    <a href="assistant-deploy.html">Deployment</a>
+    <h4>Operations</h4>
+    <a href="user-handbook.html">User Handbook</a>
+    <a href="admin-handbook.html">Admin Handbook</a>
+    <h4>Release Notes</h4>
+    <a href="release-2026.06.0.html">v2026.06.0</a>
+    <a href="release-2026.05.0.html">v2026.05.0</a>
+    <a href="release-2026.04.0.html">v2026.04.0</a>
+    <a href="release-2026.03.0.html">v2026.03.0</a>
+    <h4>&nbsp;</h4>
+    <a href="../dev/index.html">Developer Docs</a>
+    <a href="../index.html">Home</a>
+  </aside>
+  <main class="docs-content">
+<h1 id="forail-2026060-release-notes">Forail 2026.06.0 — Release Notes</h1>
+<p><strong>Release date:</strong> 2026-06-14
+<strong>Based on:</strong> Forail 2026.05.0
+<strong>License:</strong> Apache License 2.0</p>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>Forail 2026.06.0 is the <strong>project rename release</strong>. The platform —
+previously published as <em>Forge</em> under the <code>forgeplatform</code> GitHub
+organization — is now <strong>Forail</strong>, under the <strong><code>forail-platform</code></strong>
+organization. This was a deliberate move to a unique, unambiguous name
+that does not collide with the many existing "forge"-named projects.</p>
+<p>There are <strong>no functional changes</strong> in this release. Every component was
+verified to build and deploy unchanged after the rename (full stack
+brought up on a 5-node k3s cluster, operator reconciling, REST API
+serving <code>HTTP 200</code>, database migrations applied).</p>
+<h2 id="what-changed">What changed</h2>
+<ul>
+<li><strong>Name:</strong> <code>forge</code> → <code>forail</code>, organization <code>forgeplatform</code> →
+  <code>forail-platform</code> (note the hyphen).</li>
+<li><strong>Container images:</strong> now published to
+  <code>ghcr.io/forail-platform/forail-&lt;component&gt;</code>. The old
+  <code>ghcr.io/forgeplatform/forge-*</code> packages are retired.</li>
+<li><strong>Python package:</strong> <code>forge</code> → <code>forail</code>; CLI <code>forge-manage</code> →
+  <code>forail-manage</code> (the <code>awx-manage</code> compatibility alias is retained).</li>
+<li><strong>Kubernetes operator:</strong> Go module
+  <code>github.com/forail-platform/forail-operator</code>; CRD API group
+  <code>forge.forgeplatform.io</code> → <strong><code>forail.forail-platform.io</code></strong>; the
+  <code>ForgeInstance</code> kind is now <strong><code>ForailInstance</code></strong>. All 9 CRDs renamed.</li>
+<li><strong>Helm chart / Compose:</strong> image references and the <code>forail.lan</code>
+  ingress host updated; values pinned to the <code>2026.06.0</code> images.</li>
+<li><strong>Mobile:</strong> Kotlin package <code>io.forailplatform.mobile</code> (no hyphen —
+  hyphens are invalid in JVM package identifiers).</li>
+<li><strong>Versioning:</strong> all platform components are unified on CalVer
+  <code>2026.06.0</code> for this coordinated release.</li>
+</ul>
+<h2 id="upgrade-guide">Upgrade guide</h2>
+<p>This is a rename, not a data-model change, so existing installs keep
+working on the old images until you re-point them.</p>
+<ol>
+<li><strong>Kubernetes (Helm):</strong>
+   <code>bash
+   helm upgrade forail oci://ghcr.io/forail-platform/forail-helm \
+       --version 2026.6.0 -n forail</code></li>
+<li><strong>Operator:</strong> because the CRD API group changed
+   (<code>forge.forgeplatform.io</code> → <code>forail.forail-platform.io</code>), this is a
+   <strong>breaking change for existing CRs</strong>. Re-apply your resources against
+   the new group. The operator is republished as <code>forail-operator</code>.</li>
+<li><strong>Docker Compose:</strong> pull <code>FORAIL_TAG=2026.06.0</code> and
+   <code>ghcr.io/forail-platform/forail-*</code> images (see <code>.env.example</code>).</li>
+</ol>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>GitHub automatically redirects the old organization/repository URLs,
+  so existing links continue to resolve.</li>
+<li>A fresh OperatorHub.io submission under the <code>forail-operator</code> name is
+  planned to replace the retired <code>forge-operator</code> listing.</li>
+</ul>
+  </main>
+</div>
+<footer class="footer">
+  <div class="footer-links">
+    <a href="../index.html">Home</a>
+    <a href="../dev/index.html">Dev Docs</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
+  </div>
+  <p>Forail Platform — Apache License 2.0</p>
+</footer>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
