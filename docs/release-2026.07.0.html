@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Release Notes v2026.07.0 — Forail Platform Docs</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="Forail Platform v2026.07.0 release notes — security-hardening and migration release: one-shot AWX → Forail importer, SAML signed-assertion and SHA-256 defaults (breaking), session-key hashing, trusted-proxy audit IP, OAuth refresh-token redaction, and an RBAC role-assignment fix.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <meta name="author" content="Krstan Vjestica">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/release-2026.07.0.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Release Notes v2026.07.0 — Forail Platform Docs">
+  <meta property="og:description" content="Forail Platform v2026.07.0 release notes — security-hardening and migration release: one-shot AWX → Forail importer, SAML signed-assertion and SHA-256 defaults (breaking), session-key hashing, trusted-proxy audit IP, OAuth refresh-token redaction, and an RBAC role-assignment fix.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/release-2026.07.0.html">
+  <meta property="og:site_name" content="Forail Platform">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Release Notes v2026.07.0 — Forail Platform Docs">
+  <meta name="twitter:description" content="Forail Platform v2026.07.0 release notes — security-hardening and migration release: one-shot AWX → Forail importer, SAML signed-assertion and SHA-256 defaults (breaking), session-key hashing, trusted-proxy audit IP, OAuth refresh-token redaction, and an RBAC role-assignment fix.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"Release Notes v2026.07.0","description":"Forail Platform v2026.07.0 release notes — security-hardening and migration release: one-shot AWX → Forail importer, SAML signed-assertion and SHA-256 defaults (breaking), session-key hashing, trusted-proxy audit IP, OAuth refresh-token redaction, and an RBAC role-assignment fix.","url":"https://forail-platform.github.io/docs/release-2026.07.0.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <svg viewBox="0 0 64 64" fill="none"><line x1="18" y1="28.5" x2="45" y2="12.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><line x1="18" y1="28.5" x2="49" y2="36.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><line x1="18" y1="28.5" x2="26" y2="51.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><rect x="9" y="19.5" width="18" height="18" rx="5" fill="#1D9E75"/><circle cx="45" cy="12.5" r="6" fill="#1D9E75"/><circle cx="49" cy="36.5" r="6" fill="#1D9E75"/><circle cx="26" cy="51.5" r="6" fill="#1D9E75"/></svg>
+      Forail
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
+      <li><a href="../dev/index.html">Dev Docs</a></li>
+    </ul>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
+    <button class="nav-toggle" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="docs-layout" style="padding: 2rem;">
+  <aside class="docs-sidebar">
+    <h4>Getting Started</h4>
+    <a href="architecture.html">Architecture</a>
+    <a href="deployment.html">Deployment (Docker)</a>
+    <a href="kubernetes.html">Kubernetes</a>
+    <a href="operator-v1.html">Operator v1.0.0</a>
+    <h4>Features</h4>
+    <a href="event-driven.html">Event-Driven Automation</a>
+    <a href="drift-detection.html">Drift Detection</a>
+    <a href="policy-as-code.html">Policy-as-Code</a>
+    <a href="self-service.html">Self-Service Portal</a>
+    <a href="multi-tenancy.html">Multi-Tenancy</a>
+    <a href="oidc-webauthn.html">OIDC + WebAuthn</a>
+    <a href="iac-scanning.html">IaC Scanning</a>
+    <a href="observability.html">Observability</a>
+    <a href="dynamic-surveys.html">Dynamic Surveys</a>
+    <a href="audit-trail.html">Audit Trail</a>
+    <a href="recommendations.html">Recommendations</a>
+    <h4>AI Assistant</h4>
+    <a href="assistant-architecture.html">Architecture</a>
+    <a href="assistant-api.html">API Reference</a>
+    <a href="assistant-config.html">Configuration</a>
+    <a href="assistant-deploy.html">Deployment</a>
+    <h4>Operations</h4>
+    <a href="user-handbook.html">User Handbook</a>
+    <a href="admin-handbook.html">Admin Handbook</a>
+    <h4>Release Notes</h4>
+    <a href="release-2026.07.0.html">v2026.07.0</a>
+    <a href="release-2026.06.0.html">v2026.06.0</a>
+    <a href="release-2026.05.0.html">v2026.05.0</a>
+    <a href="release-2026.04.0.html">v2026.04.0</a>
+    <a href="release-2026.03.0.html">v2026.03.0</a>
+    <h4>&nbsp;</h4>
+    <a href="../dev/index.html">Developer Docs</a>
+    <a href="../index.html">Home</a>
+  </aside>
+  <main class="docs-content">
+<h1 id="forail-2026070-release-notes">Forail 2026.07.0 — Release Notes</h1>
+<p><strong>Release date:</strong> 2026-06-24
+<strong>Based on:</strong> Forail 2026.06.0
+<strong>License:</strong> Apache License 2.0</p>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>2026.07.0 is a <strong>security-hardening and migration</strong> release. It tightens several
+authentication and audit defaults (some of which are <strong>breaking</strong> for existing
+SAML deployments) and introduces a one-shot <strong>AWX → Forail importer</strong> so teams
+can migrate off AWX/AAP without rebuilding their configuration by hand.</p>
+<p>There are no data-model migrations required for the hardening changes.</p>
+<h2 id="added">Added</h2>
+<h3 id="awx-forail-migration-importer">AWX → Forail migration importer</h3>
+<p>A new backend management command migrates configuration from an existing AWX (or
+AAP) installation via its REST API:</p>
+<div class="codehilite"><pre><span></span><code>forail-manage<span class="w"> </span>import_from_awx<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--url<span class="w"> </span>https://awx.example.com<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--token<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$AWX_TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--dry-run<span class="w">            </span><span class="c1"># preview; remove to apply</span>
+</code></pre></div>
+
+<ul>
+<li>Imports Organizations, Users, Teams, Credential Types, Credentials, Projects,
+  Inventories (with group hierarchy and host membership), Inventory Sources,
+  Job Templates, Workflow Job Templates (with their node DAG), Schedules,
+  Notification Templates, and RBAC role assignments, in dependency order.</li>
+<li><strong>Idempotent</strong> — re-running matches existing objects by natural key (name
+  within organization; username for users) and updates rather than duplicating.</li>
+<li><code>--dry-run</code> previews all changes inside a rolled-back transaction.</li>
+<li><code>--resource &lt;type&gt;</code> (repeatable) limits the run to specific resource types.</li>
+<li>Auth via <code>--token</code> (preferred) or <code>--username/--password</code>; <code>--insecure</code> skips
+  source TLS verification.</li>
+</ul>
+<p><strong>Secrets are not migrated.</strong> The AWX API never returns secret credential inputs
+(it sends <code>$encrypted$</code>), and user passwords are not exported. The importer
+brings over credential <em>structure</em> and non-secret inputs, creates users with an
+unusable password, and reports exactly how many secret fields need manual
+re-entry afterwards. Notification-template secrets are stripped the same way.</p>
+<p>RBAC role assignments are migrated where the target framework allows it: user
+grants and team→object-role grants are applied; organization-member grants to
+teams (rejected by the access framework) are skipped with a warning rather than
+aborting the run.</p>
+<h2 id="security-hardening">Security hardening</h2>
+<ul>
+<li>Superuser grant/revoke is now written to the dedicated audit log
+  (independently of the activity stream).</li>
+<li>Audit records store a SHA-256 hash of the session key, never the raw key.</li>
+<li><code>X-Forwarded-For</code> is trusted for the audit source IP only behind a configured
+  trusted proxy (<code>PROXY_IP_ALLOWED_LIST</code>).</li>
+<li>OAuth <code>refresh_token</code> is redacted from activity-stream entries.</li>
+<li>Tenant concurrency-quota errors are logged instead of silently swallowed.</li>
+</ul>
+<h2 id="breaking-changes-saml">⚠️ Breaking changes — SAML</h2>
+<p>Two SAML defaults changed. They affect installs that rely on the previous,
+weaker behavior.</p>
+<h3 id="1-signed-assertions-sha-256-now-required-by-default">1. Signed assertions + SHA-256 now required by default</h3>
+<p><code>SOCIAL_AUTH_SAML_SECURITY_CONFIG</code> now defaults to:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;requestedAuthnContext&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;wantMessagesSigned&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;wantAssertionsSigned&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;rejectUnsolicitedResponsesWithInResponseTo&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;signatureAlgorithm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://www.w3.org/2001/04/xmldsig-more#rsa-sha256&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;digestAlgorithm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://www.w3.org/2001/04/xmlenc#sha256&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Impact:</strong> If your IdP sends unsigned responses/assertions, or signs with
+SHA-1, logins will be rejected after upgrade.</p>
+<p><strong>Action:</strong>
+- Preferred: reconfigure your IdP to sign responses and assertions with SHA-256.
+- Temporary fallback: explicitly set <code>SOCIAL_AUTH_SAML_SECURITY_CONFIG</code> via
+  <code>PATCH /api/v2/settings/saml/</code> for a legacy IdP (not recommended for
+  production).</p>
+<blockquote>
+<p>⚠️ <strong>Setting this replaces the whole dict — it does not merge with the
+secure defaults.</strong> When the setting is unset, Forail's hardened defaults
+apply; the moment you set it, your value is used verbatim and any key you
+omit falls back to the <strong>weak</strong> python-saml/OneLogin default (unsigned
+assertions, SHA-1). So to relax a single key you must re-specify the full
+secure dict with only that key changed, e.g. to accept unsigned assertions
+from one legacy IdP while keeping every other protection:</p>
+<p><code>json
+{
+  "requestedAuthnContext": false,
+  "wantMessagesSigned": true,
+  "wantAssertionsSigned": false,
+  "rejectUnsolicitedResponsesWithInResponseTo": true,
+  "signatureAlgorithm": "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256",
+  "digestAlgorithm": "http://www.w3.org/2001/04/xmlenc#sha256"
+}</code></p>
+<p>Clearing the setting (back to null) restores the full hardened defaults.</p>
+</blockquote>
+<h3 id="2-saml-role-attribute-grants-require-an-explicit-value">2. SAML role-attribute grants require an explicit value</h3>
+<p>Granting <code>is_superuser</code> / <code>is_system_auditor</code> from a SAML attribute now requires
+a non-empty <code>is_superuser_value</code> / <code>is_system_auditor_value</code>.</p>
+<p><strong>Impact:</strong> A configuration that sets only <code>is_superuser_attr</code> (with no value)
+previously granted superuser to <strong>every</strong> user the IdP sent with that attribute.
+That now fails safe (no grant) and logs a warning.</p>
+<p><strong>Action:</strong> Set the required attribute value(s) for the flags you intend to grant.</p>
+<h2 id="fixed">Fixed</h2>
+<ul>
+<li><strong>RBAC role assignment was broken in 2026.06.0.</strong> <code>ScanFinding</code> and
+  <code>TenantIsolationEvent</code> were registered with the default
+  <code>parent_field_name='organization'</code>, but neither model has an <code>organization</code>
+  field. The resulting <code>FieldDoesNotExist</code> aborted <strong>every</strong> role-assignment
+  operation across the platform. They are now registered against their real
+  parents (<code>scan_result</code> and <code>accessed_organization</code> respectively). Anyone on
+  2026.06.0 who relies on role assignment should upgrade. No data migration is
+  required — the fix is in model registration only.</li>
+<li><code>pytest.ini</code> referenced the pre-rename <code>awx.main.tests.settings_for_test</code>
+  (no longer exists), which prevented the backend test suite from starting.</li>
+<li>Tenant queue router referenced pre-rename <code>awx.main.tasks.*</code> task names.</li>
+</ul>
+<h2 id="upgrade">Upgrade</h2>
+<p>This release has no schema migrations. Standard image re-point applies:</p>
+<div class="codehilite"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>forail<span class="w"> </span>oci://ghcr.io/forail-platform/forail-helm<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--version<span class="w"> </span><span class="m">2026</span>.7.0<span class="w"> </span>-n<span class="w"> </span>forail
+</code></pre></div>
+
+<p>Before upgrading a SAML deployment, review the <strong>Breaking changes — SAML</strong>
+section above and reconfigure your IdP if needed.</p>
+  </main>
+</div>
+<footer class="footer">
+  <div class="footer-links">
+    <a href="../index.html">Home</a>
+    <a href="../dev/index.html">Dev Docs</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
+  </div>
+  <p>Forail Platform — Apache License 2.0</p>
+</footer>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
