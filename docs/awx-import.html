@@ -114,11 +114,11 @@ organizations, inventories, credentials and templates by hand.</p>
 </tr>
 <tr>
 <td><code>--token</code></td>
-<td>OAuth2 token for the source AWX API (preferred auth).</td>
+<td>OAuth2 token for the source AWX API (preferred auth). Prefer <code>AWX_TOKEN</code> env.</td>
 </tr>
 <tr>
 <td><code>--username/--password</code></td>
-<td>Basic auth, if no token.</td>
+<td>Basic auth, if no token. Prefer <code>AWX_USERNAME</code> / <code>AWX_PASSWORD</code> env.</td>
 </tr>
 <tr>
 <td><code>--insecure</code></td>
@@ -129,11 +129,27 @@ organizations, inventories, credentials and templates by hand.</p>
 <td>Fetch and report what would change, then roll back without writing.</td>
 </tr>
 <tr>
+<td><code>--grant-superusers</code></td>
+<td>Honour <code>is_superuser</code> / system-role grants from the source (<strong>off</strong> by default).</td>
+</tr>
+<tr>
+<td><code>--trust-injectors</code></td>
+<td>Import custom credential-type injectors verbatim (<strong>off</strong>; else re-approve).</td>
+</tr>
+<tr>
 <td><code>--resource &lt;type&gt;</code></td>
 <td>Limit to specific resource type(s); repeatable. Default: all.</td>
 </tr>
 </tbody>
 </table>
+<blockquote>
+<p><strong>The source is treated as untrusted by default.</strong> Superuser promotion and
+custom credential-type injectors (which render into env/extra-vars/files at
+job-execution time) are <strong>not</strong> applied unless you opt in with
+<code>--grant-superusers</code> / <code>--trust-injectors</code>. Pass secrets via <code>AWX_TOKEN</code> /
+<code>AWX_PASSWORD</code> environment variables rather than the command line, where they
+would be visible in <code>ps</code> / <code>/proc</code>.</p>
+</blockquote>
 <p>Resource types (and import order): <code>organizations</code>, <code>users</code>, <code>teams</code>,
 <code>credential_types</code>, <code>credentials</code>, <code>projects</code>, <code>inventories</code>, <code>groups</code>,
 <code>hosts</code>, <code>inventory_sources</code>, <code>job_templates</code>, <code>workflow_job_templates</code>,
