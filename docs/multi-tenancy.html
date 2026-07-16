@@ -426,6 +426,59 @@ on every tick.</p>
 <p>All four live under the <strong>System</strong> category and show up in
 <code>/api/v2/settings/system/</code>.</p>
 <hr />
+<h2 id="security-posture-v2-hardening">Security posture (v2 hardening)</h2>
+<p>The v2 isolation stack is designed to <strong>fail closed</strong> and is off by default so
+single-tenant installs are unaffected. A multi-tenant deployment enables at
+least <code>TENANCY_ENABLED</code> + <code>TENANCY_RLS_ENABLED</code>, plus
+<code>TENANCY_STRICT_ISOLATION_ENABLED</code> for hard cross-tenant blocking.</p>
+<ul>
+<li><strong>RLS gate fails closed.</strong> If the per-request Postgres tenant scope cannot be
+  installed, the request is aborted (HTTP 500) rather than run with global row
+  visibility (an unset scope makes RLS treat all rows as visible).</li>
+<li><strong>Strict gate sees cross-tenant objects.</strong> The 403 gate resolves the target
+  resource's organization with the caller's RLS scope removed — otherwise a
+  genuinely cross-tenant object is invisible to the lookup and could never be
+  blocked. When a covered resource's org can't be determined, it defaults to
+  <strong>deny</strong>.</li>
+<li><strong>RLS coverage.</strong> Every table with its own <code>organization_id</code> has a policy
+  (including <code>main_eventlog</code>); child tables of <code>main_unifiedjobtemplate</code> /
+  <code>main_unifiedjob</code> (projects, workflow templates, schedules, nodes, job events)
+  are covered indirectly through the parent via the multi-table-inheritance join.
+  Policies cast the tenant GUC as <code>NULLIF(current_setting(...), '')::int</code> so the
+  empty "no scope" sentinel can't raise.</li>
+<li><strong>Rate limiter</strong> logs Redis outages loudly and can be made to fail closed with
+  <code>TENANCY_RATE_LIMIT_FAIL_CLOSED</code> (default open, favouring availability).</li>
+<li><strong>Provisioning</strong> refuses to silently reuse an existing username (which would
+  discard the supplied password and cross-link accounts) unless
+  <code>attach_existing_admin</code> is set.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TENANCY_RLS_ENABLED</code></td>
+<td><code>False</code></td>
+<td>Install the per-request RLS tenant scope</td>
+</tr>
+<tr>
+<td><code>TENANCY_STRICT_ISOLATION_ENABLED</code></td>
+<td><code>False</code></td>
+<td>Block (403) cross-tenant access instead of audit-only</td>
+</tr>
+<tr>
+<td><code>TENANCY_RATE_LIMIT_FAIL_CLOSED</code></td>
+<td><code>False</code></td>
+<td>Reject (503) when the rate-limiter Redis is down</td>
+</tr>
+</tbody>
+</table>
+<hr />
 <h2 id="rest-api">REST API</h2>
 <p>All <code>/api/v2/tenants/*</code> endpoints require <code>is_superuser</code>. <code>/api/v2/branding/</code>
 is <strong>public</strong> (no auth classes).</p>
