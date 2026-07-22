@@ -298,6 +298,17 @@ newgrp<span class="w"> </span>docker
 <li>Create at least two named admin users so no single account is the only way in.</li>
 <li>Configure a <a href="#backup">backup cron</a> before importing real data.</li>
 <li>Configure at least one <a href="HANDBOOK.md#notifications">Notification</a> channel for failure alerts.</li>
+<li>Set <code>FORAIL_ALLOWED_HOSTS</code> to the hostnames you actually serve. The default is
+   loopback-only; <code>*</code> turns off Django's Host-header check entirely.</li>
+<li>Leave <code>FORAIL_TASK_PRIVILEGED</code> / <code>FORAIL_TASK_CGROUP</code> unset unless you need the
+   podman-in-container job path. A privileged container with the host cgroup
+   namespace is a trivial escape to the host — if you do enable it, treat that
+   host as part of your automation trust boundary and keep it off the public
+   internet.</li>
+<li>If you authenticate via SAML, re-check the IdP against the signed-assertion and
+   role-attribute requirements introduced in 2026.07.0
+   (<code>docs/RELEASE_NOTES_v2026.07.0.md</code>) — unsigned or SHA-1 assertions are now
+   rejected by default.</li>
 </ol>
 <hr />
 <h1 id="day-2-operations_1">DAY-2 OPERATIONS</h1>
@@ -943,8 +954,8 @@ docker compose exec forail-web awx-manage createsuperuser</code></p>
 <tr>
 <td><code>FORAIL_ALLOWED_HOSTS</code></td>
 <td>no</td>
-<td><code>*</code></td>
-<td>Django ALLOWED_HOSTS</td>
+<td><code>localhost,127.0.0.1</code></td>
+<td>Django ALLOWED_HOSTS — list your real hostnames</td>
 </tr>
 <tr>
 <td><code>FORAIL_NODE_NAME</code></td>
@@ -973,8 +984,20 @@ docker compose exec forail-web awx-manage createsuperuser</code></p>
 <tr>
 <td><code>FORAIL_TAG</code></td>
 <td>no</td>
-<td><code>latest</code></td>
-<td>Image tag (use a real version, not <code>latest</code>)</td>
+<td><code>2026.07.0</code></td>
+<td>Image tag (pin a real version, never <code>latest</code>)</td>
+</tr>
+<tr>
+<td><code>FORAIL_TASK_PRIVILEGED</code></td>
+<td>no</td>
+<td><code>false</code></td>
+<td>Privileged <code>forail-task</code> — needed for the podman job path</td>
+</tr>
+<tr>
+<td><code>FORAIL_TASK_CGROUP</code></td>
+<td>no</td>
+<td><code>private</code></td>
+<td>Set <code>host</code> with <code>FORAIL_TASK_PRIVILEGED=true</code> for job execution</td>
 </tr>
 <tr>
 <td><code>BACKUP_RETENTION_DAYS</code></td>

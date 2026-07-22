@@ -96,9 +96,16 @@
 <h2 id="overview">Overview</h2>
 <p>2026.07.0 is a <strong>security-hardening and migration</strong> release. It tightens several
 authentication and audit defaults (some of which are <strong>breaking</strong> for existing
-SAML deployments) and introduces a one-shot <strong>AWX → Forail importer</strong> so teams
-can migrate off AWX/AAP without rebuilding their configuration by hand.</p>
-<p>There are no data-model migrations required for the hardening changes.</p>
+SAML deployments), makes tenant isolation fail closed, replaces the insecure
+defaults in the Helm chart and Compose stack (<strong>breaking</strong> — installs now require
+an explicit admin password), and introduces a one-shot <strong>AWX → Forail importer</strong>
+so teams can migrate off AWX/AAP without rebuilding their configuration by hand.</p>
+<p>Kubernetes installs also gain the pod RBAC and receptor worktype that in-cluster
+job execution needs — see <em>Fixed</em>.</p>
+<p>There are no data-model changes. Two idempotent migrations (<code>0209</code>, <code>0210</code>) ship
+with the tenancy work; both only drop and re-create PostgreSQL row-level-security
+policies, so they apply to an existing database without touching table schemas or
+rows.</p>
 <h2 id="added">Added</h2>
 <h3 id="awx-forail-migration-importer">AWX → Forail migration importer</h3>
 <p>A new backend management command migrates configuration from an existing AWX (or
@@ -140,6 +147,58 @@ aborting the run.</p>
 <li>OAuth <code>refresh_token</code> is redacted from activity-stream entries.</li>
 <li>Tenant concurrency-quota errors are logged instead of silently swallowed.</li>
 </ul>
+<h3 id="tenant-isolation-now-fails-closed">Tenant isolation now fails closed</h3>
+<ul>
+<li>The RLS middleware <strong>aborts the request (HTTP 500)</strong> if it cannot install the
+  tenant scope, instead of continuing with global row visibility.</li>
+<li>The strict-isolation gate resolves the target organization with the caller's
+  RLS scope removed — previously the lookup ran <em>inside</em> the caller's scope, so a
+  cross-tenant object was invisible and the gate could essentially never fire. It
+  now denies by default when a covered resource's organization cannot be
+  determined, and records a <code>TenantIsolationEvent</code>.</li>
+<li>RLS coverage extended to <code>main_eventlog</code>, and every policy now casts the tenant
+  GUC via <code>NULLIF(current_setting(...), '')::int</code> so the empty "no scope"
+  sentinel cannot raise (migrations <code>0209</code>, <code>0210</code>).</li>
+<li>The tenancy rate limiter logs Redis outages loudly and honours
+  <code>TENANCY_RATE_LIMIT_FAIL_CLOSED</code> (default open, for availability).</li>
+</ul>
+<h3 id="trust-boundaries-around-import-and-sso">Trust boundaries around import and SSO</h3>
+<ul>
+<li><code>import_from_awx</code> no longer carries privilege across the boundary implicitly:
+  superuser / system-role promotion requires <code>--grant-superusers</code>, custom
+  credential-type injectors are dropped for admin re-approval unless
+  <code>--trust-injectors</code> is passed, and secrets are read from <code>AWX_TOKEN</code> /
+  <code>AWX_PASSWORD</code> in preference to argv.</li>
+<li><strong>SSO account takeover fixed</strong>: <code>associate_by_email</code> was removed from the auth
+  pipeline — accounts associate by provider UID, never by matching email.</li>
+<li>Tenant provisioning refuses to silently reuse an existing username (which
+  discarded the supplied password and cross-linked accounts) unless
+  <code>attach_existing_admin</code> is set.</li>
+<li>The IaC scanner can no longer be pointed outside the project checkout via a job
+  template's <code>playbook</code> field (absolute paths / <code>..</code>).</li>
+</ul>
+<h3 id="deployment-defaults-helm-chart-and-compose">Deployment defaults — Helm chart and Compose</h3>
+<p>Both deployment artifacts shipped working credentials and a privileged worker by
+default. That is over:</p>
+<ul>
+<li><strong>Helm</strong>: <code>postgresPassword</code>, <code>forailSecretKey</code> and
+  <code>forailBroadcastWebsocketSecret</code> are auto-generated on first install and reused
+  across upgrades; <code>forailAdminPassword</code> is <strong>required</strong>. <code>forail-task</code> runs
+  non-privileged with no host cgroup mount unless you opt in. Session cookies are
+  <code>Secure</code>, <code>allowedHosts</code> is the ingress host plus loopback (not <code>"*"</code>), and an
+  opt-in <code>NetworkPolicy</code> plus per-workload <code>securityContext</code> knobs are available.</li>
+<li><strong>Compose</strong>: <code>FORAIL_TASK_PRIVILEGED</code> / <code>FORAIL_TASK_CGROUP</code> default off,
+  <code>FORAIL_ALLOWED_HOSTS</code> defaults to <code>localhost,127.0.0.1</code> instead of <code>*</code>, and
+  <code>FORAIL_TAG</code> pins to <code>2026.07.0</code> rather than <code>:latest</code>.</li>
+<li><strong>Operator</strong>: the manager no longer holds cluster-wide <code>get/list/watch</code> on
+  every Secret — the credential reconciler's access is a namespaced
+  <code>Role</code>/<code>RoleBinding</code> in the operator's own namespace.</li>
+<li><strong>Assistant</strong>: a wildcard CORS origin no longer combines with credentials, and
+  <code>/api/v1/chat</code> accepts an optional shared bearer token
+  (<code>FORAIL_ASSISTANT_CHAT_TOKEN</code>) with a concurrency cap
+  (<code>FORAIL_ASSISTANT_CHAT_MAX_CONCURRENCY</code>, 429 on overload).</li>
+</ul>
+<p>See <strong>Breaking changes — deployment defaults</strong> below for the upgrade actions.</p>
 <h2 id="breaking-changes-saml">⚠️ Breaking changes — SAML</h2>
 <p>Two SAML defaults changed. They affect installs that rely on the previous,
 weaker behavior.</p>
@@ -188,8 +247,54 @@ a non-empty <code>is_superuser_value</code> / <code>is_system_auditor_value</cod
 previously granted superuser to <strong>every</strong> user the IdP sent with that attribute.
 That now fails safe (no grant) and logs a warning.</p>
 <p><strong>Action:</strong> Set the required attribute value(s) for the flags you intend to grant.</p>
+<h2 id="breaking-changes-deployment-defaults">⚠️ Breaking changes — deployment defaults</h2>
+<h3 id="1-helm-install-requires-an-admin-password">1. <code>helm install</code> requires an admin password</h3>
+<p><code>secrets.forailAdminPassword</code> has no default and no generated fallback; the chart
+fails to render without it. The other three secrets (<code>postgresPassword</code>,
+<code>forailSecretKey</code>, <code>forailBroadcastWebsocketSecret</code>) are generated on first
+install and looked up on subsequent upgrades, so leave them empty unless you pin
+them deliberately.</p>
+<p><strong>Action:</strong> pass <code>--set secrets.forailAdminPassword='&lt;strong-password&gt;'</code> on
+install. Automation that renders the chart (CI <code>helm lint</code> / <code>helm template</code>)
+needs a throwaway value for the same reason.</p>
+<h3 id="2-forail-task-is-no-longer-privileged-by-default">2. <code>forail-task</code> is no longer privileged by default</h3>
+<p>The podman-in-pod execution path needs a privileged container and the host cgroup
+namespace; both now default <strong>off</strong>, because a privileged pod with a host cgroup
+mount is a trivial container escape.</p>
+<p><strong>Action, Kubernetes:</strong> <code>--set task.privileged=true --set task.hostCgroup=true</code>
+(ideally pinning those workers to dedicated, tainted nodes).
+<strong>Action, Compose:</strong> <code>FORAIL_TASK_PRIVILEGED=true FORAIL_TASK_CGROUP=host</code>.</p>
+<h3 id="3-allowed-hosts-and-secure-cookies">3. Allowed hosts and secure cookies</h3>
+<p><code>forail.allowedHosts</code> / <code>FORAIL_ALLOWED_HOSTS</code> no longer default to <code>"*"</code>, and
+session cookies are <code>Secure</code> by default — a deployment served over plain HTTP
+will not keep a session.</p>
+<p><strong>Action:</strong> set your real ingress host(s), and <strong>keep <code>127.0.0.1,localhost</code> in the
+list</strong> — the in-cluster health probes call the API on loopback. Terminate TLS in
+front of the ingress, or set <code>forail.cookieSecure: "false"</code> for a lab install.</p>
 <h2 id="fixed">Fixed</h2>
 <ul>
+<li><strong>In-cluster job execution now works out of the box.</strong> Two pieces were missing
+  from the chart, and each failed a launch on its own:</li>
+<li>No pod RBAC. Jobs run as pods in a Kubernetes container group, and receptor
+    manages them with the task pod's ServiceAccount — which had no pod
+    permissions, so every launch failed with
+    <code>pods is forbidden ... cannot list resource "pods"</code> and the job hung pending.
+    The chart now ships a <code>forail</code> ServiceAccount plus a namespaced
+    <code>forail-job-runner</code> <code>Role</code>/<code>RoleBinding</code> (<code>pods</code>, <code>pods/log|attach|exec</code>) and
+    a <code>MY_POD_NAMESPACE</code> downward-API env so job pods land in the release
+    namespace.</li>
+<li>The receptor mesh config declared only the <code>local</code> worktype, so launches
+    errored at 0s with <code>unknown work type kubernetes-incluster-auth</code>. The
+    <code>kubernetes-incluster-auth</code> worktype (<code>authmethod: incluster</code>) is now
+    registered.</li>
+<li><strong><code>forail-web</code> crash-loop after the allowed-hosts change.</strong> The liveness and
+  readiness probes call <code>http://127.0.0.1:8013/api/v2/ping/</code>; with only the
+  ingress host allowed, Django answered <code>400 DisallowedHost</code>, the probe failed and
+  the pod restarted in a loop. The chart default keeps the loopback names.</li>
+<li><strong>Tenancy audit events were never persisted.</strong> <code>TenantQuotaEvent</code> and
+  <code>TenantIsolationEvent</code> inherit <code>CreatedModifiedModel</code>, which lacks the
+  <code>description</code> column that migration <code>0205</code> declares <code>NOT NULL</code> — every insert
+  raised <code>IntegrityError</code>. Both models now declare the field (no new migration).</li>
 <li><strong>RBAC role assignment was broken in 2026.06.0.</strong> <code>ScanFinding</code> and
   <code>TenantIsolationEvent</code> were registered with the default
   <code>parent_field_name='organization'</code>, but neither model has an <code>organization</code>
@@ -203,13 +308,28 @@ That now fails safe (no grant) and logs a warning.</p>
 <li>Tenant queue router referenced pre-rename <code>awx.main.tasks.*</code> task names.</li>
 </ul>
 <h2 id="upgrade">Upgrade</h2>
-<p>This release has no schema migrations. Standard image re-point applies:</p>
+<p>No schema migrations. Migrations <code>0209</code> and <code>0210</code> re-create RLS policies only
+and are idempotent, so the standard image re-point applies — but the chart's new
+required/secure defaults have to be supplied:</p>
 <div class="codehilite"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>forail<span class="w"> </span>oci://ghcr.io/forail-platform/forail-helm<span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--version<span class="w"> </span><span class="m">2026</span>.7.0<span class="w"> </span>-n<span class="w"> </span>forail
+<span class="w">    </span>--version<span class="w"> </span><span class="m">2026</span>.7.0<span class="w"> </span>-n<span class="w"> </span>forail<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set<span class="w"> </span>secrets.forailAdminPassword<span class="o">=</span><span class="s1">&#39;&lt;strong-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set<span class="w"> </span>forail.allowedHosts<span class="o">=</span><span class="s1">&#39;forail.example.com,127.0.0.1,localhost&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set<span class="w"> </span>task.privileged<span class="o">=</span><span class="nb">true</span><span class="w"> </span>--set<span class="w"> </span>task.hostCgroup<span class="o">=</span><span class="nb">true</span><span class="w">   </span><span class="c1"># only if you run jobs in-pod</span>
 </code></pre></div>
 
-<p>Before upgrading a SAML deployment, review the <strong>Breaking changes — SAML</strong>
-section above and reconfigure your IdP if needed.</p>
+<p>Before upgrading:</p>
+<ul>
+<li><strong>SAML deployments</strong> — review <strong>Breaking changes — SAML</strong> above and reconfigure
+  the IdP if needed.</li>
+<li><strong>Any deployment</strong> — review <strong>Breaking changes — deployment defaults</strong>; an
+  upgrade that omits the admin password will not render, and one that drops the
+  loopback hosts will fail its health probes.</li>
+<li><strong>Multi-tenant deployments</strong> — tenant isolation now fails closed. A request
+  whose tenant scope cannot be installed is rejected rather than served with
+  global visibility; verify your tenants resolve correctly in a staging install
+  first.</li>
+</ul>
   </main>
 </div>
 <footer class="footer">

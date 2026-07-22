@@ -305,8 +305,8 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 <tbody>
 <tr>
 <td><code>FORAIL_ALLOWED_HOSTS</code></td>
-<td><code>*</code></td>
-<td>Allowed HTTP hosts</td>
+<td><code>localhost,127.0.0.1</code></td>
+<td>Allowed HTTP hosts — list your real hostnames; <code>*</code> disables the Host check</td>
 </tr>
 <tr>
 <td><code>FORAIL_ADMIN_USER</code></td>
@@ -340,8 +340,18 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 </tr>
 <tr>
 <td><code>FORAIL_TAG</code></td>
-<td><code>latest</code></td>
-<td>Image tag</td>
+<td><code>2026.07.0</code></td>
+<td>Image tag — pinned to a release, not <code>latest</code></td>
+</tr>
+<tr>
+<td><code>FORAIL_TASK_PRIVILEGED</code></td>
+<td><code>false</code></td>
+<td>Run <code>forail-task</code> privileged. Required for the podman-in-container job path</td>
+</tr>
+<tr>
+<td><code>FORAIL_TASK_CGROUP</code></td>
+<td><code>private</code></td>
+<td>Set to <code>host</code> together with <code>FORAIL_TASK_PRIVILEGED=true</code> for job execution</td>
 </tr>
 <tr>
 <td><code>NGINX_HTTP_PORT</code></td>

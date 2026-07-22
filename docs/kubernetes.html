@@ -263,9 +263,15 @@ cd forail-helm
 helm install forail . -n forail \
     --set forail.admin.user=admin \
     --set secrets.forailAdminPassword='&lt;strong-password&gt;' \
-    --set secrets.postgresPassword='&lt;random-32-bytes&gt;' \
-    --set secrets.forailSecretKey="$(openssl rand -hex 32)" \
-    --set secrets.forailBroadcastWebsocketSecret="$(openssl rand -hex 32)"</code></pre>
+    --set forail.allowedHosts='forail.lan,127.0.0.1,localhost' \
+    --set task.privileged=true --set task.hostCgroup=true</code></pre>
+<p>Since <strong>2026.07.0</strong> the chart ships no working secret defaults:</p>
+<ul>
+<li><code>secrets.forailAdminPassword</code> is <strong>required</strong> — the install fails to render without it.</li>
+<li><code>secrets.postgresPassword</code>, <code>secrets.forailSecretKey</code> and <code>secrets.forailBroadcastWebsocketSecret</code> are <strong>auto-generated</strong> on first install and re-read from the existing Secret on every upgrade. Pass them only if you want to pin explicit values.</li>
+<li><code>forail.allowedHosts</code> defaults to the ingress host plus loopback, and session cookies are <code>Secure</code>. Keep <code>127.0.0.1,localhost</code> in the list — the liveness and readiness probes call the API on loopback, and Django answers <code>400 DisallowedHost</code> without them, which crash-loops <code>forail-web</code>.</li>
+<li><code>task.privileged</code> / <code>task.hostCgroup</code> default to <strong>false</strong>. The podman-in-pod execution path needs both; opt in as shown above, ideally pinning those workers to dedicated, tainted nodes.</li>
+</ul>
 <p>The install runs synchronously through the <code>forail-init</code> Job. Watch progress with:</p>
 <pre><code>kubectl -n forail get pods -w</code></pre>
 <p>Expected end state — every Pod <code>Running 1/1</code>, <code>forail-init-1</code> <code>Completed</code>:</p>
@@ -358,6 +364,20 @@ kubectl get inventory production -o jsonpath='{.status}'</code></pre>
 
 <hr />
 
+<h2 id="job-execution">Job Execution in the Cluster</h2>
+<p>Automation jobs do not run inside <code>forail-task</code> — the task pod asks Receptor to create one <strong>job pod</strong> per run through a Kubernetes container group, then streams its output and deletes it. Three pieces have to line up, and since <strong>2026.07.0</strong> the chart ships all three:</p>
+<table>
+<thead><tr><th>Piece</th><th>What the chart renders</th><th>Symptom when missing</th></tr></thead>
+<tbody>
+<tr><td>Pod RBAC</td><td><code>serviceAccount.create</code> + <code>rbac.create</code> render a <code>forail</code> ServiceAccount and a <em>namespaced</em> <code>forail-job-runner</code> Role/RoleBinding covering <code>pods</code> and <code>pods/log|attach|exec</code>; web, task and the init Job all run under it</td><td>Launch fails with <code>pods is forbidden: User "system:serviceaccount:forail:default" cannot list resource "pods"</code> and the job sits in <em>pending</em></td></tr>
+<tr><td>Namespace</td><td>The <code>MY_POD_NAMESPACE</code> downward-API env, so job pods land in the release namespace — where the Role actually grants access</td><td>Job pods are created in <code>default</code>, outside the grant</td></tr>
+<tr><td>Receptor worktype</td><td><code>kubernetes-incluster-auth</code> (<code>authmethod: incluster</code>) registered in the Receptor config</td><td>Job errors at 0 s with <code>unknown work type kubernetes-incluster-auth</code></td></tr>
+</tbody>
+</table>
+<p>The RBAC is deliberately namespaced — nothing here grants cluster-wide pod access. Turn <code>serviceAccount.create</code> and <code>rbac.create</code> off only when you execute jobs on an external node and want no in-cluster job pods at all.</p>
+
+<hr />
+
 <h2 id="day-2">Day-2 Operations</h2>
 
 <h3 id="upgrade">Upgrade</h3>
@@ -372,7 +392,7 @@ kubectl -n forail cp forail-web-xxx:/var/backups/forail/forail-&lt;ts&gt;.sql.gz
 <h3 id="scale-task">Scale forail-task</h3>
 <p>Forail dispatches jobs to any forail-task replica via the Receptor mesh. Increase <code>task.replicas</code> in <code>values.yaml</code> for more concurrent jobs. Keep in mind:</p>
 <ul>
-<li>forail-task runs <code>privileged: true</code> with podman — restrict it to a node pool you trust</li>
+<li>forail-task runs unprivileged by default; the podman path needs <code>--set task.privileged=true --set task.hostCgroup=true</code> — restrict those replicas to a node pool you trust</li>
 <li>The chart bumps the task memory limit to <strong>4 Gi</strong> by default, because supervisord + dispatcher + Receptor + ansible-runner + an EE container together blow past 2 Gi during the first project sync. Lower this only if you’ve profiled your specific workload.</li>
 </ul>
 
@@ -385,7 +405,9 @@ kubectl -n forail cp forail-web-xxx:/var/backups/forail/forail-&lt;ts&gt;.sql.gz
 <tbody>
 <tr><td><code>images.backend.repository</code></td><td><code>ghcr.io/forail-platform/forail-backend</code></td><td>Mirror to your own registry</td></tr>
 <tr><td><code>images.backend.tag</code></td><td><code>latest</code></td><td>Pin to a CalVer release</td></tr>
-<tr><td><code>secrets.forailAdminPassword</code></td><td><code>changeme-admin</code></td><td>Always — it’s a placeholder</td></tr>
+<tr><td><code>secrets.forailAdminPassword</code></td><td><em>(none — required)</em></td><td>Always — the chart refuses to render without it</td></tr>
+<tr><td><code>task.privileged</code> / <code>task.hostCgroup</code></td><td><code>false</code> / <code>false</code></td><td>Both must be <code>true</code> for the podman-in-pod job execution path</td></tr>
+<tr><td><code>serviceAccount.create</code> / <code>rbac.create</code></td><td><code>true</code> / <code>true</code></td><td>Disable only when jobs run on an external execution node — see <a href="#job-execution">Job execution</a></td></tr>
 <tr><td><code>ingress.host</code></td><td><code>forail.lan</code></td><td>Your real DNS name</td></tr>
 <tr><td><code>ingress.tls.enabled</code></td><td><code>true</code></td><td>Disable for plain-HTTP test clusters</td></tr>
 <tr><td><code>postgres.storage.size</code></td><td><code>8Gi</code></td><td>Production sizing</td></tr>
@@ -402,7 +424,25 @@ kubectl -n forail cp forail-web-xxx:/var/backups/forail/forail-&lt;ts&gt;.sql.gz
 <h3 id="ts-mdns">Browser shows “Server Not Found” for <code>forail.local</code></h3>
 <p>That’s the mDNS hijack described <a href="#hostname-tld-pitfall">above</a>. Use the chart default (<code>forail.lan</code>) and update <code>/etc/hosts</code> accordingly. If you’re locked into a <code>.local</code> hostname, edit <code>/etc/nsswitch.conf</code> on every developer laptop to put <code>files</code> before <code>mdns_minimal</code> — but this is system-wide and may break Avahi-discovered devices on the LAN.</p>
 
-<h3 id="ts-instance-control">Jobs fail with <em>“unknown work type kubernetes-incluster-auth”</em></h3>
+<h3 id="ts-worktype">Jobs error at 0 s with <em>“unknown work type kubernetes-incluster-auth”</em></h3>
+<p>Receptor has no such worktype registered. Chart versions before <strong>2026.07.0</strong> declared only the <code>local</code> worktype, so any job routed to the container group died immediately. Upgrade the chart, or add the worktype to <code>files/receptor/receptor.conf</code>:</p>
+<pre><code>- work-kubernetes:
+    worktype: kubernetes-incluster-auth
+    authmethod: incluster
+    allowruntimeauth: true
+    allowruntimepod: true
+    allowruntimeparams: true</code></pre>
+
+<h3 id="ts-job-rbac">Jobs stay <em>pending</em> — <em>“pods is forbidden … cannot list resource pods”</em></h3>
+<p>The task pod’s ServiceAccount has no pod permissions in the namespace, so Receptor cannot create the job pod. The chart renders this RBAC by default since <strong>2026.07.0</strong> (<code>serviceAccount.create</code>, <code>rbac.create</code>) — see <a href="#job-execution">Job execution</a>. Verify with:</p>
+<pre><code>kubectl -n forail auth can-i create pods --as=system:serviceaccount:forail:forail</code></pre>
+<p>If the answer is <code>no</code>, the release was installed with those values disabled, or the pods still run under <code>default</code> (check <code>kubectl -n forail get pod -l app=forail-task -o jsonpath='{.items[0].spec.serviceAccountName}'</code>).</p>
+
+<h3 id="ts-web-crashloop">forail-web crash-loops right after an upgrade</h3>
+<p>Check the logs for <code>Invalid HTTP_HOST header: '127.0.0.1:8013'</code>. The liveness and readiness probes call the API on loopback, so the loopback names must stay in <code>forail.allowedHosts</code> alongside your ingress host:</p>
+<pre><code>--set forail.allowedHosts='forail.example.com,127.0.0.1,localhost'</code></pre>
+
+<h3 id="ts-instance-control">Jobs are dispatched but never execute locally</h3>
 <p>The Forail instance is registered as <code>node_type=control</code> instead of <code>hybrid</code>. Control nodes only orchestrate; they refuse to <em>execute</em> jobs locally and try to dispatch them to a ContainerGroup. The chart’s <code>init.sh</code> runs an explicit ORM update after <code>provision_instance</code> to fix this — if you wrote a custom init, replicate that step:</p>
 <pre><code>forail-manage shell -c "
 from forail.main.models import Instance
