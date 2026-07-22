@@ -314,10 +314,19 @@ required/secure defaults have to be supplied:</p>
 <div class="codehilite"><pre><span></span><code>helm<span class="w"> </span>upgrade<span class="w"> </span>forail<span class="w"> </span>oci://ghcr.io/forail-platform/forail-helm<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--version<span class="w"> </span><span class="m">2026</span>.7.0<span class="w"> </span>-n<span class="w"> </span>forail<span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--set<span class="w"> </span>secrets.forailAdminPassword<span class="o">=</span><span class="s1">&#39;&lt;strong-password&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">    </span>--set<span class="w"> </span>forail.allowedHosts<span class="o">=</span><span class="s1">&#39;forail.example.com,127.0.0.1,localhost&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set<span class="w"> </span><span class="s1">&#39;forail.allowedHosts=forail.example.com\,127.0.0.1\,localhost&#39;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">    </span>--set<span class="w"> </span>task.privileged<span class="o">=</span><span class="nb">true</span><span class="w"> </span>--set<span class="w"> </span>task.hostCgroup<span class="o">=</span><span class="nb">true</span><span class="w">   </span><span class="c1"># only if you run jobs in-pod</span>
 </code></pre></div>
 
+<blockquote>
+<p><strong>Escape the commas.</strong> Helm's <code>--set</code> splits unescaped commas into a list, so
+<code>--set forail.allowedHosts='a,b,c'</code> fails to parse. Either escape them as above
+(<code>a\,b\,c</code>, inside single quotes so the shell keeps the backslashes) or put the
+value in a values file, where no escaping is needed:</p>
+<p><code>yaml
+forail:
+  allowedHosts: "forail.example.com,127.0.0.1,localhost"</code></p>
+</blockquote>
 <p>Before upgrading:</p>
 <ul>
 <li><strong>SAML deployments</strong> — review <strong>Breaking changes — SAML</strong> above and reconfigure

@@ -263,8 +263,9 @@ cd forail-helm
 helm install forail . -n forail \
     --set forail.admin.user=admin \
     --set secrets.forailAdminPassword='&lt;strong-password&gt;' \
-    --set forail.allowedHosts='forail.lan,127.0.0.1,localhost' \
+    --set 'forail.allowedHosts=forail.lan\,127.0.0.1\,localhost' \
     --set task.privileged=true --set task.hostCgroup=true</code></pre>
+<p><strong>Escape the commas.</strong> Helm’s <code>--set</code> splits an unescaped comma into a list, so <code>--set forail.allowedHosts='a,b,c'</code> fails with <code>key "1" has no value</code>. Escape them as above (single quotes keep the backslashes), or drop the value into a values file where no escaping is needed.</p>
 <p>Since <strong>2026.07.0</strong> the chart ships no working secret defaults:</p>
 <ul>
 <li><code>secrets.forailAdminPassword</code> is <strong>required</strong> — the install fails to render without it.</li>
@@ -440,7 +441,7 @@ kubectl -n forail cp forail-web-xxx:/var/backups/forail/forail-&lt;ts&gt;.sql.gz
 
 <h3 id="ts-web-crashloop">forail-web crash-loops right after an upgrade</h3>
 <p>Check the logs for <code>Invalid HTTP_HOST header: '127.0.0.1:8013'</code>. The liveness and readiness probes call the API on loopback, so the loopback names must stay in <code>forail.allowedHosts</code> alongside your ingress host:</p>
-<pre><code>--set forail.allowedHosts='forail.example.com,127.0.0.1,localhost'</code></pre>
+<pre><code>--set 'forail.allowedHosts=forail.example.com\,127.0.0.1\,localhost'</code></pre>
 
 <h3 id="ts-instance-control">Jobs are dispatched but never execute locally</h3>
 <p>The Forail instance is registered as <code>node_type=control</code> instead of <code>hybrid</code>. Control nodes only orchestrate; they refuse to <em>execute</em> jobs locally and try to dispatch them to a ContainerGroup. The chart’s <code>init.sh</code> runs an explicit ORM update after <code>provision_instance</code> to fix this — if you wrote a custom init, replicate that step:</p>
