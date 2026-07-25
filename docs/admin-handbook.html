@@ -90,7 +90,7 @@
   <main class="docs-content">
 <h1 id="forail-platform-administrator-handbook">Forail Platform — Administrator Handbook</h1>
 <p>Operational guide for installing, running, and maintaining a Forail Platform deployment. Each section is step-by-step with concrete example values you can copy. Click any item in the table of contents to jump straight to it.</p>
-<p>For day-to-day UI usage, see the companion <a href="HANDBOOK.md">User Handbook</a>.</p>
+<p>For day-to-day UI usage, see the companion <a href="user-handbook.html">User Handbook</a>.</p>
 <hr />
 <h2 id="table-of-contents">Table of Contents</h2>
 <h3 id="install-first-boot">Install &amp; First Boot</h3>
@@ -436,7 +436,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 <p>Upgrading is a tag bump + pull + up.</p>
 <p><strong>Step by step</strong></p>
 <ol>
-<li>Read the <a href="RELEASE_NOTES_v2026.04.0.md">release notes</a> for breaking changes.</li>
+<li>Read the <a href="release-2026.04.0.html">release notes</a> for breaking changes.</li>
 <li>Take a backup (see <a href="#backup">Backup</a>).</li>
 <li>Edit <code>.env</code> and bump <code>FORAIL_TAG</code>:</li>
 </ol>
@@ -573,7 +573,7 @@ docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"
 <p>The <code>k8s/</code> folder contains baseline manifests if you outgrow Docker Compose.</p>
 <p><strong>Step by step</strong></p>
 <ol>
-<li>Read <a href="../k8s/"><code>k8s/</code></a> — it includes Deployments, Services, ConfigMap, Secret, Ingress.</li>
+<li>Read <a href="https://github.com/forail-platform/forail-devops/tree/main/k8s"><code>k8s/</code></a> — it includes Deployments, Services, ConfigMap, Secret, Ingress.</li>
 <li>Create a namespace:</li>
 </ol>
 <p><code>bash

@@ -565,7 +565,7 @@ runs in well under a second.</p>
   filtering — recommendations describe platform-wide state.</li>
 <li><strong>Telemetry:</strong> the endpoint emits an OpenTelemetry span
   (<code>recommendations.evaluate</code>) with <code>scope</code> and <code>count</code> attributes when OTel
-  is enabled (see <a href="21-observability.md">21 — Observability</a>).</li>
+  is enabled (see <a href="observability.html">21 — Observability</a>).</li>
 <li><strong>Disable globally:</strong> there is no kill switch in v1. If you need to hide the
   feature, add <code>DISABLE_RECOMMENDATIONS=True</code> to settings and short-circuit
   the view — out of scope for v1.</li>
@@ -581,10 +581,10 @@ runs in well under a second.</p>
 <hr />
 <h2 id="see-also">See Also</h2>
 <ul>
-<li><a href="16-drift-detection.md">16 — Drift Detection</a> — feeds <code>no_drift</code> and adjacent rules</li>
-<li><a href="19-policy-as-code.md">19 — Policy-as-Code</a> — feeds <code>all_policies_warn</code></li>
-<li><a href="20-iac-scanning.md">20 — IaC Scanning</a> — feeds <code>no_scanners</code></li>
-<li><a href="22-multi-tenancy.md">22 — Multi-Tenancy</a> — feeds <code>multi_org_no_tenancy</code>, <code>tenant_near_quota</code></li>
+<li><a href="drift-detection.html">16 — Drift Detection</a> — feeds <code>no_drift</code> and adjacent rules</li>
+<li><a href="policy-as-code.html">19 — Policy-as-Code</a> — feeds <code>all_policies_warn</code></li>
+<li><a href="iac-scanning.html">20 — IaC Scanning</a> — feeds <code>no_scanners</code></li>
+<li><a href="multi-tenancy.html">22 — Multi-Tenancy</a> — feeds <code>multi_org_no_tenancy</code>, <code>tenant_near_quota</code></li>
 <li><a href="../../forail-deploy/docs/HANDBOOK.md#dashboard">User Handbook → Dashboard</a> — where the UI surfaces these</li>
 </ul>
   </main>

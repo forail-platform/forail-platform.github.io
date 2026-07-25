@@ -48,10 +48,24 @@ generate_page() {
 
   local content
   content=$(python3 -c "
-import markdown, sys
+import markdown, os, re, sys
 with open('$src_path', 'r') as f:
     text = f.read()
 html = markdown.markdown(text, extensions=['tables', 'fenced_code', 'codehilite', 'toc'])
+
+# The sources cross-reference each other as .md files (e.g. 21-observability.md).
+# Left alone those become dead links on the site, since only the generated .html
+# exists there. Rewrite every link whose basename is a page we build. Anything
+# unmapped is left as-is rather than guessed at, and shows up in a link check.
+linkmap = dict(
+    pair.split('=', 1)
+    for pair in os.environ.get('LINKMAP', '').split(';')
+    if pair
+)
+def relink(m):
+    target = linkmap.get(os.path.basename(m.group(1)))
+    return 'href=\"%s\"' % target if target else m.group(0)
+html = re.sub(r'href=\"([^\"]+\.md)\"', relink, html)
 sys.stdout.write(html)
 ")
 
@@ -170,6 +184,14 @@ ${content}
 HTMLEOF
   echo "OK: $out"
 }
+
+# basename.md -> generated .html, consumed by relink() above.
+LINKMAP=""
+for src in "${!DOCS[@]}"; do
+  IFS='|' read -r out _ _ <<< "${DOCS[$src]}"
+  LINKMAP+="$(basename "$src")=$out;"
+done
+export LINKMAP
 
 echo "Building user/admin docs..."
 for src in "${!DOCS[@]}"; do
