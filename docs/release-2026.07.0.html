@@ -56,7 +56,7 @@
     <a href="architecture.html">Architecture</a>
     <a href="deployment.html">Deployment (Docker)</a>
     <a href="kubernetes.html">Kubernetes</a>
-    <a href="operator-v1.html">Operator v1.0.0</a>
+    <a href="operator.html">Kubernetes Operator</a>
     <h4>Features</h4>
     <a href="event-driven.html">Event-Driven Automation</a>
     <a href="drift-detection.html">Drift Detection</a>
@@ -106,6 +106,82 @@ job execution needs — see <em>Fixed</em>.</p>
 with the tenancy work; both only drop and re-create PostgreSQL row-level-security
 policies, so they apply to an existing database without touching table schemas or
 rows.</p>
+<h2 id="security-advisories">Security advisories</h2>
+<p><strong>Upgrade from 2026.06.0 or earlier is strongly recommended.</strong> Several of the
+fixes below are exploitable on a default install of an earlier release; the
+detail is in <em>Security hardening</em> and <em>Breaking changes</em> further down.</p>
+<p>Severity is this project's own assessment of impact on a default deployment. It
+is not CVSS, and no CVE identifiers have been requested. "Affected" means every
+release up to and including 2026.06.0.</p>
+<table>
+<thead>
+<tr>
+<th>Issue</th>
+<th>Severity</th>
+<th>Who is exposed</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deployment artifacts shipped working default credentials</td>
+<td><strong>Critical</strong></td>
+<td>Any install that did not override the shipped secrets</td>
+<td>Upgrade; rotate <code>forailAdminPassword</code>, <code>postgresPassword</code>, <code>forailSecretKey</code> and the websocket secret</td>
+</tr>
+<tr>
+<td>SSO account takeover — accounts associated by email address, not provider UID</td>
+<td><strong>Critical</strong></td>
+<td>Installs using SAML/OIDC/social auth where an IdP can assert an arbitrary email</td>
+<td>Upgrade; audit existing SSO-linked accounts for unexpected associations</td>
+</tr>
+<tr>
+<td>Tenant isolation gate could essentially never fire; RLS failures degraded to global row visibility</td>
+<td><strong>High</strong></td>
+<td>Multi-tenant installs</td>
+<td>Upgrade; review <code>TenantIsolationEvent</code> records and cross-tenant access in the audit trail</td>
+</tr>
+<tr>
+<td><code>forail-task</code> ran privileged with a host cgroup mount by default — a container escape to node-root</td>
+<td><strong>High</strong></td>
+<td>Kubernetes and Compose installs using shipped defaults</td>
+<td>Upgrade; job execution now needs an explicit opt-in, ideally on dedicated tainted nodes</td>
+</tr>
+<tr>
+<td><code>ALLOWED_HOSTS</code> defaulted to <code>*</code> and session cookies were not <code>Secure</code></td>
+<td><strong>Medium</strong></td>
+<td>Internet-reachable installs</td>
+<td>Upgrade; set your real ingress host(s) and terminate TLS</td>
+</tr>
+<tr>
+<td>Audit records stored the raw session key; <code>X-Forwarded-For</code> was trusted unconditionally for the audit source IP</td>
+<td><strong>Medium</strong></td>
+<td>Any install; higher where audit logs are broadly readable</td>
+<td>Upgrade; configure <code>PROXY_IP_ALLOWED_LIST</code>; treat historical audit rows as sensitive</td>
+</tr>
+<tr>
+<td>IaC scanner could be pointed outside the project checkout via a job template's <code>playbook</code> field</td>
+<td><strong>Medium</strong></td>
+<td>Installs where non-admins can edit job templates</td>
+<td>Upgrade</td>
+</tr>
+<tr>
+<td>Operator held cluster-wide <code>get/list/watch</code> on every Secret</td>
+<td><strong>Medium</strong></td>
+<td>Kubernetes installs running the operator</td>
+<td>Upgrade the operator to <strong>2026.07.1</strong>; its Secret access is now a namespaced <code>Role</code></td>
+</tr>
+<tr>
+<td>OAuth <code>refresh_token</code> was recorded in activity-stream entries; superuser grant/revoke was not separately audited</td>
+<td><strong>Low</strong></td>
+<td>Any install</td>
+<td>Upgrade; consider rotating OAuth tokens that appear in historical activity entries</td>
+</tr>
+</tbody>
+</table>
+<p>Upgrading does not retroactively clean data written by an earlier release —
+rotate the credentials above, and treat pre-upgrade audit and activity rows as
+potentially containing secrets.</p>
 <h2 id="added">Added</h2>
 <h3 id="awx-forail-migration-importer">AWX → Forail migration importer</h3>
 <p>A new backend management command migrates configuration from an existing AWX (or

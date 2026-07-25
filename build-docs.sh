@@ -12,6 +12,7 @@ declare -A DOCS
 # Getting Started
 DOCS["forail-deploy/docs/01-architecture-overview.md"]="architecture.html|Architecture Overview|Forail Platform architecture: Django REST API, Celery task engine, Receptor mesh networking, React UI, PostgreSQL, Redis. Component diagram, request flow, and deployment topology for the open-source AWX alternative."
 DOCS["forail-deploy/docs/07-docker-deployment.md"]="deployment.html|Docker Deployment|Deploy Forail Platform with Docker Compose: install, configure, scale, and operate the open-source Ansible automation platform on a single host. Production-ready compose stack with PostgreSQL, Redis, Nginx, and OpenTelemetry."
+DOCS["forail-operator/docs/operator.md"]="operator.html|Kubernetes Operator|Forail Platform Kubernetes operator — manage Organizations, Projects, Inventories, Credentials, Job Templates, Schedules, Teams and Workflows as custom resources, route them to multiple Forail backends, and keep Credential Secrets under namespaced RBAC."
 # Features
 DOCS["forail-backend/docs/13-dynamic-surveys.md"]="dynamic-surveys.html|Dynamic Surveys|Dynamic surveys in Forail Platform — define per-job-template input forms with regex validation, conditional fields, and prompt-on-launch parameters for Ansible playbook execution."
 DOCS["forail-backend/docs/14-audit-trail.md"]="audit-trail.html|Audit Trail|Audit trail in Forail Platform — every state change is recorded with actor, resource, before/after diff. Compliance-ready audit logging for Ansible automation and infrastructure changes."
@@ -135,7 +136,7 @@ sys.stdout.write(html)
     <a href="architecture.html">Architecture</a>
     <a href="deployment.html">Deployment (Docker)</a>
     <a href="kubernetes.html">Kubernetes</a>
-    <a href="operator-v1.html">Operator v1.0.0</a>
+    <a href="operator.html">Kubernetes Operator</a>
     <h4>Features</h4>
     <a href="event-driven.html">Event-Driven Automation</a>
     <a href="drift-detection.html">Drift Detection</a>

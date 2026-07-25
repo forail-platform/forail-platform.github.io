@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kubernetes Operator — Forail Platform Docs</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="Forail Platform Kubernetes operator — manage Organizations, Projects, Inventories, Credentials, Job Templates, Schedules, Teams and Workflows as custom resources, route them to multiple Forail backends, and keep Credential Secrets under namespaced RBAC.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <meta name="author" content="Krstan Vjestica">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/operator.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Kubernetes Operator — Forail Platform Docs">
+  <meta property="og:description" content="Forail Platform Kubernetes operator — manage Organizations, Projects, Inventories, Credentials, Job Templates, Schedules, Teams and Workflows as custom resources, route them to multiple Forail backends, and keep Credential Secrets under namespaced RBAC.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/operator.html">
+  <meta property="og:site_name" content="Forail Platform">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kubernetes Operator — Forail Platform Docs">
+  <meta name="twitter:description" content="Forail Platform Kubernetes operator — manage Organizations, Projects, Inventories, Credentials, Job Templates, Schedules, Teams and Workflows as custom resources, route them to multiple Forail backends, and keep Credential Secrets under namespaced RBAC.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"Kubernetes Operator","description":"Forail Platform Kubernetes operator — manage Organizations, Projects, Inventories, Credentials, Job Templates, Schedules, Teams and Workflows as custom resources, route them to multiple Forail backends, and keep Credential Secrets under namespaced RBAC.","url":"https://forail-platform.github.io/docs/operator.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <svg viewBox="0 0 64 64" fill="none"><line x1="18" y1="28.5" x2="45" y2="12.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><line x1="18" y1="28.5" x2="49" y2="36.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><line x1="18" y1="28.5" x2="26" y2="51.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><rect x="9" y="19.5" width="18" height="18" rx="5" fill="#1D9E75"/><circle cx="45" cy="12.5" r="6" fill="#1D9E75"/><circle cx="49" cy="36.5" r="6" fill="#1D9E75"/><circle cx="26" cy="51.5" r="6" fill="#1D9E75"/></svg>
+      Forail
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
+      <li><a href="../dev/index.html">Dev Docs</a></li>
+    </ul>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
+    <button class="nav-toggle" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="docs-layout" style="padding: 2rem;">
+  <aside class="docs-sidebar">
+    <h4>Getting Started</h4>
+    <a href="architecture.html">Architecture</a>
+    <a href="deployment.html">Deployment (Docker)</a>
+    <a href="kubernetes.html">Kubernetes</a>
+    <a href="operator.html">Kubernetes Operator</a>
+    <h4>Features</h4>
+    <a href="event-driven.html">Event-Driven Automation</a>
+    <a href="drift-detection.html">Drift Detection</a>
+    <a href="policy-as-code.html">Policy-as-Code</a>
+    <a href="self-service.html">Self-Service Portal</a>
+    <a href="multi-tenancy.html">Multi-Tenancy</a>
+    <a href="oidc-webauthn.html">OIDC + WebAuthn</a>
+    <a href="iac-scanning.html">IaC Scanning</a>
+    <a href="observability.html">Observability</a>
+    <a href="dynamic-surveys.html">Dynamic Surveys</a>
+    <a href="audit-trail.html">Audit Trail</a>
+    <a href="recommendations.html">Recommendations</a>
+    <h4>AI Assistant</h4>
+    <a href="assistant-architecture.html">Architecture</a>
+    <a href="assistant-api.html">API Reference</a>
+    <a href="assistant-config.html">Configuration</a>
+    <a href="assistant-deploy.html">Deployment</a>
+    <h4>Operations</h4>
+    <a href="user-handbook.html">User Handbook</a>
+    <a href="admin-handbook.html">Admin Handbook</a>
+    <h4>Release Notes</h4>
+    <a href="release-2026.07.0.html">v2026.07.0</a>
+    <a href="release-2026.06.0.html">v2026.06.0</a>
+    <a href="release-2026.05.0.html">v2026.05.0</a>
+    <a href="release-2026.04.0.html">v2026.04.0</a>
+    <a href="release-2026.03.0.html">v2026.03.0</a>
+    <h4>&nbsp;</h4>
+    <a href="../dev/index.html">Developer Docs</a>
+    <a href="../index.html">Home</a>
+  </aside>
+  <main class="docs-content">
+<h1 id="kubernetes-operator">Kubernetes Operator</h1>
+<p><code>forail-operator</code> manages Forail resources as Kubernetes custom resources. You
+declare an Organization, Project, Inventory, Credential, JobTemplate, Schedule,
+Team or Workflow in YAML, and the operator reconciles it against a Forail
+backend over the REST API — creating what is missing, updating what drifted, and
+reporting the outcome in <code>.status</code>.</p>
+<p>It is the same object model you would build by hand in the UI, expressed as
+GitOps-friendly manifests.</p>
+<h2 id="install">Install</h2>
+<div class="codehilite"><pre><span></span><code><span class="nv">TOKEN</span><span class="o">=</span><span class="k">$(</span>kubectl<span class="w"> </span>-n<span class="w"> </span>forail<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>deploy/forail-web<span class="w"> </span>--<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>forail-manage<span class="w"> </span>create_oauth2_token<span class="w"> </span>--user<span class="w"> </span>admin<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-1<span class="k">)</span>
+
+helm<span class="w"> </span>install<span class="w"> </span>forail-operator<span class="w"> </span>./helm<span class="w"> </span>-n<span class="w"> </span>forail-operator<span class="w"> </span>--create-namespace<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set<span class="w"> </span>forail.url<span class="o">=</span>http://forail-web.forail.svc.cluster.local:8013<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set<span class="w"> </span>forail.token<span class="o">=</span><span class="s2">&quot;</span><span class="nv">$TOKEN</span><span class="s2">&quot;</span>
+</code></pre></div>
+
+<p><code>forail.url</code> has to be a host Forail accepts. The chart's <code>forail.allowedHosts</code>
+already covers the <code>forail-web</code> Service DNS names, so the URL above works
+unchanged. Reaching Forail under any other name — an ingress host, an external
+load balancer — needs <code>--set forail.hostHeader=&lt;that host&gt;</code>, or Django rejects
+every call with <code>400</code>.</p>
+<p>For OpenShift / OperatorHub there is an OLM bundle under <code>bundle/</code>; see the
+repository README for the catalog build.</p>
+<h2 id="resource-model">Resource model</h2>
+<p>Nine kinds, all in API group <code>forail.forail-platform.io/v1alpha1</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Kind</th>
+<th>Forail resource</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Organization</code></td>
+<td><code>/api/v2/organizations</code></td>
+</tr>
+<tr>
+<td><code>Team</code></td>
+<td><code>/api/v2/teams</code> + <code>/teams/{id}/users/</code></td>
+</tr>
+<tr>
+<td><code>Project</code></td>
+<td><code>/api/v2/projects</code></td>
+</tr>
+<tr>
+<td><code>Inventory</code></td>
+<td><code>/api/v2/inventories</code></td>
+</tr>
+<tr>
+<td><code>Credential</code></td>
+<td><code>/api/v2/credentials</code></td>
+</tr>
+<tr>
+<td><code>JobTemplate</code></td>
+<td><code>/api/v2/job_templates</code></td>
+</tr>
+<tr>
+<td><code>Schedule</code></td>
+<td><code>/api/v2/schedules</code></td>
+</tr>
+<tr>
+<td><code>Workflow</code></td>
+<td><code>/api/v2/workflow_job_templates</code> + <code>/workflow_nodes/</code></td>
+</tr>
+<tr>
+<td><code>ForailInstance</code></td>
+<td>control-plane only — see <em>Multiple backends</em></td>
+</tr>
+</tbody>
+</table>
+<p>Every reconciler writes <code>Synced</code> and <code>Ready</code> conditions plus the upstream id, so
+<code>kubectl describe</code> tells you whether Forail actually accepted the object:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">status</span><span class="p">:</span>
+<span class="w">  </span><span class="nx">conditions</span><span class="p">:</span>
+<span class="w">    </span><span class="o">-</span><span class="w"> </span><span class="k">type</span><span class="p">:</span><span class="w"> </span><span class="nx">Synced</span>
+<span class="w">      </span><span class="nx">status</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;True&quot;</span>
+<span class="w">      </span><span class="nx">reason</span><span class="p">:</span><span class="w"> </span><span class="nx">InSync</span>
+<span class="w">      </span><span class="nx">message</span><span class="p">:</span><span class="w"> </span><span class="nx">Organization</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">sync</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">Forail</span>
+<span class="w">  </span><span class="nx">forailId</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span>
+</code></pre></div>
+
+<h2 id="credential-secrets-and-namespaces">Credential Secrets and namespaces</h2>
+<p>A <code>Credential</code> keeps its sensitive fields in a Kubernetes <code>Secret</code> and
+references them from <code>spec.inputsFrom</code>:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">forail.forail-platform.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Credential</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy-key</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">forail-operator</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">organization</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Default</span>
+<span class="w">  </span><span class="nt">credentialType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Machine</span>
+<span class="w">  </span><span class="nt">inputs</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy</span>
+<span class="w">  </span><span class="nt">inputsFrom</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssh_key_data</span>
+<span class="w">      </span><span class="nt">valueFrom</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy-ssh</span>
+<span class="w">        </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssh_key_data</span>
+</code></pre></div>
+
+<p><strong>The operator never holds a cluster-wide grant on Secrets.</strong> Its access is a
+namespaced <code>Role</code>, and its Secret cache is scoped to the same set — deliberately,
+because a controller that can read every Secret in the cluster is a large blast
+radius for a convenience nobody asked for.</p>
+<p>The practical consequence: a <code>Credential</code> resolves <code>spec.inputsFrom</code> in <strong>its
+own</strong> namespace, and that namespace has to be one the operator was given. Out of
+the box that is only the release namespace, so Credentials live beside the
+operator. To keep them elsewhere, name those namespaces at install time:</p>
+<div class="codehilite"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>forail-operator<span class="w"> </span>./helm<span class="w"> </span>...<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--set<span class="w"> </span><span class="s1">&#39;secretNamespaces={team-a,team-b}&#39;</span>
+</code></pre></div>
+
+<p>That single value renders both halves — the Secret <code>Role</code>/<code>RoleBinding</code> in each
+namespace, and <code>--secret-namespaces</code> on the Deployment so the cache covers the
+same set. Adding a <code>RoleBinding</code> by hand does not work on its own; the cache
+would still reject the namespace with:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">read</span><span class="w"> </span><span class="nv">Secret</span><span class="w"> </span><span class="nv">team</span><span class="o">-</span><span class="nv">a</span><span class="o">/</span><span class="nv">deploy</span><span class="o">-</span><span class="nv">ssh</span>:<span class="w"> </span><span class="nv">unable</span><span class="w"> </span><span class="nv">to</span><span class="w"> </span><span class="nv">get</span>:<span class="w"> </span><span class="nv">team</span><span class="o">-</span><span class="nv">a</span><span class="o">/</span><span class="nv">deploy</span><span class="o">-</span><span class="nv">ssh</span>
+<span class="w">  </span><span class="nv">because</span><span class="w"> </span><span class="nv">of</span><span class="w"> </span><span class="nv">unknown</span><span class="w"> </span><span class="nv">namespace</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="nv">the</span><span class="w"> </span><span class="nv">cache</span>
+</code></pre></div>
+
+<h2 id="multiple-backends">Multiple backends</h2>
+<p>Every CR takes an optional <code>spec.forailInstance</code>. When set, the controller looks
+up a <code>ForailInstance</code> by that name in the same namespace, reads its bearer token
+from the Secret named by <code>spec.tokenSecretRef</code>, and builds a per-instance client
+(cached, invalidated when the observed generation moves). When it is empty the
+CR falls back to the default backend from <code>--forail-url</code> / <code>--forail-token</code>.</p>
+<p>That is what lets one operator drive several Forail installations:</p>
+<div class="codehilite"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="nv">forail-eu-token</span><span class="p p-Indicator">,</span><span class="nt"> namespace</span><span class="p">:</span><span class="w"> </span><span class="nv">default</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="nt">stringData</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;PAT from forail-manage create_oauth2_token&gt;</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">forail.forail-platform.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ForailInstance</span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="nv">forail-eu</span><span class="p p-Indicator">,</span><span class="nt"> namespace</span><span class="p">:</span><span class="w"> </span><span class="nv">default</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://forail-eu.example.com</span>
+<span class="w">  </span><span class="nt">tokenSecretRef</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="nv">forail-eu-token</span><span class="p p-Indicator">,</span><span class="nt"> key</span><span class="p">:</span><span class="w"> </span><span class="nv">token</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">forail.forail-platform.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Project</span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="nv">eu-roles</span><span class="p p-Indicator">,</span><span class="nt"> namespace</span><span class="p">:</span><span class="w"> </span><span class="nv">default</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">forailInstance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">forail-eu</span><span class="w">       </span><span class="c1"># routed to the EU backend</span>
+<span class="w">  </span><span class="nt">organization</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Default</span>
+<span class="w">  </span><span class="nt">scmType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">git</span>
+<span class="w">  </span><span class="nt">scmUrl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/mycorp/eu-roles.git</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">forail.forail-platform.io/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Project</span>
+<span class="nt">metadata</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt"> name</span><span class="p">:</span><span class="w"> </span><span class="nv">us-roles</span><span class="p p-Indicator">,</span><span class="nt"> namespace</span><span class="p">:</span><span class="w"> </span><span class="nv">default</span><span class="w"> </span><span class="p p-Indicator">}</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># no forailInstance — uses the default backend</span>
+<span class="w">  </span><span class="nt">organization</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Default</span>
+<span class="w">  </span><span class="nt">scmType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">git</span>
+<span class="w">  </span><span class="nt">scmUrl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://github.com/mycorp/us-roles.git</span>
+</code></pre></div>
+
+<p>The <code>ForailInstance</code> reconciler polls <code>/api/v2/ping/</code> every 60 seconds (30 on
+failure) and surfaces reachability and server version, so a backend going dark
+is visible without digging:</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>kubectl<span class="w"> </span>get<span class="w"> </span>forailinstance<span class="w"> </span>-A
+NAMESPACE<span class="w">  </span>NAME<span class="w">        </span>URL<span class="w">                             </span>REACHABLE<span class="w">  </span>VERSION<span class="w">     </span>LAST<span class="w"> </span>CHECKED
+default<span class="w">    </span>forail-eu<span class="w">   </span>https://forail-eu.example.com<span class="w">   </span><span class="nb">true</span><span class="w">       </span><span class="m">2026</span>.07.0<span class="w">   </span>12s
+default<span class="w">    </span>forail-us<span class="w">   </span>https://forail-us.example.com<span class="w">   </span><span class="nb">false</span><span class="w">      </span>—<span class="w">           </span>22s
+</code></pre></div>
+
+<p>Remember that <code>tokenSecretRef</code> is subject to the same namespace rule as
+Credential Secrets above.</p>
+<h2 id="workflows">Workflows</h2>
+<p><code>Workflow</code> is the only kind with a graph model: <code>spec.nodes[]</code> is a DAG of
+job-template nodes joined by <code>success</code>, <code>failure</code> and <code>always</code> edges, keyed by a
+per-node identifier. The reconciler creates the workflow job template first,
+then the nodes, then the edges between them, so a partially applied graph
+converges on the next pass rather than erroring.</p>
+<h2 id="verifying-an-install">Verifying an install</h2>
+<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>forail-operator<span class="w"> </span>get<span class="w"> </span>pods<span class="w">                 </span><span class="c1"># 1/1 Running, 0 restarts</span>
+kubectl<span class="w"> </span>-n<span class="w"> </span>forail-operator<span class="w"> </span>logs<span class="w"> </span>deploy/forail-operator-forail-operator<span class="w"> </span><span class="p">|</span><span class="w"> </span>head
+
+kubectl<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>config/samples/organization-sample.yaml
+kubectl<span class="w"> </span>get<span class="w"> </span>organization<span class="w"> </span>platform-team<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">&#39;{.status}&#39;</span>
+<span class="c1"># -&gt; conditions Synced/Ready True, forailId set</span>
+</code></pre></div>
+
+<p>If a CR stays without status, check that the operator can reach the backend
+(<code>kubectl get forailinstance -A</code>, or the operator log for <code>400</code>/<code>401</code>), and that
+any referenced Secret is in a namespace the operator was given.</p>
+<h2 id="versions">Versions</h2>
+<p>The operator moved to the platform's date-based scheme; <code>v1.0.x</code> predates it.</p>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Notable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>2026.07.1</code></td>
+<td><code>secretNamespaces</code> — Credential Secrets outside the operator's namespace</td>
+</tr>
+<tr>
+<td><code>2026.07.0</code></td>
+<td>Secret access narrowed from cluster-wide to a namespaced <code>Role</code></td>
+</tr>
+<tr>
+<td><code>2026.06.0</code></td>
+<td>Date-based versioning</td>
+</tr>
+<tr>
+<td><code>v1.0.0</code></td>
+<td>Nine CRDs, multi-cluster routing, OLM bundle</td>
+</tr>
+</tbody>
+</table>
+  </main>
+</div>
+<footer class="footer">
+  <div class="footer-links">
+    <a href="../index.html">Home</a>
+    <a href="../dev/index.html">Dev Docs</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
+  </div>
+  <p>Forail Platform — Apache License 2.0</p>
+</footer>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
