@@ -89,7 +89,7 @@
   </aside>
   <main class="docs-content">
 <h1 id="forail-2026070-release-notes">Forail 2026.07.0 — Release Notes</h1>
-<p><strong>Release date:</strong> 2026-06-24
+<p><strong>Release date:</strong> 2026-07-25
 <strong>Based on:</strong> Forail 2026.06.0
 <strong>License:</strong> Apache License 2.0</p>
 <hr />
@@ -193,11 +193,22 @@ default. That is over:</p>
 <li><strong>Operator</strong>: the manager no longer holds cluster-wide <code>get/list/watch</code> on
   every Secret — the credential reconciler's access is a namespaced
   <code>Role</code>/<code>RoleBinding</code> in the operator's own namespace.</li>
-<li><strong>Assistant</strong>: a wildcard CORS origin no longer combines with credentials, and
+</ul>
+<blockquote>
+<p><strong>Use operator <code>2026.07.1</code>.</strong> In <code>2026.07.0</code> that narrowing left <code>Credential</code>
+CRs working only in the operator's own namespace, because a Credential
+resolves <code>spec.inputsFrom</code> in <em>its</em> namespace and the Secret cache covered
+only one. <code>2026.07.1</code> adds <code>secretNamespaces</code> to the operator chart, which
+renders both the per-namespace Secret <code>Role</code> and the matching cache scope:</p>
+<p><code>sh
+helm install forail-operator ... --set 'secretNamespaces={team-a,team-b}'</code></p>
+<p>Still no cluster-wide secrets grant. Everything else in this release is
+unchanged at <code>2026.07.0</code>.
+- <strong>Assistant</strong>: a wildcard CORS origin no longer combines with credentials, and
   <code>/api/v1/chat</code> accepts an optional shared bearer token
   (<code>FORAIL_ASSISTANT_CHAT_TOKEN</code>) with a concurrency cap
-  (<code>FORAIL_ASSISTANT_CHAT_MAX_CONCURRENCY</code>, 429 on overload).</li>
-</ul>
+  (<code>FORAIL_ASSISTANT_CHAT_MAX_CONCURRENCY</code>, 429 on overload).</p>
+</blockquote>
 <p>See <strong>Breaking changes — deployment defaults</strong> below for the upgrade actions.</p>
 <h2 id="breaking-changes-saml">⚠️ Breaking changes — SAML</h2>
 <p>Two SAML defaults changed. They affect installs that rely on the previous,
@@ -273,8 +284,15 @@ list</strong> — the in-cluster health probes call the API on loopback. Termina
 front of the ingress, or set <code>forail.cookieSecure: "false"</code> for a lab install.</p>
 <h2 id="fixed">Fixed</h2>
 <ul>
-<li><strong>In-cluster job execution now works out of the box.</strong> Two pieces were missing
-  from the chart, and each failed a launch on its own:</li>
+<li><strong>In-cluster job execution.</strong> Two pieces were missing from the chart, and each
+  failed a launch on its own. Note this is not "out of the box": project updates
+  and control-plane jobs still run through podman inside the task pod, so they
+  also need the privileged opt-in from <em>Breaking changes</em> #2 above. Without it
+  every job dies moments after launch with <code>mount
+  /var/lib/containers/storage/overlay: permission denied</code>, and the only symptom
+  in the UI is a project or job stuck in <code>Pending</code>. The chart now prints a
+  warning to that effect at install time when the flags are off. The two chart
+  fixes were:</li>
 <li>No pod RBAC. Jobs run as pods in a Kubernetes container group, and receptor
     manages them with the task pod's ServiceAccount — which had no pod
     permissions, so every launch failed with
