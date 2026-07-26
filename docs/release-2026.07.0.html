@@ -78,6 +78,7 @@
     <a href="user-handbook.html">User Handbook</a>
     <a href="admin-handbook.html">Admin Handbook</a>
     <h4>Release Notes</h4>
+    <a href="release-2026.07.1.html">v2026.07.1</a>
     <a href="release-2026.07.0.html">v2026.07.0</a>
     <a href="release-2026.06.0.html">v2026.06.0</a>
     <a href="release-2026.05.0.html">v2026.05.0</a>
@@ -106,6 +107,59 @@ job execution needs — see <em>Fixed</em>.</p>
 with the tenancy work; both only drop and re-create PostgreSQL row-level-security
 policies, so they apply to an existing database without touching table schemas or
 rows.</p>
+<h2 id="known-issue-upgrading-breaks-job-execution">⚠️ Known issue — upgrading breaks job execution</h2>
+<blockquote>
+<p><strong>Fixed in 2026.07.1.</strong> Upgrade to it instead of applying the workaround
+below — see the <a href="release-2026.07.1.html">2026.07.1 release notes</a>. The
+rest of this section describes what happens if you stay on 2026.07.0.</p>
+</blockquote>
+<p><strong>If you upgrade an existing 2026.06.0 install, jobs stop running: they are
+accepted and then stay in <code>pending</code> indefinitely.</strong> The only hint is the job's
+<code>job_explanation</code>, <em>"This job is not ready to start because there is not enough
+available capacity"</em> — accurate, but it does not point at the cause. Fresh
+installs are unaffected. The workaround below is verified on a live cluster.</p>
+<p>The <code>default</code> instance group has to satisfy two conditions at once for a job to
+run locally, and an upgrade breaks both:</p>
+<ol>
+<li><strong>It must contain an instance.</strong> The chart's init Job calls <code>register_queue
+   --queuename=default</code>, which on an upgrade finds the group already there,
+   prints <code>Instance Group already registered default</code> and assigns nothing.</li>
+<li><strong>That instance must be able to execute.</strong> The task pod re-registers itself
+   as <code>node_type=control</code> on every start, and a control node only orchestrates.</li>
+</ol>
+<p>Either one alone is enough to hang every launch — both were measured
+individually, holding the other fixed.</p>
+<p>Project updates keep working, because they run in <code>controlplane</code>, which does
+have the instance. The install therefore looks healthy right up until someone
+launches a job.</p>
+<p><strong>Workaround, after <code>helm upgrade</code> completes:</strong></p>
+<div class="codehilite"><pre><span></span><code>kubectl<span class="w"> </span>-n<span class="w"> </span>forail<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>deploy/forail-web<span class="w"> </span>--<span class="w"> </span>forail-manage<span class="w"> </span>shell<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+<span class="s2">from forail.main.models import Instance, InstanceGroup</span>
+<span class="s2">i = Instance.objects.get(hostname=&#39;forail-node&#39;)</span>
+<span class="s2">i.node_type=&#39;hybrid&#39;; i.save(update_fields=[&#39;node_type&#39;])</span>
+<span class="s2">InstanceGroup.objects.get(name=&#39;default&#39;).instances.add(i)&quot;</span>
+</code></pre></div>
+
+<p>Substitute your own instance hostname if you did not install with the chart
+defaults. Any job already sitting in <code>pending</code> starts on its own within about a
+minute; a fresh short job should return a normal <code>PLAY RECAP</code> in a few seconds.</p>
+<blockquote>
+<p><strong>The workaround does not survive a restart of <code>forail-task</code>.</strong> That pod
+re-runs <code>provision_instance</code> every time it starts — after a node reboot, an
+eviction, or the next <code>helm upgrade</code> — and that call resets both <code>node_type</code>
+and the group's execution mode. Re-apply it, and re-check job execution, after
+any task-pod restart until the fix ships.</p>
+</blockquote>
+<p><strong>Also re-apply your role assignments after upgrading.</strong> Any role assignment
+attempted on 2026.06.0 failed silently (the <code>ScanFinding</code> /
+<code>TenantIsolationEvent</code> <code>FieldDoesNotExist</code> bug fixed in this release, see
+<em>Fixed</em>). The upgrade fixes the cause but does not recreate the assignments that
+were lost, and <em>Fixed</em> saying "no data migration is required" refers to the
+schema only. Check the members of every role you rely on and re-grant what is
+missing.</p>
+<p>What the upgrade does do correctly: it succeeds, migrations <code>0209</code> and <code>0210</code>
+apply cleanly, and no data is lost — object counts and names are identical
+before and after.</p>
 <h2 id="security-advisories">Security advisories</h2>
 <p><strong>Upgrade from 2026.06.0 or earlier is strongly recommended.</strong> Several of the
 fixes below are exploitable on a default install of an earlier release; the
@@ -360,6 +414,18 @@ list</strong> — the in-cluster health probes call the API on loopback. Termina
 front of the ingress, or set <code>forail.cookieSecure: "false"</code> for a lab install.</p>
 <h2 id="fixed">Fixed</h2>
 <ul>
+<li><strong>The task dispatcher crash-looped on 2026.06.0, so no job could finish.</strong>
+  The periodic schedule runs <code>update_active_jobs_gauge_task</code> every 30 seconds
+  unconditionally, but in 2026.06.0 that function carried Celery's
+  <code>@shared_task</code> instead of Forail's own <code>@task()</code>. Dispatching it raised
+  <code>ValueError: ... is not decorated with @task()</code>, the dispatcher exited, and
+  whatever was running died with <em>"Task was canceled due to receiving a
+  shutdown signal"</em> — typically surfacing as a failed project update and a job
+  in <code>error</code>. Measured on a fresh 2026.06.0 install: the dispatcher restarted
+  roughly every 50 seconds, indefinitely. <strong>Anyone still on 2026.06.0 should
+  upgrade</strong>; there is no configuration that avoids this, since the schedule
+  entry is not conditional. Fixed by registering the task properly
+  (<code>@task(queue=get_task_queuename)</code>).</li>
 <li><strong>In-cluster job execution.</strong> Two pieces were missing from the chart, and each
   failed a launch on its own. Note this is not "out of the box": project updates
   and control-plane jobs still run through podman inside the task pod, so they
@@ -423,6 +489,10 @@ forail:
 </blockquote>
 <p>Before upgrading:</p>
 <ul>
+<li><strong>Any deployment that runs jobs</strong> — read <strong>Known issue — upgrading breaks job
+  execution</strong> at the top of these notes, and plan to apply the workaround (and
+  re-apply role assignments) as part of the upgrade. Without it the platform
+  comes up healthy but executes nothing.</li>
 <li><strong>SAML deployments</strong> — review <strong>Breaking changes — SAML</strong> above and reconfigure
   the IdP if needed.</li>
 <li><strong>Any deployment</strong> — review <strong>Breaking changes — deployment defaults</strong>; an
