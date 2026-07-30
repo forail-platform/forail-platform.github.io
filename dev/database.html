@@ -447,7 +447,7 @@ gunzip<span class="w"> </span>-c<span class="w"> </span>backup_20260310.sql.gz<s
 
 <span class="c1"># Restart</span>
 docker<span class="w"> </span>compose<span class="w"> </span>start<span class="w"> </span>forail-web<span class="w"> </span>forail-task
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-web<span class="w"> </span>awx-manage<span class="w"> </span>migrate<span class="w">  </span><span class="c1"># if version differs</span>
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-web<span class="w"> </span>forail-manage<span class="w"> </span>migrate<span class="w">  </span><span class="c1"># if version differs</span>
 </code></pre></div>
 
 <h3 id="cleanup-mandatory-in-production">Cleanup (MANDATORY in production)</h3>
@@ -549,7 +549,7 @@ docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">ex
 docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-U<span class="w"> </span>forail<span class="w"> </span>forail
 
 <span class="c1"># Or through Django</span>
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-web<span class="w"> </span>awx-manage<span class="w"> </span>dbshell
+docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>forail-web<span class="w"> </span>forail-manage<span class="w"> </span>dbshell
 </code></pre></div>
 
 <hr />

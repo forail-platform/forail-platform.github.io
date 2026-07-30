@@ -183,8 +183,8 @@
 <hr />
 <h2 id="django-settings-files">Django Settings Files</h2>
 <p>Loaded in order (later ones override earlier):</p>
-<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="kr">for</span><span class="n">ge</span><span class="o">/</span><span class="n">settings</span><span class="o">/</span><span class="kd">def</span><span class="n">aults</span><span class="o">/*</span><span class="mf">.</span><span class="n">py</span><span class="w">       </span><span class="err">←</span><span class="w"> </span><span class="kd">Def</span><span class="n">ault</span><span class="w"> </span><span class="nb">val</span><span class="n">ues</span>
-<span class="mf">2.</span><span class="w"> </span><span class="kr">for</span><span class="n">ge</span><span class="o">/</span><span class="n">settings</span><span class="o">/</span><span class="n">production</span><span class="mf">.</span><span class="n">py</span><span class="w">       </span><span class="err">←</span><span class="w"> </span><span class="n">Production</span><span class="w"> </span><span class="n">override</span><span class="w"> </span><span class="p">(</span><span class="n">DEBUG</span><span class="o">=</span><span class="n">False</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="mf">1.</span><span class="w"> </span><span class="kr">for</span><span class="n">ail</span><span class="o">/</span><span class="n">settings</span><span class="o">/</span><span class="kd">def</span><span class="n">aults</span><span class="o">/*</span><span class="mf">.</span><span class="n">py</span><span class="w">       </span><span class="err">←</span><span class="w"> </span><span class="kd">Def</span><span class="n">ault</span><span class="w"> </span><span class="nb">val</span><span class="n">ues</span>
+<span class="mf">2.</span><span class="w"> </span><span class="kr">for</span><span class="n">ail</span><span class="o">/</span><span class="n">settings</span><span class="o">/</span><span class="n">production</span><span class="mf">.</span><span class="n">py</span><span class="w">       </span><span class="err">←</span><span class="w"> </span><span class="n">Production</span><span class="w"> </span><span class="n">override</span><span class="w"> </span><span class="p">(</span><span class="n">DEBUG</span><span class="o">=</span><span class="n">False</span><span class="p">)</span>
 <span class="mf">3.</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="kr">to</span><span class="n">wer</span><span class="o">/</span><span class="n">settings</span><span class="mf">.</span><span class="n">py</span><span class="w">             </span><span class="err">←</span><span class="w"> </span><span class="n">Root</span><span class="w"> </span><span class="n">settings</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="kr">cont</span><span class="n">ainer</span>
 <span class="mf">4.</span><span class="w"> </span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="kr">to</span><span class="n">wer</span><span class="o">/</span><span class="n">conf</span><span class="mf">.</span><span class="n">d</span><span class="o">/*</span><span class="mf">.</span><span class="n">py</span><span class="w">             </span><span class="err">←</span><span class="w"> </span><span class="n">Per</span><span class="o">-</span><span class="n">module</span><span class="w"> </span><span class="n">settings</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="kr">cont</span><span class="n">ainer</span>
 <span class="mf">5.</span><span class="w"> </span><span class="kd">Data</span><span class="n">base</span><span class="w"> </span><span class="n">settings</span><span class="w">                  </span><span class="err">←</span><span class="w"> </span><span class="kr">Run</span><span class="n">time</span><span class="w"> </span><span class="n">override</span><span class="w"> </span><span class="n">via</span><span class="w"> </span><span class="n">API</span>
@@ -351,6 +351,81 @@
 <td><code>LOG_AGGREGATOR_LEVEL</code></td>
 <td><code>WARNING</code></td>
 <td>Minimum level</td>
+</tr>
+</tbody>
+</table>
+<h3 id="multi-tenancy-isolation-apiv2settingssystem">Multi-tenancy &amp; isolation (<code>/api/v2/settings/system/</code>)</h3>
+<p>Every isolation control is <strong>off by default</strong> to preserve single-tenant
+backwards compatibility. A multi-tenant deployment must enable at least
+<code>TENANCY_ENABLED</code> + <code>TENANCY_RLS_ENABLED</code>, and <code>TENANCY_STRICT_ISOLATION_ENABLED</code>
+for hard cross-tenant blocking (vs audit-only).</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TENANCY_ENABLED</code></td>
+<td><code>False</code></td>
+<td>Master switch for the multi-tenancy feature set</td>
+</tr>
+<tr>
+<td><code>TENANCY_RLS_ENABLED</code></td>
+<td><code>False</code></td>
+<td>Set the per-request Postgres RLS tenant scope</td>
+</tr>
+<tr>
+<td><code>TENANCY_STRICT_ISOLATION_ENABLED</code></td>
+<td><code>False</code></td>
+<td>Block cross-tenant API access (HTTP 403) instead of audit-only</td>
+</tr>
+<tr>
+<td><code>TENANCY_RATE_LIMITING_ENABLED</code></td>
+<td><code>False</code></td>
+<td>Per-tenant token-bucket API rate limiting (needs Redis)</td>
+</tr>
+<tr>
+<td><code>TENANCY_RATE_LIMIT_FAIL_CLOSED</code></td>
+<td><code>False</code></td>
+<td>Reject requests (503) if the rate-limiter Redis is down, vs allow</td>
+</tr>
+<tr>
+<td><code>TENANCY_DEDICATED_QUEUES_ENABLED</code></td>
+<td><code>False</code></td>
+<td>Route tenant jobs to dedicated <code>tenant-{org_id}</code> Celery queues</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>When RLS is on, tenant isolation <strong>fails closed</strong>: if the tenant scope cannot
+be installed for a request, the request is aborted rather than run with global
+row visibility.</p>
+</blockquote>
+<h3 id="import_from_awx-security-flags"><code>import_from_awx</code> security flags</h3>
+<p>The AWX importer treats the source as untrusted by default:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--grant-superusers</code></td>
+<td>Honour <code>is_superuser</code> / system-role grants from the source (off by default)</td>
+</tr>
+<tr>
+<td><code>--trust-injectors</code></td>
+<td>Import custom credential-type injectors verbatim (off; else re-approve)</td>
+</tr>
+<tr>
+<td><code>AWX_TOKEN</code> / <code>AWX_PASSWORD</code></td>
+<td>Preferred over <code>--token</code> / <code>--password</code> (argv leaks via <code>ps</code>/<code>/proc</code>)</td>
 </tr>
 </tbody>
 </table>

@@ -106,13 +106,17 @@ permissions work.</p>
 </table>
 <hr />
 <h2 id="session-authentication-browser">Session Authentication (Browser)</h2>
-<p>The user logs in with username/password and receives two cookies:
-- <code>awx_sessionid</code> — HttpOnly, Secure. JS cannot read it.
-- <code>csrftoken</code> — JS reads it and sends it as the <code>X-CSRFToken</code> header on every POST/PATCH/DELETE.</p>
-<p><strong>Watch out:</strong>
-- Sessions last <strong>30 minutes</strong> (default). Every request resets the timer.
-- <code>SESSION_COOKIE_SECURE=True</code> — the cookie is only sent over HTTPS. If you're testing
-  on HTTP, login won't work. Set to <code>False</code> for local development.</p>
+<p>The user logs in with username/password and receives two cookies:</p>
+<ul>
+<li><code>awx_sessionid</code> — HttpOnly, Secure. JS cannot read it.</li>
+<li><code>csrftoken</code> — JS reads it and sends it as the <code>X-CSRFToken</code> header on every POST/PATCH/DELETE.</li>
+</ul>
+<p><strong>Watch out:</strong></p>
+<ul>
+<li>Sessions last <strong>30 minutes</strong> (default). Every request resets the timer.</li>
+<li><code>SESSION_COOKIE_SECURE=True</code> — the cookie is only sent over HTTPS. If you're testing
+  on HTTP, login won't work. Set to <code>False</code> for local development.</li>
+</ul>
 <hr />
 <h2 id="oauth2-token-api">OAuth2 Token (API)</h2>
 <p>For scripts, automation, and integrations.</p>
@@ -132,10 +136,12 @@ curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class=
 <span class="w">  </span>https://forail.example.com/api/v2/job_templates/
 </code></pre></div>
 
-<p><strong>Watch out:</strong>
-- Token scope: <code>read</code> (GET only) or <code>write</code> (everything)
-- Default token expiry is very long (~1000 years). For security, rotate tokens
-  periodically and delete old ones: <code>forail-manage cleanup_tokens</code></p>
+<p><strong>Watch out:</strong></p>
+<ul>
+<li>Token scope: <code>read</code> (GET only) or <code>write</code> (everything)</li>
+<li>Default token expiry is very long (~1000 years). For security, rotate tokens
+  periodically and delete old ones: <code>forail-manage cleanup_tokens</code></li>
+</ul>
 <hr />
 <h2 id="sso-ldap">SSO — LDAP</h2>
 <p>LDAP is configured via the API: <code>PATCH /api/v2/settings/ldap/</code></p>
@@ -169,24 +175,46 @@ curl<span class="w"> </span>-u<span class="w"> </span>admin:password<span class=
 <hr />
 <h2 id="sso-saml-20">SSO — SAML 2.0</h2>
 <p>Configured via: <code>PATCH /api/v2/settings/saml/</code></p>
-<p>You need to define:
-- SP (Service Provider) Entity ID, certificate, and key
-- IDP (Identity Provider) configuration: entity_id, SSO URL, X.509 certificate
-- Attribute mapping: which SAML attributes correspond to email, name, etc.</p>
-<p><strong>Watch out:</strong>
-- The SAML metadata endpoint is at <code>https://forail.example.com/sso/metadata/saml/</code>
-  — give this to your IDP for automatic configuration.
-- SAML requires valid HTTPS certificates on both sides.</p>
+<p>You need to define:</p>
+<ul>
+<li>SP (Service Provider) Entity ID, certificate, and key</li>
+<li>IDP (Identity Provider) configuration: entity_id, SSO URL, X.509 certificate</li>
+<li>Attribute mapping: which SAML attributes correspond to email, name, etc.</li>
+</ul>
+<p><strong>Secure defaults (since the 2026.07 hardening):</strong></p>
+<ul>
+<li><code>SOCIAL_AUTH_SAML_SECURITY_CONFIG</code> now defaults to requiring <strong>signed
+  responses and signed assertions</strong> (<code>wantMessagesSigned</code> / <code>wantAssertionsSigned</code>),
+  rejecting unsolicited responses (replay protection), and using <strong>SHA-256</strong>
+  (<code>rsa-sha256</code> / <code>sha256</code>) instead of the broken SHA-1.</li>
+<li>If your IdP sends <strong>unsigned</strong> assertions or signs with <strong>SHA-1</strong>, logins will
+  be rejected until the IdP is reconfigured — or override
+  <code>SOCIAL_AUTH_SAML_SECURITY_CONFIG</code> to relax it for a legacy IdP.</li>
+<li>Granting <code>is_superuser</code> / <code>is_system_auditor</code> from a SAML attribute now
+  <strong>requires a non-empty <code>is_*_value</code></strong>. Configuring only <code>is_*_attr</code> (no value)
+  no longer grants the flag to every user who presents the attribute — it fails
+  safe and logs a warning.</li>
+</ul>
+<p><strong>Watch out:</strong></p>
+<ul>
+<li>The SAML metadata endpoint is at <code>https://forail.example.com/sso/metadata/saml/</code>
+  — give this to your IDP for automatic configuration.</li>
+<li>SAML requires valid HTTPS certificates on both sides.</li>
+</ul>
 <hr />
 <h2 id="sso-social-auth-github-google-azure-ad">SSO — Social Auth (GitHub, Google, Azure AD)</h2>
 <p>Configured via: <code>PATCH /api/v2/settings/github/</code> (or <code>google-oauth2/</code>, <code>azuread-oauth2/</code>)</p>
-<p>You need:
-- Client ID and Secret from the OAuth2 provider
-- Organization/Team mapping (optional)</p>
-<p><strong>Watch out:</strong>
-- The callback URL you must register with the provider:
-  <code>https://forail.example.com/sso/complete/github-org/</code>
-- GitHub Enterprise has separate configuration with custom URLs.</p>
+<p>You need:</p>
+<ul>
+<li>Client ID and Secret from the OAuth2 provider</li>
+<li>Organization/Team mapping (optional)</li>
+</ul>
+<p><strong>Watch out:</strong></p>
+<ul>
+<li>The callback URL you must register with the provider:
+  <code>https://forail.example.com/sso/complete/github-org/</code></li>
+<li>GitHub Enterprise has separate configuration with custom URLs.</li>
+</ul>
 <hr />
 <h2 id="rbac-role-based-access-control">RBAC — Role-Based Access Control</h2>
 <h3 id="concept">Concept</h3>
