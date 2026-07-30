@@ -369,24 +369,34 @@ check if a signal is attempting something invalid.</p>
 <p>Commands are in <code>forail/main/management/commands/</code>. They are run with <code>forail-manage</code>
 (or <code>awx-manage</code> — both work, backward compatibility).</p>
 <h3 id="most-important-commands">Most important commands</h3>
-<p><strong>Instance management:</strong>
-- <code>forail-manage provision_instance --hostname=node1</code> — register a new cluster node
-- <code>forail-manage deprovision_instance --hostname=node1</code> — remove a node
-- <code>forail-manage list_instances</code> — show all nodes with capacity</p>
-<p><strong>Users:</strong>
-- <code>forail-manage createsuperuser</code> — create admin user
-- <code>forail-manage update_password --username=admin --password=new</code> — reset password</p>
-<p><strong>Database:</strong>
-- <code>forail-manage migrate</code> — apply migrations
-- <code>forail-manage check_db</code> — verify database connectivity
-- <code>forail-manage dbshell</code> — open PostgreSQL shell</p>
-<p><strong>Cleanup (run periodically):</strong>
-- <code>forail-manage cleanup_jobs --days=90</code> — delete old jobs and events
-- <code>forail-manage cleanup_sessions</code> — delete expired sessions
-- <code>forail-manage cleanup_tokens</code> — delete expired OAuth tokens</p>
-<p><strong>Diagnostics:</strong>
-- <code>forail-manage check_instance_ready</code> — is the node ready for work
-- <code>forail-manage stats</code> — system statistics</p>
+<p><strong>Instance management:</strong></p>
+<ul>
+<li><code>forail-manage provision_instance --hostname=node1</code> — register a new cluster node</li>
+<li><code>forail-manage deprovision_instance --hostname=node1</code> — remove a node</li>
+<li><code>forail-manage list_instances</code> — show all nodes with capacity</li>
+</ul>
+<p><strong>Users:</strong></p>
+<ul>
+<li><code>forail-manage createsuperuser</code> — create admin user</li>
+<li><code>forail-manage update_password --username=admin --password=new</code> — reset password</li>
+</ul>
+<p><strong>Database:</strong></p>
+<ul>
+<li><code>forail-manage migrate</code> — apply migrations</li>
+<li><code>forail-manage check_db</code> — verify database connectivity</li>
+<li><code>forail-manage dbshell</code> — open PostgreSQL shell</li>
+</ul>
+<p><strong>Cleanup (run periodically):</strong></p>
+<ul>
+<li><code>forail-manage cleanup_jobs --days=90</code> — delete old jobs and events</li>
+<li><code>forail-manage cleanup_sessions</code> — delete expired sessions</li>
+<li><code>forail-manage cleanup_tokens</code> — delete expired OAuth tokens</li>
+</ul>
+<p><strong>Diagnostics:</strong></p>
+<ul>
+<li><code>forail-manage check_instance_ready</code> — is the node ready for work</li>
+<li><code>forail-manage stats</code> — system statistics</li>
+</ul>
 <h3 id="watch-out_2">Watch out</h3>
 <ul>
 <li>

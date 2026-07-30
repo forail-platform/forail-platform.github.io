@@ -61,7 +61,28 @@
 <li><strong>Every change must be understood</strong> — if you can't explain why, don't commit it</li>
 <li><strong>Author of all commits is Krstan Vjestica</strong> — never attribute tools as authors</li>
 <li><strong>Review the diff before committing</strong> — always</li>
+<li><strong>Everything must pass before you commit</strong> — not <code>vagrant validate</code>, not a syntax
+   check: the actual thing running. A change to the dev environment is proven by
+   destroying the VM and building it again; a change to the platform is proven by
+   a clean install plus the full Cypress regression</li>
 </ol>
+<hr />
+<h2 id="development-environment">Development environment</h2>
+<ul>
+<li><strong>VirtualBox is the only supported provider.</strong> libvirt/KVM must not be running
+  on the same host — one hypervisor owns AMD-V per boot, and the loser's guests
+  die with <code>Guru Meditation VERR_SVM_IN_USE</code> or wedge mid-boot. Keep <code>libvirtd</code>
+  masked; <code>forail-dev-cluster/scripts/up.sh</code> refuses to start if it is active.
+  Full root-cause writeup: <code>forail-dev-cluster/docs/TROUBLESHOOTING-vagrant.md</code>.</li>
+<li><strong>Bring the cluster up with <code>scripts/up.sh</code></strong>, not bare <code>vagrant up</code> — it goes
+  node by node in dependency order and recreates any node whose boot wedges.</li>
+<li><strong>Start from a clean state when you are testing.</strong> <code>vagrant up</code> on an existing
+  VM only boots it; it does <strong>not</strong> re-provision. Mixing a freshly created node
+  with previously provisioned ones gives two different cluster CAs and a control
+  plane that never reaches quorum. Use <code>vagrant destroy -f</code> first.</li>
+<li><strong>The dev VMs collide on host ports.</strong> <code>forail-backend</code> and <code>forail-deploy</code>
+  both forward <code>8013</code> and <code>8080</code>, so only one of them can run at a time.</li>
+</ul>
 <hr />
 <h2 id="git-workflow">Git Workflow</h2>
 <h3 id="branch-naming">Branch naming</h3>
@@ -74,9 +95,11 @@ chore/update-dependencies      # Maintenance
 </code></pre></div>
 
 <h3 id="standard-flow">Standard flow</h3>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Create branch from devel</span>
-git<span class="w"> </span>checkout<span class="w"> </span>devel
-git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>devel
+<p><strong><code>main</code> is the integration branch.</strong> There is no <code>devel</code> branch in any Forail
+repo — branch from <code>main</code> and target <code>main</code> in the PR.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Create branch from main</span>
+git<span class="w"> </span>checkout<span class="w"> </span>main
+git<span class="w"> </span>pull<span class="w"> </span>github<span class="w"> </span>main
 git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feature/my-feature
 
 <span class="c1"># 2. Make changes, test, commit</span>
@@ -86,15 +109,20 @@ git<span class="w"> </span>add<span class="w"> </span>forail/main/models/my_mode
 git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat(models): add Policy model for governance&quot;</span>
 
 <span class="c1"># 3. Push and create PR</span>
-git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>feature/my-feature
+git<span class="w"> </span>push<span class="w"> </span>github<span class="w"> </span>feature/my-feature
+gh<span class="w"> </span>pr<span class="w"> </span>create<span class="w"> </span>--base<span class="w"> </span>main
 </code></pre></div>
 
 <h3 id="updating-the-branch">Updating the branch</h3>
-<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>devel<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>devel
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>main<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span>github<span class="w"> </span>main
 git<span class="w"> </span>checkout<span class="w"> </span>feature/my-feature
-git<span class="w"> </span>rebase<span class="w"> </span>devel
+git<span class="w"> </span>rebase<span class="w"> </span>main
 </code></pre></div>
 
+<h3 id="remotes">Remotes</h3>
+<p>Most repos have two: <code>github</code> (github.com/forail-platform, the canonical one,
+where CI and releases run) and <code>origin</code> (the GitLab mirror). Push branches and
+tags to <strong>both</strong> when you are done, or the mirror silently falls behind.</p>
 <hr />
 <h2 id="commit-conventions">Commit Conventions</h2>
 <h3 id="format">Format</h3>
@@ -183,7 +211,7 @@ git<span class="w"> </span>rebase<span class="w"> </span>devel
 <li>[ ] All tests pass</li>
 <li>[ ] No lint errors</li>
 <li>[ ] Commit messages follow conventions</li>
-<li>[ ] Branch is rebased on latest <code>devel</code></li>
+<li>[ ] Branch is rebased on latest <code>main</code></li>
 <li>[ ] Changes are minimal and focused</li>
 </ul>
 <h3 id="pr-guidelines">PR guidelines</h3>
@@ -191,21 +219,25 @@ git<span class="w"> </span>rebase<span class="w"> </span>devel
 <li><strong>Keep PRs small</strong> — ideally under 500 lines. Large PRs are harder to review.</li>
 <li><strong>One concern per PR</strong> — don't mix a bug fix with refactoring.</li>
 <li><strong>Include tests</strong> — new features need tests, bug fixes need a regression test.</li>
-<li><strong>Target <code>devel</code> branch</strong> — all PRs merge into <code>devel</code>.</li>
+<li><strong>Target <code>main</code></strong> — all PRs merge into <code>main</code>.</li>
 </ul>
 <h3 id="review-checklist">Review Checklist</h3>
-<p><strong>For the author:</strong>
-- [ ] Reviewed my own diff before requesting review
-- [ ] No debug code, console.log, or print statements
-- [ ] No hardcoded secrets or URLs
-- [ ] Error handling is adequate
-- [ ] New code has tests</p>
-<p><strong>For the reviewer:</strong>
-- [ ] Code does what the PR description says
-- [ ] Security: no SQL injection, XSS, credential exposure
-- [ ] Edge cases are handled (empty lists, null, concurrent access)
-- [ ] Follows existing patterns in the codebase
-- [ ] Will this be easy to maintain in 6 months?</p>
+<p><strong>For the author:</strong></p>
+<ul>
+<li>[ ] Reviewed my own diff before requesting review</li>
+<li>[ ] No debug code, console.log, or print statements</li>
+<li>[ ] No hardcoded secrets or URLs</li>
+<li>[ ] Error handling is adequate</li>
+<li>[ ] New code has tests</li>
+</ul>
+<p><strong>For the reviewer:</strong></p>
+<ul>
+<li>[ ] Code does what the PR description says</li>
+<li>[ ] Security: no SQL injection, XSS, credential exposure</li>
+<li>[ ] Edge cases are handled (empty lists, null, concurrent access)</li>
+<li>[ ] Follows existing patterns in the codebase</li>
+<li>[ ] Will this be easy to maintain in 6 months?</li>
+</ul>
 <hr />
 <h2 id="quick-reference-common-development-tasks">Quick Reference — Common Development Tasks</h2>
 <h3 id="add-a-new-api-endpoint">Add a new API endpoint</h3>

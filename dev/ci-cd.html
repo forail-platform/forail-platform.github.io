@@ -56,68 +56,44 @@
 <p>Forail Platform uses <strong>GitHub Actions</strong> as the public CI/CD pipeline. Each repository has its own workflow in <code>.github/workflows/</code> that runs on push and pull request.</p>
 <hr />
 <h2 id="pipeline-overview">Pipeline Overview</h2>
-<div class="codehilite"><pre><span></span><code>┌──────────┐   ┌────────┐   ┌────────┐   ┌────────┐   ┌──────────┐   ┌─────────┐
-│ Checkout │──►│  Lint  │──►│  Test  │──►│ Build  │──►│ Security │──►│ Release │
-└──────────┘   └────────┘   └────────┘   └────────┘   └──────────┘   └─────────┘
-  GitHub         ruff /        pytest /     docker        pip-audit      docker push
-  Actions        tsc           vitest       build         trivy          ghcr.io/forail-platform
+<div class="codehilite"><pre><span></span><code><span class="err">┌──────────┐</span><span class="w">   </span><span class="err">┌────────┐</span><span class="w">   </span><span class="err">┌────────┐</span><span class="w">        </span><span class="err">┌───────────────────────────────┐</span>
+<span class="err">│</span><span class="w"> </span><span class="n">Checkout</span><span class="w"> </span><span class="err">│──►│</span><span class="w">  </span><span class="n">Lint</span><span class="w">  </span><span class="err">│──►│</span><span class="w">  </span><span class="n">Test</span><span class="w">  </span><span class="err">│───────►│</span><span class="w">           </span><span class="n">publish</span><span class="w">             </span><span class="err">│</span>
+<span class="err">└──────────┘</span><span class="w">   </span><span class="err">└────────┘</span><span class="w">   </span><span class="err">└────────┘</span><span class="w">        </span><span class="err">│</span><span class="w">  </span><span class="n">build</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nc">image</span><span class="w"> </span><span class="err">→</span><span class="w"> </span><span class="n">push</span><span class="w"> </span><span class="err">│</span>
+<span class="w">  </span><span class="n">GitHub</span><span class="w">         </span><span class="n">ruff</span><span class="w"> </span><span class="o">/</span><span class="w">       </span><span class="n">pytest</span><span class="w"> </span><span class="o">/</span><span class="w">        </span><span class="err">└───────────────────────────────┘</span>
+<span class="w">  </span><span class="n">Actions</span><span class="w">        </span><span class="k">go</span><span class="w"> </span><span class="n">vet</span><span class="w">       </span><span class="n">vitest</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">envtest</span><span class="w">      </span><span class="k">ONLY</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">v</span><span class="o">*</span><span class="w"> </span><span class="n">tag</span>
 </code></pre></div>
 
 <p>Each repo's workflow file: <strong><code>.github/workflows/ci.yml</code></strong></p>
 <h2 id="pipeline-stages">Pipeline Stages</h2>
+<p>The jobs differ per repo. What each one actually runs:</p>
 <table>
 <thead>
 <tr>
-<th>Stage</th>
-<th>What it does</th>
-<th>Fails if...</th>
+<th>Repo</th>
+<th>Always (push + PR)</th>
+<th><code>publish</code> (v* tags only)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Checkout</td>
-<td><code>actions/checkout@v4</code> clones the repo on the runner</td>
-<td>Repo unreachable</td>
+<td><code>forail-backend</code></td>
+<td><code>ruff check</code> , <code>pyproject.toml</code> parse, standalone tests</td>
+<td>build image → <strong>run the Django functional tests inside the built image</strong> → push</td>
 </tr>
 <tr>
-<td>Lint (Python)</td>
-<td><code>ruff check</code> in backend / assistant</td>
-<td>Lint errors</td>
+<td><code>forail-frontend</code></td>
+<td><code>npm run lint</code>, <code>npm test</code>, <code>npm run build</code></td>
+<td>build and push image</td>
 </tr>
 <tr>
-<td>Lint (Frontend)</td>
-<td><code>tsc --noEmit</code> + ESLint</td>
-<td>TypeScript type errors</td>
+<td><code>forail-operator</code></td>
+<td><code>go vet</code>, <code>go build</code>, controller tests (envtest)</td>
+<td>build and push image</td>
 </tr>
 <tr>
-<td>Test (Python)</td>
-<td><code>pytest</code> against <code>tests_standalone/</code> (no DB needed for fast path)</td>
-<td>Any test fails</td>
-</tr>
-<tr>
-<td>Test (Frontend)</td>
-<td><code>vitest run</code></td>
-<td>Any test fails</td>
-</tr>
-<tr>
-<td>Build</td>
-<td><code>docker build</code> to produce the release image</td>
-<td>Build error</td>
-</tr>
-<tr>
-<td>Security (pip-audit)</td>
-<td>CVE scan on Python dependencies</td>
-<td>Critical CVE</td>
-</tr>
-<tr>
-<td>Security (Trivy)</td>
-<td>Container image scan</td>
-<td>CRITICAL CVE</td>
-</tr>
-<tr>
-<td>Release</td>
-<td><code>docker push</code> to <code>ghcr.io/forail-platform/*</code></td>
-<td>Only on <code>main</code> branch or tag push</td>
+<td><code>forail-assistant</code></td>
+<td><code>pytest -q</code></td>
+<td>build and push image</td>
 </tr>
 </tbody>
 </table>
@@ -131,19 +107,29 @@
 </thead>
 <tbody>
 <tr>
-<td>Checkout, Lint, Test</td>
-<td>Every push / PR</td>
+<td>Lint, Test</td>
+<td>Every push and every PR</td>
 </tr>
 <tr>
-<td>Build, Security</td>
-<td><code>main</code> branch builds and tag builds</td>
-</tr>
-<tr>
-<td>Release</td>
-<td><code>main</code> branch builds and tag builds (push to <code>ghcr.io</code>)</td>
+<td><code>publish</code></td>
+<td><strong>Only</strong> when the ref is a tag matching <code>v*</code> — <code>if: startsWith(github.ref, 'refs/tags/v')</code></td>
 </tr>
 </tbody>
 </table>
+<blockquote>
+<p><strong>A merge to <code>main</code> does not produce an image.</strong> It runs lint and tests only.
+The image on <code>ghcr.io</code> changes when, and only when, someone pushes a <code>v*</code> tag.
+This is the single most common source of confusion: <code>main</code> can be many commits
+ahead of the newest published image, and that is by design.</p>
+</blockquote>
+<h3 id="known-gaps">Known gaps</h3>
+<p>These are documented as they are, not as they should be:</p>
+<ul>
+<li><strong><code>ruff check . || true</code></strong> in the backend — lint output is informational; lint
+  errors do not fail the build.</li>
+<li><strong>No container image scanning</strong> (no Trivy) and <strong>no <code>pip-audit</code></strong> stage in any
+  repo's workflow today.</li>
+</ul>
 <hr />
 <h2 id="github-actions-secrets">GitHub Actions Secrets</h2>
 <p>For the release stage, each repo needs the following secret:</p>
@@ -174,38 +160,41 @@
 </thead>
 <tbody>
 <tr>
-<td><code>ghcr.io/forail-platform/forail-backend:latest</code></td>
+<td><code>ghcr.io/forail-platform/forail-backend:&lt;version&gt;</code></td>
 <td><code>forail-backend/Dockerfile</code></td>
 <td>Django API + task engine</td>
 </tr>
 <tr>
-<td><code>ghcr.io/forail-platform/forail-backend:&lt;version&gt;</code></td>
-<td>Same</td>
-<td>Version-tagged (CalVer)</td>
-</tr>
-<tr>
-<td><code>ghcr.io/forail-platform/forail-frontend:latest</code></td>
+<td><code>ghcr.io/forail-platform/forail-frontend:&lt;version&gt;</code></td>
 <td><code>forail-frontend/Dockerfile</code></td>
 <td>React SPA + nginx</td>
-</tr>
-<tr>
-<td><code>ghcr.io/forail-platform/forail-frontend:&lt;version&gt;</code></td>
-<td>Same</td>
-<td>Version-tagged</td>
-</tr>
-<tr>
-<td><code>ghcr.io/forail-platform/forail-assistant:latest</code></td>
-<td><code>forail-assistant/Dockerfile</code></td>
-<td>FastAPI + Ollama + ChromaDB (preview)</td>
 </tr>
 <tr>
 <td><code>ghcr.io/forail-platform/forail-operator:&lt;version&gt;</code></td>
 <td><code>forail-operator/Dockerfile</code></td>
 <td>Kubernetes operator</td>
 </tr>
+<tr>
+<td><code>ghcr.io/forail-platform/forail-assistant:&lt;version&gt;</code></td>
+<td><code>forail-assistant/Dockerfile</code></td>
+<td>FastAPI + Ollama + ChromaDB (preview)</td>
+</tr>
 </tbody>
 </table>
+<p>Every image carries <strong>exactly one tag: the version</strong>, taken from the git tag with
+the <code>v</code> stripped. There is <strong>no <code>latest</code> tag</strong> — nothing in the pipeline creates
+one, so <code>docker pull …:latest</code> fails. Always pull an explicit version.</p>
+<p>Release-candidate tags (<code>v2026.07.2-rc1</code>) go through the same <code>publish</code> job and
+produce a normal image (<code>…:2026.07.2-rc1</code>), which is how a build is validated
+against a real cluster before a release is cut.</p>
 <p>All images are <strong>public</strong> — no pull secret required for <code>docker pull</code> or <code>helm install</code>.</p>
+<p>To see what is actually published, ask the registry rather than guessing:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">TOKEN</span><span class="o">=</span><span class="k">$(</span>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">&quot;https://ghcr.io/token?scope=repository:forail-platform/forail-backend:pull&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import json,sys; print(json.load(sys.stdin)[&#39;token&#39;])&quot;</span><span class="k">)</span>
+curl<span class="w"> </span>-s<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Authorization: Bearer </span><span class="nv">$TOKEN</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://ghcr.io/v2/forail-platform/forail-backend/tags/list
+</code></pre></div>
+
 <hr />
 <h2 id="versioning">Versioning</h2>
 <p>Forail uses <strong>CalVer</strong> (Calendar Versioning):</p>
@@ -215,10 +204,16 @@
 2026.04.0     # April release
 </code></pre></div>
 
-<p>The version is derived from the git tag on <code>forail-deploy</code>:</p>
-<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>tag<span class="w"> </span>-a<span class="w"> </span>v2026.05.0<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Forail 2026.05.0&quot;</span>
-git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>v2026.05.0
-<span class="c1"># GitHub Actions automatically: checkout → lint → test → build → security → push to ghcr.io</span>
+<p><strong>Each repo carries its own tag.</strong> There is no central tag that releases the
+platform — <code>forail-backend</code>, <code>forail-frontend</code>, <code>forail-operator</code> and
+<code>forail-assistant</code> are tagged individually, and only the repos that changed need
+a new one. That is why published versions legitimately differ between components
+(for example backend <code>2026.07.1</code> alongside frontend <code>2026.07.0</code>); the Helm chart
+is what pins a working set together.</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>forail-backend
+git<span class="w"> </span>tag<span class="w"> </span>-a<span class="w"> </span>v2026.05.0<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Forail 2026.05.0&quot;</span>
+git<span class="w"> </span>push<span class="w"> </span>github<span class="w"> </span>v2026.05.0
+<span class="c1"># GitHub Actions then: lint → test → build image → test inside the image → push to ghcr.io</span>
 </code></pre></div>
 
 <hr />
@@ -233,11 +228,8 @@ ruff<span class="w"> </span>check<span class="w"> </span>forail/
 <span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span>forail.settings.development<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>python<span class="w"> </span>-m<span class="w"> </span>pytest<span class="w"> </span>forail/main/tests/unit/<span class="w"> </span>-q
 
-<span class="c1"># Security</span>
-pip<span class="w"> </span>install<span class="w"> </span>pip-audit<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pip-audit<span class="w"> </span>-r<span class="w"> </span>requirements/requirements.txt
-
-<span class="c1"># Build image</span>
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forail-platform/forail-backend:latest<span class="w"> </span>.
+<span class="c1"># Build image (tag it with a version — there is no :latest)</span>
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forail-platform/forail-backend:2026.05.0<span class="w"> </span>.
 </code></pre></div>
 
 <h3 id="frontend">Frontend</h3>
@@ -249,28 +241,34 @@ npx<span class="w"> </span>tsc<span class="w"> </span>--noEmit
 <span class="c1"># Tests</span>
 npx<span class="w"> </span>vitest<span class="w"> </span>run
 
-<span class="c1"># Build image</span>
-docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forail-platform/forail-frontend:latest<span class="w"> </span>.
+<span class="c1"># Build image (tag it with a version — there is no :latest)</span>
+docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>ghcr.io/forail-platform/forail-frontend:2026.05.0<span class="w"> </span>.
 </code></pre></div>
 
 <hr />
 <h2 id="release-process">Release Process</h2>
 <ol>
-<li>Ensure all tests pass on both backend and frontend (GitHub Actions on PR/push must be green)</li>
-<li>Update docs and release notes</li>
-<li>Commit to <code>forail-deploy</code>: <code>git commit -m "chore: prepare release v2026.05.0"</code></li>
-<li>Tag: <code>git tag -a v2026.05.0 -m "Forail 2026.05.0"</code></li>
-<li>Push tag: <code>git push origin v2026.05.0</code></li>
-<li>GitHub Actions automatically:</li>
-<li>Runs lint + tests</li>
-<li>Builds Docker images with version tag</li>
-<li>Scans for vulnerabilities</li>
-<li>Pushes <code>ghcr.io/forail-platform/forail-backend:&lt;version&gt;</code> and friends to GHCR</li>
+<li>Ensure GitHub Actions is green on <code>main</code> for every repo being released</li>
+<li>Bump <code>VERSION</code> in the repos that ship a version, and the Helm chart's
+   <code>version</code> / <code>appVersion</code> so it pins the images you are about to publish</li>
+<li>Write the release notes (<code>forail-deploy/docs/RELEASE_NOTES_v&lt;version&gt;.md</code>) and
+   the docs-site release page</li>
+<li>Tag each changed repo and push the tag — this is what builds and publishes:
+   <code>git tag -a v2026.05.0 -m "Forail 2026.05.0" &amp;&amp; git push github v2026.05.0</code></li>
+<li>Install the published chart and images into a clean cluster and run the full
+   regression before announcing anything</li>
+<li>Create the GitHub Release</li>
 </ol>
+<h3 id="validate-before-you-release">Validate before you release</h3>
+<p>Cut an rc tag first (<code>v2026.05.0-rc1</code>). It publishes a real image through the
+same job, so the release candidate can be installed into a clean cluster and put
+through the full Cypress suite. Only then cut the real tag. Rc images stay on
+<code>ghcr.io</code> — harmless, but do not point a chart at one.</p>
 <h3 id="watch-out">Watch out</h3>
 <ul>
 <li><strong>Never release without passing tests.</strong></li>
 <li><strong>Tag format must have <code>v</code> prefix:</strong> <code>v2026.05.0</code>, not <code>2026.05.0</code>.</li>
+<li><strong>Merging to <code>main</code> publishes nothing</strong> — only a <code>v*</code> tag does.</li>
 <li><strong>Image visibility</strong> — when a new package is first pushed to <code>ghcr.io</code>, GitHub creates it as <strong>private</strong> by default. You must manually flip it to public via the Packages settings (<code>https://github.com/orgs/forail-platform/packages</code>).</li>
 </ul>
   </main>
