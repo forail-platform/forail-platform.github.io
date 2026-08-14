@@ -5,7 +5,20 @@ set -euo pipefail
 SITE_DIR="/home/krle/repos/forail-platform/forail-platform.github.io"
 DOCS_DIR="$SITE_DIR/docs"
 
-python3 -c "import markdown" 2>/dev/null || pip install markdown
+# Markdown is the only dependency. `pip install` into the system interpreter is
+# refused outright on Arch-family hosts (PEP 668, "externally-managed
+# environment"), which left this script unable to run at all -- so keep it in a
+# venv beside the script instead.
+PYTHON=python3
+if ! python3 -c "import markdown" 2>/dev/null; then
+  VENV="$SITE_DIR/.venv"
+  [ -d "$VENV" ] || python3 -m venv "$VENV"
+  # Pygments is not optional: without it the codehilite extension silently
+  # degrades to unhighlighted <pre> blocks and a rebuild rewrites every code
+  # sample on the site.
+  "$VENV/bin/pip" install --quiet markdown pygments
+  PYTHON="$VENV/bin/python"
+fi
 
 # Format: ["source.md"]="output.html|Title|SEO description"
 declare -A DOCS
@@ -49,7 +62,7 @@ generate_page() {
   [ ! -f "$src_path" ] && echo "SKIP: $src_path" && return
 
   local content
-  content=$(python3 -c "
+  content=$("$PYTHON" -c "
 import markdown, os, re, sys
 with open('$src_path', 'r') as f:
     text = f.read()
