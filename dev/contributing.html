@@ -95,11 +95,12 @@ chore/update-dependencies      # Maintenance
 </code></pre></div>
 
 <h3 id="standard-flow">Standard flow</h3>
-<p><strong><code>main</code> is the integration branch.</strong> There is no <code>devel</code> branch in any Forail
-repo — branch from <code>main</code> and target <code>main</code> in the PR.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Create branch from main</span>
-git<span class="w"> </span>checkout<span class="w"> </span>main
-git<span class="w"> </span>pull<span class="w"> </span>github<span class="w"> </span>main
+<p><strong><code>develop</code> is the integration branch.</strong> Every Forail repo has one — branch from
+<code>develop</code> and target <code>develop</code> in the PR. <code>main</code> holds released code and is
+updated from <code>develop</code> at release time, not per change.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 1. Create branch from develop</span>
+git<span class="w"> </span>checkout<span class="w"> </span>develop
+git<span class="w"> </span>pull<span class="w"> </span>github<span class="w"> </span>develop
 git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feature/my-feature
 
 <span class="c1"># 2. Make changes, test, commit</span>
@@ -110,13 +111,13 @@ git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </sp
 
 <span class="c1"># 3. Push and create PR</span>
 git<span class="w"> </span>push<span class="w"> </span>github<span class="w"> </span>feature/my-feature
-gh<span class="w"> </span>pr<span class="w"> </span>create<span class="w"> </span>--base<span class="w"> </span>main
+gh<span class="w"> </span>pr<span class="w"> </span>create<span class="w"> </span>--base<span class="w"> </span>develop
 </code></pre></div>
 
 <h3 id="updating-the-branch">Updating the branch</h3>
-<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>main<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span>github<span class="w"> </span>main
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>develop<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>pull<span class="w"> </span>github<span class="w"> </span>develop
 git<span class="w"> </span>checkout<span class="w"> </span>feature/my-feature
-git<span class="w"> </span>rebase<span class="w"> </span>main
+git<span class="w"> </span>rebase<span class="w"> </span>develop
 </code></pre></div>
 
 <h3 id="remotes">Remotes</h3>
@@ -211,7 +212,7 @@ tags to <strong>both</strong> when you are done, or the mirror silently falls be
 <li>[ ] All tests pass</li>
 <li>[ ] No lint errors</li>
 <li>[ ] Commit messages follow conventions</li>
-<li>[ ] Branch is rebased on latest <code>main</code></li>
+<li>[ ] Branch is rebased on latest <code>develop</code></li>
 <li>[ ] Changes are minimal and focused</li>
 </ul>
 <h3 id="pr-guidelines">PR guidelines</h3>
@@ -219,7 +220,8 @@ tags to <strong>both</strong> when you are done, or the mirror silently falls be
 <li><strong>Keep PRs small</strong> — ideally under 500 lines. Large PRs are harder to review.</li>
 <li><strong>One concern per PR</strong> — don't mix a bug fix with refactoring.</li>
 <li><strong>Include tests</strong> — new features need tests, bug fixes need a regression test.</li>
-<li><strong>Target <code>main</code></strong> — all PRs merge into <code>main</code>.</li>
+<li><strong>Target <code>develop</code></strong> — all PRs merge into <code>develop</code>; <code>main</code> is updated from
+  <code>develop</code> at release time.</li>
 </ul>
 <h3 id="review-checklist">Review Checklist</h3>
 <p><strong>For the author:</strong></p>

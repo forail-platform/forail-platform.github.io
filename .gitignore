@@ -1,0 +1,2 @@
+# Local build venv for the page generators (see build-dev.sh / build-docs.sh).
+.venv/
