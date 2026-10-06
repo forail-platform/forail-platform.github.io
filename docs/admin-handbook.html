@@ -285,7 +285,7 @@ newgrp<span class="w"> </span>docker
 <p><code>bash
    curl -I https://forail.example.com</code></p>
 <p><strong>Example renewal cron</strong></p>
-<div class="codehilite"><pre><span></span><code><span class="mf">0</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="n">certbot</span><span class="w"> </span><span class="n">renew</span><span class="w"> </span><span class="o">--</span><span class="n">pre</span><span class="o">-</span><span class="n">hook</span><span class="w"> </span><span class="s">&quot;docker compose -f /opt/forail/docker-compose.yml stop nginx&quot;</span><span class="w"> </span><span class="o">--</span><span class="nb">pos</span><span class="n">t</span><span class="o">-</span><span class="n">hook</span><span class="w"> </span><span class="s">&quot;cp /etc/letsencrypt/live/forail.example.com/fullchain.pem /opt/forail/nginx/ssl/forail.crt &amp;&amp; cp /etc/letsencrypt/live/forail.example.com/privkey.pem /opt/forail/nginx/ssl/forail.key &amp;&amp; docker compose -f /opt/forail/docker-compose.yml up -d nginx&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="mf">0</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="n">certbot</span><span class="w"> </span><span class="n">renew</span><span class="w"> </span><span class="o">--</span><span class="n">pre</span><span class="o">-</span><span class="n">hook</span><span class="w"> </span><span class="s">"docker compose -f /opt/forail/docker-compose.yml stop nginx"</span><span class="w"> </span><span class="o">--</span><span class="nb">pos</span><span class="n">t</span><span class="o">-</span><span class="n">hook</span><span class="w"> </span><span class="s">"cp /etc/letsencrypt/live/forail.example.com/fullchain.pem /opt/forail/nginx/ssl/forail.crt &amp;&amp; cp /etc/letsencrypt/live/forail.example.com/privkey.pem /opt/forail/nginx/ssl/forail.key &amp;&amp; docker compose -f /opt/forail/docker-compose.yml up -d nginx"</span>
 </code></pre></div>
 
 <hr />
@@ -369,76 +369,83 @@ docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">ex
 
 <hr />
 <h2 id="backup">Backup</h2>
-<p>Daily backups are mandatory. Forail ships <code>scripts/backup.sh</code> which dumps Postgres and rotates old archives.</p>
+<p>Daily backups are mandatory. <code>scripts/backup.sh</code> runs inside the <code>forail-task</code> container (that is where <code>pg_dump</code> and the database credentials are) and writes to the <code>forail_backups</code> volume.</p>
+<p>A database backup alone is <strong>not</strong> a complete backup. Credentials, tokens and other secrets in it are encrypted with <code>FORAIL_SECRET_KEY</code>; restored under any other key, every one of them is unreadable. Keep a copy of <code>.env</code> with your backups, on another host.</p>
 <p><strong>Step by step</strong></p>
 <ol>
 <li>Run a one-off backup to verify it works:</li>
 </ol>
 <p><code>bash
-   docker compose exec postgres /scripts/backup.sh</code></p>
+   docker compose exec -T forail-task bash /etc/forail/backup.sh</code></p>
+<p>Each run writes two files: <code>forail_backup_&lt;timestamp&gt;.dump</code> (PostgreSQL custom format, compressed) and <code>forail_backup_&lt;timestamp&gt;.meta</code> (Forail version, last applied migration, and a fingerprint of the secret key, which <code>restore.sh</code> checks).</p>
 <ol>
 <li>Inspect the result:</li>
 </ol>
 <p><code>bash
-   ls -lh /var/lib/awx/backups/</code></p>
+   docker compose exec -T forail-task ls -lh /var/lib/awx/backups/</code></p>
 <ol>
 <li>Schedule a nightly cron on the host:</li>
 </ol>
 <p><code>cron
-   0 2 * * * docker compose -f /opt/forail/docker-compose.yml exec -T postgres /scripts/backup.sh &gt;&gt; /var/log/forail-backup.log 2&gt;&amp;1</code></p>
+   0 2 * * * cd /opt/forail &amp;&amp; docker compose exec -T forail-task bash /etc/forail/backup.sh &gt;&gt; /var/log/forail-backup.log 2&gt;&amp;1</code></p>
 <ol>
-<li>Copy the backups off-host (S3, rsync, etc.):</li>
+<li>Copy the backups off-host. They live in the <code>forail_backups</code> Docker volume:</li>
 </ol>
 <p><code>cron
-   30 2 * * * aws s3 sync /var/lib/awx/backups/ s3://acme-forail-backups/</code></p>
+   30 2 * * * docker run --rm -v forail_forail_backups:/b:ro -v /srv/forail-backups:/out alpine sh -c 'cp -n /b/* /out/'</code></p>
+<p>(The volume name is <code>&lt;compose project&gt;_forail_backups</code>; check with <code>docker volume ls</code>.)</p>
 <p><strong>Example output</strong></p>
 <div class="codehilite"><pre><span></span><code><span class="o">==&gt;</span><span class="w"> </span><span class="n">Starting</span><span class="w"> </span><span class="n">backup</span><span class="o">...</span>
-<span class="o">==&gt;</span><span class="w"> </span><span class="n">Backup</span><span class="w"> </span><span class="n">saved</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">awx</span><span class="o">/</span><span class="n">backups</span><span class="o">/</span><span class="n">forail_backup_20260411_020000</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">==&gt;</span><span class="w"> </span><span class="n">Backup</span><span class="w"> </span><span class="n">saved</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">awx</span><span class="o">/</span><span class="n">backups</span><span class="o">/</span><span class="n">forail_backup_20261004_020000</span><span class="o">.</span><span class="n">dump</span>
 <span class="o">==&gt;</span><span class="w"> </span><span class="n">Removing</span><span class="w"> </span><span class="n">backups</span><span class="w"> </span><span class="n">older</span><span class="w"> </span><span class="n">than</span><span class="w"> </span><span class="mi">7</span><span class="w"> </span><span class="n">days</span><span class="o">...</span>
 <span class="o">==&gt;</span><span class="w"> </span><span class="n">Backup</span><span class="w"> </span><span class="n">complete</span><span class="o">.</span>
 </code></pre></div>
 
 <blockquote>
-<p><strong>Retention</strong> is controlled by <code>BACKUP_RETENTION_DAYS</code> (default 7). Override in <code>.env</code> if you need longer.</p>
+<p><strong>Retention</strong> is controlled by <code>BACKUP_RETENTION_DAYS</code> (default 7). A failed <code>pg_dump</code> fails the script; a half-written dump is never left under a name that <code>restore.sh</code> would pick up.</p>
 </blockquote>
 <hr />
 <h2 id="restore">Restore</h2>
-<p><code>scripts/restore.sh</code> reads a <code>.sql.gz</code> and pipes it back into Postgres.</p>
+<p><code>scripts/restore.sh</code> restores a backup into a <strong>new</strong> database and then swaps it in by renaming. If anything fails, the current database is untouched; if it succeeds, the previous database is kept as <code>forail_before_restore_&lt;timestamp&gt;</code> until you drop it.</p>
 <p><strong>Step by step</strong></p>
 <ol>
-<li><strong>Stop</strong> the application services so nothing writes to the DB:</li>
+<li><strong>Stop</strong> everything that writes to the database. <code>restore.sh</code> refuses to run while other sessions are connected:</li>
 </ol>
 <p><code>bash
    docker compose stop forail-web forail-task</code></p>
 <ol>
-<li>Run the restore (omit the filename to use the most recent backup):</li>
+<li>
+<p>Make sure <code>.env</code> has the <code>FORAIL_SECRET_KEY</code> the backup was taken with. <code>restore.sh</code> compares it with the fingerprint in the <code>.meta</code> file and refuses on a mismatch.</p>
+</li>
+<li>
+<p>Run the restore in a one-off container (omit the filename to use the newest backup):</p>
+</li>
 </ol>
 <p><code>bash
-   docker compose exec -T postgres /scripts/restore.sh /var/lib/awx/backups/forail_backup_20260411_020000.sql.gz</code></p>
+   docker compose run --rm --no-deps forail-task bash /etc/forail/restore.sh --yes \
+       /var/lib/awx/backups/forail_backup_20261004_020000.dump</code></p>
 <ol>
-<li>Restart the application:</li>
+<li>Start the stack. If the backup is from an older Forail, <code>forail-init</code> applies the migrations:</li>
 </ol>
 <p><code>bash
-   docker compose up -d forail-web forail-task</code></p>
+   docker compose up -d</code></p>
 <ol>
-<li>Verify in the UI: log in and check <strong>Activity</strong> for the expected history.</li>
+<li>Verify (log in, check <strong>Jobs</strong> and <strong>Credentials</strong>), then drop the kept database:</li>
 </ol>
-<p><strong>Example — restore yesterday's backup</strong></p>
-<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>stop<span class="w"> </span>forail-web<span class="w"> </span>forail-task
-docker<span class="w"> </span>compose<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-T<span class="w"> </span>postgres<span class="w"> </span>/scripts/restore.sh
-docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>forail-web<span class="w"> </span>forail-task
-</code></pre></div>
-
+<p><code>bash
+   docker compose exec postgres psql -U forail -d postgres -c 'DROP DATABASE "forail_before_restore_20261004_031500"'</code></p>
 <blockquote>
-<p><strong>Warning:</strong> Restore is destructive. The current database is <strong>overwritten</strong> by the dump. Always take a fresh backup <em>before</em> restoring an old one.</p>
+<p>Backups made by the old <code>backup.sh</code> (<code>.sql.gz</code>) still restore the same way, but have no <code>.meta</code>, so the secret key cannot be checked.</p>
 </blockquote>
+<p><strong>Testing the procedure</strong></p>
+<p><code>scripts/test-backup-restore.sh</code> runs the whole round trip against a running stack -- seeds an organization and an encrypted credential, backs up, writes more, restores, and checks the first is back, the second is gone, the secret decrypts, and new writes work. It is destructive: run it against a throwaway stack, never production.</p>
 <hr />
 <h2 id="upgrade">Upgrade</h2>
 <p>Upgrading is a tag bump + pull + up.</p>
 <p><strong>Step by step</strong></p>
 <ol>
 <li>Read the <a href="release-2026.04.0.html">release notes</a> for breaking changes.</li>
-<li>Take a backup (see <a href="#backup">Backup</a>).</li>
+<li>Take a backup (see <a href="#backup">Backup</a>) and keep its file name -- it is your way back.</li>
 <li>Edit <code>.env</code> and bump <code>FORAIL_TAG</code>:</li>
 </ol>
 <p><code>ini
@@ -467,33 +474,34 @@ docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> 
 <li>Watch <strong>Jobs</strong> for 10 minutes — make sure new launches work.</li>
 </ol>
 <p><strong>Example — minor version bump</strong></p>
-<div class="codehilite"><pre><span></span><code>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s/^FORAIL_TAG=.*/FORAIL_TAG=2026.04.1/&#39;</span><span class="w"> </span>.env
+<div class="codehilite"><pre><span></span><code>sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">'s/^FORAIL_TAG=.*/FORAIL_TAG=2026.04.1/'</span><span class="w"> </span>.env
 docker<span class="w"> </span>compose<span class="w"> </span>pull<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </code></pre></div>
 
 <hr />
 <h2 id="rolling-back">Rolling Back</h2>
-<p>If an upgrade fails, roll back the tag and restore the pre-upgrade backup.</p>
+<p>If an upgrade fails after <code>forail-init</code> applied migrations, the previous version cannot run against the new schema. Restore the pre-upgrade backup <strong>before</strong> starting the old version.</p>
 <p><strong>Step by step</strong></p>
 <ol>
-<li>Set the previous tag in <code>.env</code>:</li>
-</ol>
-<p><code>ini
-   FORAIL_TAG=2026.04.0</code></p>
-<ol>
-<li>Pull and bring up:</li>
+<li>Stop the application:</li>
 </ol>
 <p><code>bash
-   docker compose pull
-   docker compose up -d</code></p>
+   docker compose stop forail-web forail-task</code></p>
 <ol>
-<li><strong>If migrations were applied</strong> during the failed upgrade, you must also restore the pre-upgrade DB dump (see <a href="#restore">Restore</a>).</li>
-<li>Verify and notify users.</li>
+<li>Restore the backup taken just before the upgrade (see <a href="#restore">Restore</a>):</li>
 </ol>
-<p><strong>Example</strong></p>
-<blockquote>
-<p>Upgraded to <code>2026.05.0</code> at 02:30, jobs started failing at 02:45 → set <code>FORAIL_TAG=2026.04.0</code> → pull → up → restore <code>forail_backup_20260411_020000.sql.gz</code> → service restored at 02:55.</p>
-</blockquote>
+<p><code>bash
+   docker compose run --rm --no-deps forail-task bash /etc/forail/restore.sh --yes \
+       /var/lib/awx/backups/forail_backup_20261004_020000.dump</code></p>
+<ol>
+<li>Set the previous tag in <code>.env</code>, pull, and start:</li>
+</ol>
+<p><code>bash
+   sed -i 's/^FORAIL_TAG=.*/FORAIL_TAG=2026.07.2/' .env
+   docker compose pull &amp;&amp; docker compose up -d</code></p>
+<ol>
+<li>Verify and notify users. Anything written between the backup and the rollback is lost.</li>
+</ol>
 <hr />
 <h1 id="scaling-topology_1">SCALING &amp; TOPOLOGY</h1>
 <h2 id="adding-an-execution-node">Adding an Execution Node</h2>

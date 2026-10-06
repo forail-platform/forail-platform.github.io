@@ -11,6 +11,7 @@
   <url><loc>https://forail-platform.github.io/docs/assistant-deploy.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://forail-platform.github.io/docs/audit-trail.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://forail-platform.github.io/docs/awx-import.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://forail-platform.github.io/docs/what-changed-from-awx.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://forail-platform.github.io/docs/deployment.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://forail-platform.github.io/docs/drift-detection.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://forail-platform.github.io/docs/dynamic-surveys.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
