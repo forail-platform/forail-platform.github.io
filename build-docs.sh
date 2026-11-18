@@ -40,6 +40,7 @@ DOCS["forail-backend/docs/22-multi-tenancy.md"]="multi-tenancy.html|Multi-Tenanc
 DOCS["forail-backend/docs/23-recommendations.md"]="recommendations.html|Recommendations Engine|Recommendations engine in Forail Platform — surfaces optimization suggestions for job templates, schedules, and resource utilization. Data-driven hints for automation hygiene."
 # Migration
 DOCS["forail-backend/docs/24-awx-import.md"]="awx-import.html|AWX → Forail Migration|Migrate from AWX or Ansible Automation Platform to Forail with the one-shot import_from_awx command — organizations, inventories, credentials, projects, job and workflow templates, schedules, notifications and RBAC, imported idempotently over the AWX REST API."
+DOCS["forail-backend/docs/25-what-changed-from-awx.md"]="what-changed-from-awx.html|What Changed Relative to AWX|What Forail changed relative to AWX 24.6.1, measured file by file: what was added, modified and removed, what stays API-compatible, and what is known not to be right yet — with the script to reproduce the numbers."
 # AI Assistant
 DOCS["forail-assistant/docs/architecture.md"]="assistant-architecture.html|AI Assistant Architecture (Preview)|Forail AI Assistant (UNDER ACTIVE DEVELOPMENT — not production-ready) — FastAPI service with embedded Ollama LLM runtime and ChromaDB vector store. Fully self-hosted preview, runs on CPU or GPU."
 DOCS["forail-assistant/docs/api-reference.md"]="assistant-api.html|AI Assistant API (Preview)|Forail AI Assistant API reference (UNDER ACTIVE DEVELOPMENT — not production-ready). HTTP endpoints for chat completion, RAG queries, model management. Preview only, APIs may change."
@@ -136,7 +137,7 @@ sys.stdout.write(html)
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
-      <li><a href="../dev/index.html">Dev Docs</a></li>
+      <li><a href="https://github.com/forail-platform/forail-backend/tree/main/docs">Dev Docs ↗</a></li>
     </ul>
     <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
@@ -179,7 +180,7 @@ sys.stdout.write(html)
     <a href="release-2026.04.0.html">v2026.04.0</a>
     <a href="release-2026.03.0.html">v2026.03.0</a>
     <h4>&nbsp;</h4>
-    <a href="../dev/index.html">Developer Docs</a>
+    <a href="https://github.com/forail-platform/forail-backend/tree/main/docs">Developer Docs ↗</a>
     <a href="../index.html">Home</a>
   </aside>
   <main class="docs-content">
@@ -189,7 +190,7 @@ ${content}
 <footer class="footer">
   <div class="footer-links">
     <a href="../index.html">Home</a>
-    <a href="../dev/index.html">Dev Docs</a>
+    <a href="https://github.com/forail-platform/forail-backend/tree/main/docs">Dev Docs ↗</a>
     <a href="https://github.com/forail-platform">GitHub</a>
   </div>
   <p>Forail Platform — Apache License 2.0</p>
