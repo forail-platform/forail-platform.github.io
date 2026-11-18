@@ -137,7 +137,6 @@ sys.stdout.write(html)
     </a>
     <ul class="nav-links">
       <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
-      <li><a href="https://github.com/forail-platform/forail-backend/tree/main/docs">Dev Docs ↗</a></li>
     </ul>
     <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
     <button class="nav-toggle" aria-label="Menu">
@@ -180,7 +179,6 @@ sys.stdout.write(html)
     <a href="release-2026.04.0.html">v2026.04.0</a>
     <a href="release-2026.03.0.html">v2026.03.0</a>
     <h4>&nbsp;</h4>
-    <a href="https://github.com/forail-platform/forail-backend/tree/main/docs">Developer Docs ↗</a>
     <a href="../index.html">Home</a>
   </aside>
   <main class="docs-content">
@@ -190,7 +188,6 @@ ${content}
 <footer class="footer">
   <div class="footer-links">
     <a href="../index.html">Home</a>
-    <a href="https://github.com/forail-platform/forail-backend/tree/main/docs">Dev Docs ↗</a>
     <a href="https://github.com/forail-platform">GitHub</a>
   </div>
   <p>Forail Platform — Apache License 2.0</p>
