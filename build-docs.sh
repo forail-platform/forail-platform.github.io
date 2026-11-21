@@ -56,6 +56,7 @@ DOCS["forail-deploy/docs/RELEASE_NOTES_v2026.05.0.md"]="release-2026.05.0.html|R
 DOCS["forail-deploy/docs/RELEASE_NOTES_v2026.06.0.md"]="release-2026.06.0.html|Release Notes v2026.06.0|Forail Platform v2026.06.0 release notes — project renamed forge to forail (organization forail-platform), new ghcr.io image namespace, CRD API group forail.forail-platform.io, versioning unified on CalVer."
 DOCS["forail-deploy/docs/RELEASE_NOTES_v2026.07.0.md"]="release-2026.07.0.html|Release Notes v2026.07.0|Forail Platform v2026.07.0 release notes — security-hardening and migration release: one-shot AWX → Forail importer, SAML signed-assertion and SHA-256 defaults (breaking), session-key hashing, trusted-proxy audit IP, OAuth refresh-token redaction, and an RBAC role-assignment fix."
 DOCS["forail-deploy/docs/RELEASE_NOTES_v2026.07.1.md"]="release-2026.07.1.html|Release Notes v2026.07.1|Forail Platform v2026.07.1 release notes — patch release fixing job execution after an upgrade: the task pod no longer resets its own node type and the default instance group keeps an execution-capable member, so jobs no longer sit in pending."
+DOCS["forail-deploy/docs/RELEASE_NOTES_v2026.11.0.md"]="release-2026.11.0.html|Release Notes v2026.11.0|Forail Platform v2026.11.0 release notes — monitored servers for the Forail Mobile companion, plus the previously-unreleased 2026.10.0 make-it-true work: configuration-object RBAC, working EDA/drift/webhooks/WebAuthn, a backup/restore that actually restores, and the full Django test suite in CI."
 
 generate_page() {
   local src="$1" out="$2" title="$3" description="$4"
@@ -172,6 +173,7 @@ sys.stdout.write(html)
     <a href="user-handbook.html">User Handbook</a>
     <a href="admin-handbook.html">Admin Handbook</a>
     <h4>Release Notes</h4>
+    <a href="release-2026.11.0.html">v2026.11.0</a>
     <a href="release-2026.07.1.html">v2026.07.1</a>
     <a href="release-2026.07.0.html">v2026.07.0</a>
     <a href="release-2026.06.0.html">v2026.06.0</a>

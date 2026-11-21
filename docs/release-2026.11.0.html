@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Release Notes v2026.11.0 — Forail Platform Docs</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="description" content="Forail Platform v2026.11.0 release notes — monitored servers for the Forail Mobile companion, plus the previously-unreleased 2026.10.0 make-it-true work: configuration-object RBAC, working EDA/drift/webhooks/WebAuthn, a backup/restore that actually restores, and the full Django test suite in CI.">
+  <meta name="keywords" content="Forail Platform, AWX alternative, Ansible automation, open source DevOps, Kubernetes operator, Helm chart, self-hosted, infrastructure automation">
+  <meta name="author" content="Krstan Vjestica">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://forail-platform.github.io/docs/release-2026.11.0.html">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Release Notes v2026.11.0 — Forail Platform Docs">
+  <meta property="og:description" content="Forail Platform v2026.11.0 release notes — monitored servers for the Forail Mobile companion, plus the previously-unreleased 2026.10.0 make-it-true work: configuration-object RBAC, working EDA/drift/webhooks/WebAuthn, a backup/restore that actually restores, and the full Django test suite in CI.">
+  <meta property="og:url" content="https://forail-platform.github.io/docs/release-2026.11.0.html">
+  <meta property="og:site_name" content="Forail Platform">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Release Notes v2026.11.0 — Forail Platform Docs">
+  <meta name="twitter:description" content="Forail Platform v2026.11.0 release notes — monitored servers for the Forail Mobile companion, plus the previously-unreleased 2026.10.0 make-it-true work: configuration-object RBAC, working EDA/drift/webhooks/WebAuthn, a backup/restore that actually restores, and the full Django test suite in CI.">
+  <meta name="twitter:image" content="https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"TechArticle","headline":"Release Notes v2026.11.0","description":"Forail Platform v2026.11.0 release notes — monitored servers for the Forail Mobile companion, plus the previously-unreleased 2026.10.0 make-it-true work: configuration-object RBAC, working EDA/drift/webhooks/WebAuthn, a backup/restore that actually restores, and the full Django test suite in CI.","url":"https://forail-platform.github.io/docs/release-2026.11.0.html","author":{"@type":"Person","name":"Krstan Vjestica"},"publisher":{"@type":"Organization","name":"Forail Platform","url":"https://forail-platform.github.io/"},"image":"https://forail-platform.github.io/assets/img/screenshots/dashboard-hero.png","inLanguage":"en"}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <svg viewBox="0 0 64 64" fill="none"><line x1="18" y1="28.5" x2="45" y2="12.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><line x1="18" y1="28.5" x2="49" y2="36.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><line x1="18" y1="28.5" x2="26" y2="51.5" stroke="#1D9E75" stroke-width="4" stroke-linecap="round"/><rect x="9" y="19.5" width="18" height="18" rx="5" fill="#1D9E75"/><circle cx="45" cy="12.5" r="6" fill="#1D9E75"/><circle cx="49" cy="36.5" r="6" fill="#1D9E75"/><circle cx="26" cy="51.5" r="6" fill="#1D9E75"/></svg>
+      Forail
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" style="color: var(--primary);">User Docs</a></li>
+    </ul>
+    <a href="https://github.com/forail-platform" class="nav-cta">GitHub</a>
+    <button class="nav-toggle" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="docs-layout" style="padding: 2rem;">
+  <aside class="docs-sidebar">
+    <h4>Getting Started</h4>
+    <a href="architecture.html">Architecture</a>
+    <a href="deployment.html">Deployment (Docker)</a>
+    <a href="kubernetes.html">Kubernetes</a>
+    <a href="operator.html">Kubernetes Operator</a>
+    <h4>Features</h4>
+    <a href="event-driven.html">Event-Driven Automation</a>
+    <a href="drift-detection.html">Drift Detection</a>
+    <a href="policy-as-code.html">Policy-as-Code</a>
+    <a href="self-service.html">Self-Service Portal</a>
+    <a href="multi-tenancy.html">Multi-Tenancy</a>
+    <a href="oidc-webauthn.html">OIDC + WebAuthn</a>
+    <a href="iac-scanning.html">IaC Scanning</a>
+    <a href="observability.html">Observability</a>
+    <a href="dynamic-surveys.html">Dynamic Surveys</a>
+    <a href="audit-trail.html">Audit Trail</a>
+    <a href="recommendations.html">Recommendations</a>
+    <h4>AI Assistant</h4>
+    <a href="assistant-architecture.html">Architecture</a>
+    <a href="assistant-api.html">API Reference</a>
+    <a href="assistant-config.html">Configuration</a>
+    <a href="assistant-deploy.html">Deployment</a>
+    <h4>Operations</h4>
+    <a href="user-handbook.html">User Handbook</a>
+    <a href="admin-handbook.html">Admin Handbook</a>
+    <h4>Release Notes</h4>
+    <a href="release-2026.11.0.html">v2026.11.0</a>
+    <a href="release-2026.07.1.html">v2026.07.1</a>
+    <a href="release-2026.07.0.html">v2026.07.0</a>
+    <a href="release-2026.06.0.html">v2026.06.0</a>
+    <a href="release-2026.05.0.html">v2026.05.0</a>
+    <a href="release-2026.04.0.html">v2026.04.0</a>
+    <a href="release-2026.03.0.html">v2026.03.0</a>
+    <h4>&nbsp;</h4>
+    <a href="../index.html">Home</a>
+  </aside>
+  <main class="docs-content">
+<h1 id="forail-2026110-release-notes">Forail 2026.11.0 — Release Notes</h1>
+<p><strong>Release date:</strong> 2026-11-20
+<strong>Based on:</strong> Forail 2026.07.1
+<strong>License:</strong> Apache License 2.0</p>
+<hr />
+<h2 id="overview">Overview</h2>
+<p>2026.11.0 ships two things at once: the new <strong>monitored servers</strong> feature for
+the Forail Mobile companion, and the whole <strong>"make-it-true"</strong> body of work that
+had been staged as 2026.10.0 but was never tagged or published. Several
+features Forail advertised did not work in the published images — event-driven
+automation, drift detection, outbound webhooks and WebAuthn — and the
+configuration objects behind them could be rewritten by any member of an
+organization. This release fixes that, puts the whole Django test suite (about
+2,300 tests) into CI on every pull request, and adds a backup and restore that
+actually restore.</p>
+<blockquote>
+<p><strong>Supersedes the unreleased 2026.10.0.</strong> No <code>2026.10.0</code> images were ever
+published; everything that was planned for it is in 2026.11.0.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>forail-backend</code></td>
+<td><strong>2026.11.0</strong></td>
+</tr>
+<tr>
+<td><code>forail-frontend</code></td>
+<td><strong>2026.11.0</strong></td>
+</tr>
+<tr>
+<td>Helm chart</td>
+<td><strong>2026.11.0</strong></td>
+</tr>
+<tr>
+<td><code>forail-operator</code></td>
+<td>2026.07.1 — unchanged, no code changes this cycle</td>
+</tr>
+<tr>
+<td><code>forail-assistant</code></td>
+<td>2026.06.0 — opt-in preview, unchanged</td>
+</tr>
+</tbody>
+</table>
+<p>Backend, frontend and the Helm chart move together to <strong>2026.11.0</strong>.</p>
+<h2 id="new-monitored-servers">New — monitored servers</h2>
+<p>A user registers their own server running <code>forail-agent</code> and watches it from
+Forail Mobile and the web UI, at <code>/api/v2/monitored_servers/</code>.</p>
+<ul>
+<li><strong>Ownership and access.</strong> The owner, the admins of the server's organization
+  and superusers manage it; only the organization's admins and superusers grant
+  or revoke read access. Anyone else gets <code>404</code> — a server they cannot see does
+  not exist to them.</li>
+<li><strong>No long-lived secrets in the UI.</strong> Enrolment uses a one-time code with a
+  ten-minute countdown and the exact <code>forail-agent enroll</code> command to copy;
+  token rotation and the enrolment codes go through the Forail Mobile service
+  API, and an agent token is never shown.</li>
+<li><strong>Frontend.</strong> A <strong>Resources → Monitored servers</strong> list with online state,
+  organization, owner and last report; an <strong>Install</strong> panel that issues the
+  one-time code; and an <strong>Access</strong> tab where admins grant and revoke while
+  everyone else sees who has access, read-only.</li>
+<li><strong>Quota and migration.</strong> A per-user quota (<code>MONITORED_SERVERS_PER_USER</code>,
+  default 10), and <code>import_monitored_servers</code> brings servers registered in
+  Forail Mobile before this under platform RBAC.</li>
+</ul>
+<h2 id="security">Security</h2>
+<p><strong>Upgrade if you use any of: event rules, outbound webhooks, drift alert
+rules, policies, scanners, or the service catalog.</strong></p>
+<ul>
+<li><strong>Organization members could rewrite configuration they should only read.</strong>
+  The API for event rules, outbound webhooks, drift alert rules, policies,
+  scanners and catalog items checked only that the user was logged in and in
+  the organization. A plain member could disable a policy, point an outbound
+  webhook at their own URL, retarget an event rule to launch a job template in
+  another organization, read or rotate an event rule's inbound webhook key, and
+  trigger a test send of any outbound webhook by id. These objects now follow
+  the AWX rule for notification templates: the organization reads, its admins
+  change. An event rule's author must be able to start every template its
+  actions launch; a catalog item's publisher must be able to execute its
+  template.</li>
+<li><strong>Secrets in the activity stream.</strong> An outbound webhook's HMAC key and custom
+  headers, a WebAuthn credential's key material and a service request's survey
+  answers were recorded in the activity stream, which auditors can read and
+  which is shipped to external loggers. They are now excluded.</li>
+<li><strong>Outbound webhooks are scoped to their organization.</strong> (They were not sent
+  at all before this release — see below — but the dispatch matched webhooks
+  across organizations.)</li>
+<li><strong>Branding favicon URL validation (frontend).</strong> The favicon in the
+  unauthenticated host-keyed branding response is applied only when it is an
+  <code>http(s)</code> or same-origin relative URL, blocking <code>javascript:</code>/<code>data:</code> schemes.</li>
+</ul>
+<h2 id="fixed-features-that-did-not-work">Fixed — features that did not work</h2>
+<ul>
+<li><strong>Event-driven automation never fired.</strong> The rule engine imported <code>celery</code>,
+  which Forail does not ship; the public receiver raised on every event. Now
+  verified end to end: a signed webhook launches the job, with the payload in
+  its extra vars.</li>
+<li><strong>Drift detection never recorded anything.</strong> The capture that runs after
+  every fact-caching job failed on the same import. Snapshots and drift
+  detections are now recorded; old snapshots are cleaned up every six hours.</li>
+<li><strong>Outbound webhooks were never sent</strong> on job events — nothing called them —
+  and the sender imported <code>httpx</code>, which Forail does not ship. They now fire on
+  job and workflow start, success, failure and cancel, signed with
+  <code>X-Forail-Signature</code>.</li>
+<li><strong>WebAuthn passkeys could not be registered.</strong> The <code>webauthn</code> library was
+  missing from the image.</li>
+<li><strong>Only superusers could create</strong> policies, scanners, event rules, webhooks,
+  drift rules and catalog items; everyone else got a 500. <strong>Deleting</strong> any of
+  them failed for everybody.</li>
+<li>Saving any of eight Forail objects failed while the activity stream was on
+  (the default).</li>
+<li>Editing a policy failed while the OPA sidecar was unreachable.</li>
+<li>After an SSO login users landed on a blank page; the browsable API's logo was
+  missing; any non-API URL that reached the backend directly returned 500.</li>
+</ul>
+<h2 id="backup-restore-and-upgrade">Backup, restore and upgrade</h2>
+<p>The documented backup command did not run, and <code>restore.sh</code> replaced nothing,
+reported success, and moved the database sequences backwards so new records
+failed afterwards. Both are rewritten:</p>
+<ul>
+<li><code>backup.sh</code> writes a compressed custom-format dump plus a <code>.meta</code> file that
+  records the Forail version and a fingerprint of <code>FORAIL_SECRET_KEY</code>.</li>
+<li><code>restore.sh</code> refuses while the stack is writing, refuses a backup taken with a
+  different secret key, restores into a new database and swaps it in — so a
+  failed restore changes nothing and the previous database is kept until you
+  drop it.</li>
+<li><code>scripts/test-backup-restore.sh</code> checks the round trip on a running stack.</li>
+</ul>
+<p>Commands are in the <a href="admin-handbook.html#backup">Administrator Handbook</a>.</p>
+<h2 id="awx-migration">AWX migration</h2>
+<p><code>import_from_awx</code> gains <code>--report-file</code> (a JSON plan of every object it would
+create or update, for review with <code>--dry-run</code>), prints every warning grouped by
+what you must do about it, reads secrets from <code>--token-file</code> / <code>--password-file</code>,
+and no longer erases credential-type injectors an admin re-approved when it is
+run again. See <a href="awx-import.html">AWX → Forail Migration</a>.</p>
+<h2 id="removed">Removed</h2>
+<ul>
+<li>The never-built legacy AWX React UI (about 16 MB of every backend image).</li>
+</ul>
+<h2 id="upgrading">Upgrading</h2>
+<p>Take a backup with the new <code>backup.sh</code>, keep <code>.env</code>, set <code>FORAIL_TAG=2026.11.0</code>,
+<code>docker compose pull &amp;&amp; docker compose up -d</code>. On Kubernetes, point the Helm
+chart at 2026.11.0 (the chart pins the matching backend and frontend images) and
+<code>helm upgrade</code>. <code>forail-init</code> applies the new migrations.</p>
+<p>Verified for this release: an in-place upgrade from 2026.07.1 to 2026.11.0 on a
+three-control-plane k3s cluster — rolling update, migrations applied, existing
+data preserved, and a create/read/delete round trip through the API after.</p>
+<p><strong>Breaking for API clients that relied on the old behaviour:</strong> a request for
+one of the configuration objects above in another organization now answers
+<strong>403</strong> instead of 404, and organization members can no longer change them.</p>
+<h2 id="known-issues">Known issues</h2>
+<ul>
+<li>Third-party license texts (<code>licenses/</code>) are still missing from the backend
+  repository.</li>
+<li>Some Forail models differ from their migrations in index names and field
+  options; no data is affected.</li>
+<li>See <a href="what-changed-from-awx.html">What Forail changed relative to AWX</a> for the
+  full picture.</li>
+</ul>
+  </main>
+</div>
+<footer class="footer">
+  <div class="footer-links">
+    <a href="../index.html">Home</a>
+    <a href="https://github.com/forail-platform">GitHub</a>
+  </div>
+  <p>Forail Platform — Apache License 2.0</p>
+</footer>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

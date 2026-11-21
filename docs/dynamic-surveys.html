@@ -77,6 +77,7 @@
     <a href="user-handbook.html">User Handbook</a>
     <a href="admin-handbook.html">Admin Handbook</a>
     <h4>Release Notes</h4>
+    <a href="release-2026.11.0.html">v2026.11.0</a>
     <a href="release-2026.07.1.html">v2026.07.1</a>
     <a href="release-2026.07.0.html">v2026.07.0</a>
     <a href="release-2026.06.0.html">v2026.06.0</a>
@@ -115,9 +116,9 @@ surveys resolve choices from three configurable sources:</p>
 <td>Options from CMDB, ServiceNow, etc.</td>
 </tr>
 <tr>
-<td><strong>Jinja2 Template</strong></td>
-<td>Evaluate a Jinja2 expression</td>
-<td>Custom logic using inventory data</td>
+<td>~~Jinja2 Template~~</td>
+<td><strong>Withdrawn</strong> — see below</td>
+<td>—</td>
 </tr>
 </tbody>
 </table>
@@ -175,7 +176,7 @@ surveys resolve choices from three configurable sources:</p>
 <td><code>source_type</code></td>
 <td>string</td>
 <td>Yes (if enabled)</td>
-<td>One of: <code>db_query</code>, <code>api_endpoint</code>, <code>jinja2</code></td>
+<td>One of: <code>db_query</code>, <code>api_endpoint</code> (<code>jinja2</code> is withdrawn)</td>
 </tr>
 <tr>
 <td><code>cache_ttl</code></td>
@@ -264,7 +265,37 @@ surveys resolve choices from three configurable sources:</p>
 the system automatically filters by the job template's inventory.</p>
 <hr />
 <h2 id="source-external-api">Source: External API</h2>
-<p>Fetch choices from an HTTP endpoint. Supports JSON responses.</p>
+<p>Fetch choices from an HTTPS endpoint. Supports JSON responses.</p>
+<blockquote>
+<p><strong>The destination must be named by an administrator.</strong> The server makes this
+request from inside the cluster, and the URL comes from the survey — so
+without a destination policy, whoever can edit a job template can point the
+server at cloud metadata, at a service bound to loopback, or at a neighbouring
+pod, and read the reply through the choices endpoint. Hosts are therefore
+listed in <code>SURVEY_DYNAMIC_CHOICES_API_ALLOWLIST</code> in the server settings file,
+matched exactly. The list is <strong>empty by default, which disables this source
+type</strong>.</p>
+<p>```python</p>
+<h1 id="etctowerconfddynamic_surveyspy">/etc/tower/conf.d/dynamic_surveys.py</h1>
+<p>SURVEY_DYNAMIC_CHOICES_API_ALLOWLIST = ['cmdb.internal.example.com']
+```</p>
+<p>Rules that apply even to a listed host:</p>
+<ul>
+<li><strong>HTTPS only.</strong></li>
+<li>The name is re-checked <strong>after DNS resolution</strong>. Private addresses are
+  allowed — an on-prem CMDB on <code>10.0.0.0/8</code> is the ordinary case — but
+  loopback, link-local (<code>169.254.0.0/16</code>, where cloud metadata lives),
+  multicast and reserved addresses are refused. A listed name whose DNS answer
+  points inward does not get through.</li>
+<li><strong>Redirects are never followed.</strong> The first hop is the one that was checked;
+  every hop after it would be the peer's choice.</li>
+<li>Methods are limited to <code>GET</code> and <code>POST</code>, <code>timeout</code> is capped at 30 seconds,
+  and the response is read up to 1 MiB.</li>
+</ul>
+<p>A URL that is not permitted is rejected when the survey is <strong>saved</strong>, so the
+editor is told rather than left with a question that silently resolves to
+nothing.</p>
+</blockquote>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;source_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;api_endpoint&quot;</span><span class="p">,</span>
@@ -294,7 +325,7 @@ the system automatically filters by the job template's inventory.</p>
 <td><code>url</code></td>
 <td>string</td>
 <td>—</td>
-<td>HTTP endpoint URL (required)</td>
+<td>HTTPS endpoint URL (required, host must be allowlisted)</td>
 </tr>
 <tr>
 <td><code>method</code></td>
@@ -306,7 +337,7 @@ the system automatically filters by the job template's inventory.</p>
 <td><code>headers</code></td>
 <td>object</td>
 <td><code>{}</code></td>
-<td>Custom HTTP headers</td>
+<td>Custom HTTP headers. <strong>Stored in the survey spec in plaintext</strong> — anyone who can read the job template can read them</td>
 </tr>
 <tr>
 <td><code>json_path</code></td>
@@ -324,7 +355,7 @@ the system automatically filters by the job template's inventory.</p>
 <td><code>timeout</code></td>
 <td>integer</td>
 <td><code>10</code></td>
-<td>Request timeout in seconds</td>
+<td>Request timeout in seconds (capped at 30)</td>
 </tr>
 <tr>
 <td><code>body</code></td>
@@ -353,12 +384,29 @@ the system automatically filters by the job template's inventory.</p>
 <p>With <code>json_path: "data.items"</code> and <code>value_field: "hostname"</code>, this returns
 <code>["web-01", "web-02"]</code>.</p>
 <hr />
-<h2 id="source-jinja2-template">Source: Jinja2 Template</h2>
-<p>Evaluate a Jinja2 expression that outputs a JSON array.</p>
+<h2 id="source-jinja2-template-withdrawn">Source: Jinja2 Template — withdrawn</h2>
+<p><strong>This source type is disabled and surveys can no longer be saved with it.</strong></p>
+<p>The template was rendered on the server, in the web process, whenever a user
+with <code>start</code> permission opened the launch prompt. Jinja2 seeds every environment
+with objects whose <code>__init__.__globals__</code> reaches Python's module table, so
+whoever could edit a job template's survey could run arbitrary code as the web
+process — <code>{{ cycler.__init__.__globals__.os.environ.get('PATH') }}</code> returned the
+server's <code>PATH</code>. Earlier versions of this page claimed the templates ran in a
+restricted sandbox. They did not.</p>
+<p>Surveys already stored with <code>source_type: jinja2</code> resolve to <strong>no choices</strong> and
+log a warning; they are not executed. Move them to <code>db_query</code> (for anything
+drawn from inventory) or <code>api_endpoint</code> (for anything computed elsewhere).</p>
+<p>An operator who accepts the risk can set
+<code>SURVEY_DYNAMIC_CHOICES_JINJA2_ENABLED = True</code> in the server settings file — not
+via <code>/api/v2/settings/</code>, deliberately, so the API used to store a template cannot
+also enable its execution. Templates then render in a Jinja2 sandbox with globals
+removed and a reduced filter set. Treat that as hardening, not as a boundary:
+sandbox escapes are found periodically, and a template rendering in the web
+process is worth an escape to whoever plants it.</p>
 <div class="codehilite"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;enabled&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;source_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;jinja2&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;template&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{{ groups | tojson }}&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;template&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{{ groups | sort | tojson }}&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;cache_ttl&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -387,14 +435,14 @@ the system automatically filters by the job template's inventory.</p>
 </table>
 <p>The template <strong>must output a valid JSON array</strong>.</p>
 <h3 id="examples">Examples</h3>
-<div class="codehilite"><pre><span></span><code><span class="c">{# List all hosts #}</span>
-<span class="cp">{{</span> <span class="nv">hosts</span> <span class="o">|</span> <span class="nf">tojson</span> <span class="cp">}}</span>
+<div class="codehilite"><pre><span></span><code><span class="err">{</span><span class="c1"># List all hosts #}</span>
+<span class="err">{{</span><span class="w"> </span><span class="k">hosts</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">tojson</span><span class="w"> </span><span class="err">}}</span>
 
-<span class="c">{# Filter hosts by prefix #}</span>
-<span class="cp">{{</span> <span class="nv">hosts</span> <span class="o">|</span> <span class="nf">select</span><span class="o">(</span><span class="s2">&quot;match&quot;</span><span class="o">,</span> <span class="s2">&quot;^web&quot;</span><span class="o">)</span> <span class="o">|</span> <span class="nf">list</span> <span class="o">|</span> <span class="nf">tojson</span> <span class="cp">}}</span>
+<span class="err">{</span><span class="c1"># Filter hosts by prefix #}</span>
+<span class="err">{{</span><span class="w"> </span><span class="k">hosts</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">select</span><span class="p">(</span><span class="s2">&quot;match&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;^web&quot;</span><span class="p">)</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">list</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">tojson</span><span class="w"> </span><span class="err">}}</span>
 
-<span class="c">{# Static list generated from range #}</span>
-<span class="cp">{{</span> <span class="nv">range</span><span class="o">(</span><span class="m">1</span><span class="o">,</span> <span class="m">11</span><span class="o">)</span> <span class="o">|</span> <span class="nf">list</span> <span class="o">|</span> <span class="nf">tojson</span> <span class="cp">}}</span>
+<span class="err">{</span><span class="c1"># `range` and the other Jinja globals are removed; build from context instead #}</span>
+<span class="err">{{</span><span class="w"> </span><span class="k">groups</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">sort</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">tojson</span><span class="w"> </span><span class="err">}}</span>
 </code></pre></div>
 
 <hr />
@@ -433,12 +481,17 @@ the system automatically filters by the job template's inventory.</p>
 <ol>
 <li><code>dynamic_choices</code> is only valid on <code>multiplechoice</code> and <code>multiselect</code> types</li>
 <li>When <code>dynamic_choices.enabled</code> is <code>true</code>, static <code>choices</code> field is not required</li>
-<li>During job launch, answers to dynamic choice questions skip static choice validation</li>
-<li>The <code>source_type</code> must be one of: <code>db_query</code>, <code>api_endpoint</code>, <code>jinja2</code></li>
+<li>During job launch, an answer to a dynamic-choices question is checked against
+   the <strong>resolved</strong> list, not against the static <code>choices</code> field. If the source
+   cannot be resolved the list is empty and every answer is rejected — an answer
+   that cannot be validated is not accepted</li>
+<li>The <code>source_type</code> must be one of: <code>db_query</code>, <code>api_endpoint</code>. <code>jinja2</code> is
+   rejected unless <code>SURVEY_DYNAMIC_CHOICES_JINJA2_ENABLED</code> is <code>True</code> in the
+   server settings file</li>
 <li>DB query <code>model</code> must be from the allowed list</li>
 <li>DB query <code>field</code> must be from: <code>name</code>, <code>id</code>, <code>description</code></li>
 <li>API endpoint requires a non-empty <code>url</code></li>
-<li>Jinja2 requires a non-empty <code>template</code></li>
+<li>Jinja2, where an operator has re-enabled it, requires a non-empty <code>template</code></li>
 <li><code>cache_ttl</code> must be a non-negative integer</li>
 </ol>
 <hr />
@@ -456,16 +509,24 @@ the system automatically filters by the job template's inventory.</p>
 <h2 id="caching">Caching</h2>
 <ul>
 <li>Resolved choices are cached in Django's cache backend (Redis)</li>
-<li>Cache key includes the variable name and full source configuration hash</li>
+<li>The cache key covers the question, the source configuration, <strong>and the scope
+  the answer was resolved in</strong> — job template, organization and inventory. It
+  used to be the variable name plus a config hash alone, so two templates with
+  the same question and different inventories shared one entry and the second
+  caller was served the first one's host names</li>
+<li>Nothing is cached when there is no template to scope by</li>
 <li>Default TTL: 60 seconds</li>
 <li>Set <code>cache_ttl: 0</code> to disable caching</li>
-<li>Cache is shared across all users and launch requests</li>
+<li>Within one scope, the cache is shared across users</li>
 </ul>
 <hr />
 <h2 id="limitations">Limitations</h2>
 <ul>
-<li>Maximum 500 choices returned per question (to prevent UI issues)</li>
-<li>Jinja2 templates run in a restricted sandbox (no file I/O)</li>
+<li>Maximum 500 choices returned per question (to prevent UI issues), applied to
+  every source type</li>
+<li>Jinja2 as a source type is withdrawn; where an operator has re-enabled it,
+  templates render in a Jinja2 sandbox with globals removed and a reduced filter
+  set — hardening, not a trust boundary</li>
 <li>External API requests have a configurable timeout (default 10s)</li>
 <li>DB query filters are limited to safe field lookups for security</li>
 </ul>
